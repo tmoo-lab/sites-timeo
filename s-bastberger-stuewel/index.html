@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>S'Bastberger Stuewel — Auberge-restaurant à Imbsheim, Pays de Hanau</title>
+<meta name="description" content="Une auberge-restaurant conviviale au pied du Bastberg, à Imbsheim près de Bouxwiller. Cuisine généreuse du terroir alsacien, dans l'esprit d'une vraie winstub de village." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<script>
+  document.documentElement.classList.add('js');
+  setTimeout(function(){ if(!window.__motionReady){ document.documentElement.classList.add('reveal-fallback'); } }, 1100);
+</script>
+<style>
+  :root{
+    --cream: oklch(0.968 0.019 78);
+    --cream-2: oklch(0.947 0.028 72);
+    --ink: oklch(0.28 0.032 34);
+    --ink-soft: oklch(0.44 0.030 34);
+    --wine: oklch(0.42 0.115 22);
+    --wine-deep: oklch(0.32 0.098 24);
+    --oak: oklch(0.52 0.070 58);
+    --amber: oklch(0.78 0.135 70);
+    --amber-deep: oklch(0.66 0.150 60);
+    --gold: oklch(0.74 0.120 84);
+    --clay: oklch(0.56 0.120 40);
+    --line: oklch(0.87 0.024 74);
+    --shadow: 0 22px 60px -30px oklch(0.34 0.08 30 / 0.5);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ overflow-x:clip; max-width:100%; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:
+      radial-gradient(120% 80% at 84% -12%, oklch(0.92 0.05 64) 0%, transparent 55%),
+      var(--cream);
+    color:var(--ink);
+    font-family:"Outfit", system-ui, sans-serif;
+    font-weight:400; line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{ font-family:"Fraunces", Georgia, serif; font-weight:500; line-height:1.05; letter-spacing:-0.01em; }
+  .wrap{ width:min(1120px, 90vw); margin-inline:auto; }
+  a{ color:inherit; text-decoration:none; }
+  .js [data-reveal]{ opacity:0; transform:translateY(24px); }
+  .reveal-fallback [data-reveal]{ opacity:1 !important; transform:none !important; }
+  @media (prefers-reduced-motion: reduce){ .js [data-reveal]{ opacity:1; transform:none; } }
+
+  header.nav{ position:sticky; top:0; z-index:50; background:oklch(0.968 0.019 78 / 0.9); border-bottom:1px solid var(--line); }
+  .nav-in{ display:flex; align-items:center; justify-content:space-between; padding:0.95rem 0; gap:1rem; }
+  .brand{ display:flex; align-items:baseline; gap:0.6rem; }
+  .brand .mark{ font-family:"Fraunces",serif; font-weight:600; font-size:1.28rem; color:var(--wine-deep); letter-spacing:-0.02em; }
+  .brand .sub{ font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-soft); }
+  nav.links{ display:flex; gap:2rem; align-items:center; }
+  nav.links a{ font-size:0.92rem; color:var(--ink-soft); transition:color .3s; }
+  nav.links a:hover{ color:var(--wine-deep); }
+  .btn{ display:inline-flex; align-items:center; gap:0.5rem; background:var(--wine-deep); color:var(--cream); padding:0.7rem 1.25rem; border-radius:999px; font-size:0.9rem; font-weight:500; transition:transform .4s cubic-bezier(.16,1,.3,1), background .3s; }
+  .btn:hover{ transform:translateY(-2px); background:var(--wine); }
+  .btn.amber{ background:var(--amber-deep); }
+  .btn.amber:hover{ background:var(--clay); }
+  @media (max-width:760px){ nav.links a:not(.btn){ display:none; } }
+
+  .hero{ position:relative; padding:clamp(3.5rem,9vw,7rem) 0 clamp(3rem,7vw,5.5rem); overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:clamp(2rem,5vw,4rem); align-items:center; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:0.6rem; font-size:0.78rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--clay); margin-bottom:1.4rem; }
+  .eyebrow::before{ content:""; width:34px; height:1px; background:var(--clay); display:inline-block; }
+  .hero h1{ font-size:clamp(2.6rem, 6.2vw, 4.6rem); }
+  .hero h1 em{ font-style:italic; color:var(--oak); }
+  .hero p.lead{ font-size:clamp(1.05rem,1.6vw,1.22rem); color:var(--ink-soft); max-width:44ch; margin:1.5rem 0 2.1rem; }
+  .hero-cta{ display:flex; gap:0.9rem; flex-wrap:wrap; align-items:center; }
+  .hero-cta .ghost{ font-size:0.92rem; color:var(--wine-deep); border-bottom:1px solid var(--amber-deep); padding-bottom:2px; transition:opacity .3s; }
+  .hero-cta .ghost:hover{ opacity:0.6; }
+  .hero-visual{ position:relative; }
+  .plate{ aspect-ratio:4/5; border-radius:26px; position:relative; overflow:hidden;
+    background: radial-gradient(95% 70% at 26% 12%, oklch(0.80 0.12 72) 0%, transparent 55%), linear-gradient(162deg, oklch(0.52 0.11 30) 0%, oklch(0.33 0.095 24) 100%);
+    box-shadow:var(--shadow); }
+  .plate::after{ content:""; position:absolute; inset:0;
+    background: radial-gradient(42% 30% at 80% 84%, oklch(0.80 0.135 74 / 0.6) 0%, transparent 70%), repeating-linear-gradient(118deg, oklch(1 0 0 / 0.05) 0 2px, transparent 2px 26px); }
+  .plate .tag{ position:absolute; left:1.15rem; bottom:1.15rem; z-index:2; background:oklch(0.968 0.019 78 / 0.94); color:var(--wine-deep); padding:0.55rem 0.95rem; border-radius:12px; font-size:0.82rem; font-weight:500; box-shadow:0 10px 30px -18px oklch(0.3 0.08 30 / 0.7); }
+  .badge-float{ position:absolute; top:-14px; right:-10px; z-index:3; width:118px; height:118px; border-radius:50%; background:var(--amber); color:var(--wine-deep); display:grid; place-items:center; text-align:center; font-family:"Fraunces",serif; font-size:0.82rem; font-weight:600; line-height:1.15; box-shadow:0 16px 40px -18px oklch(0.6 0.14 60 / 0.8); transform:rotate(-8deg); }
+  @media (max-width:860px){ .hero-grid{ grid-template-columns:1fr; } .hero-visual{ max-width:360px; } .badge-float{ width:98px; height:98px; } }
+
+  .strip{ border-block:1px solid var(--line); background:var(--cream-2); }
+  .strip-in{ display:flex; gap:2.6rem; flex-wrap:wrap; justify-content:space-between; padding:1.2rem 0; }
+  .strip span{ font-size:0.86rem; color:var(--ink-soft); display:flex; align-items:center; gap:0.55rem; }
+  .strip span b{ font-family:"Fraunces",serif; color:var(--wine-deep); font-weight:600; }
+  .dot{ width:6px; height:6px; border-radius:50%; background:var(--amber-deep); display:inline-block; }
+
+  section{ padding:clamp(4rem,9vw,7rem) 0; }
+  .kicker{ font-size:0.78rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--clay); margin-bottom:1rem; }
+  .sec-title{ font-size:clamp(2rem,4.4vw,3.15rem); max-width:18ch; }
+  .sec-title em{ font-style:italic; color:var(--oak); }
+
+  .story-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:clamp(2rem,5vw,4.5rem); align-items:end; }
+  .story-copy p{ color:var(--ink-soft); margin-top:1.2rem; max-width:46ch; }
+  .story-figure{ position:relative; }
+  .story-figure .frame{ aspect-ratio:5/6; border-radius:22px; overflow:hidden; box-shadow:var(--shadow);
+    background: radial-gradient(82% 60% at 68% 14%, oklch(0.82 0.12 74) 0%, transparent 55%), linear-gradient(156deg, oklch(0.54 0.11 34) 0%, oklch(0.34 0.09 24) 100%); }
+  .story-figure .frame::after{ content:""; position:absolute; inset:0; background:repeating-linear-gradient(52deg, oklch(0.2 0.03 30 / 0.06) 0 3px, transparent 3px 30px); }
+  .story-figure .cap{ position:absolute; bottom:-22px; left:-18px; background:var(--cream); border:1px solid var(--line); border-radius:16px; padding:1rem 1.25rem; box-shadow:var(--shadow); max-width:240px; }
+  .story-figure .cap strong{ font-family:"Fraunces",serif; color:var(--wine-deep); display:block; font-size:1.5rem; }
+  .story-figure .cap span{ font-size:0.82rem; color:var(--ink-soft); }
+  @media (max-width:820px){ .story-grid{ grid-template-columns:1fr; } .story-figure{ max-width:420px; } .story-figure .cap{ left:auto; right:0; } }
+
+  .room-sec{ background:linear-gradient(180deg, transparent, oklch(0.94 0.032 68) 40%, transparent); }
+  .feat{ margin-top:2.8rem; display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
+  .feat .card{ background:var(--cream); border:1px solid var(--line); border-radius:18px; padding:1.6rem 1.5rem; box-shadow:0 12px 40px -34px oklch(0.3 0.08 30 / 0.8); }
+  .feat .card .no{ font-family:"Fraunces",serif; font-size:0.9rem; color:var(--oak); font-weight:600; }
+  .feat .card h3{ font-size:1.28rem; margin:0.5rem 0 0.4rem; color:var(--wine-deep); }
+  .feat .card p{ color:var(--ink-soft); font-size:0.93rem; }
+  @media (max-width:760px){ .feat{ grid-template-columns:1fr; } }
+
+  .stay-grid{ display:grid; grid-template-columns:1.25fr 0.75fr; gap:1.5rem; margin-top:2.6rem; }
+  .stay-card{ border-radius:22px; padding:clamp(1.6rem,3vw,2.4rem); position:relative; overflow:hidden; }
+  .stay-card.big{ background:linear-gradient(160deg, var(--wine) 0%, var(--wine-deep) 100%); color:var(--cream); min-height:340px; display:flex; flex-direction:column; justify-content:flex-end; }
+  .stay-card.big::before{ content:""; position:absolute; inset:0; background:radial-gradient(62% 50% at 82% 12%, oklch(0.80 0.135 72 / 0.42) 0%, transparent 60%); }
+  .stay-card.big h3{ font-size:clamp(1.6rem,3vw,2.2rem); position:relative; }
+  .stay-card.big p{ color:oklch(0.93 0.02 74); margin-top:0.7rem; max-width:40ch; position:relative; }
+  .stay-card.small{ background:var(--cream-2); border:1px solid var(--line); display:flex; flex-direction:column; justify-content:space-between; gap:1.4rem; }
+  .stay-card.small h3{ font-size:1.35rem; color:var(--wine-deep); }
+  .stay-card.small p{ color:var(--ink-soft); font-size:0.93rem; margin-top:0.55rem; }
+  .stay-card .amenity{ font-size:0.82rem; letter-spacing:0.04em; color:var(--oak); }
+  @media (max-width:760px){ .stay-grid{ grid-template-columns:1fr; } }
+
+  .band{ background:var(--wine-deep); color:var(--cream); border-radius:28px; padding:clamp(2.4rem,5vw,4rem); display:grid; grid-template-columns:1.1fr 0.9fr; gap:2.5rem; align-items:center; box-shadow:var(--shadow); }
+  .band h2{ font-size:clamp(1.8rem,3.6vw,2.7rem); }
+  .band h2 em{ font-style:italic; color:var(--amber); }
+  .band p{ color:oklch(0.93 0.02 74); margin-top:1rem; max-width:40ch; }
+  .band .info{ display:grid; gap:1.1rem; }
+  .band .info .row{ border-top:1px solid oklch(1 0 0 / 0.14); padding-top:1rem; }
+  .band .info .row span{ font-size:0.76rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--amber); }
+  .band .info .row strong{ display:block; font-family:"Fraunces",serif; font-weight:500; font-size:1.12rem; margin-top:0.25rem; }
+  .band .info .row a{ color:var(--cream); border-bottom:1px solid oklch(1 0 0 / 0.3); }
+  @media (max-width:800px){ .band{ grid-template-columns:1fr; } }
+
+  footer{ padding:clamp(3rem,6vw,4.5rem) 0 2.5rem; }
+  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:2rem; align-items:flex-start; }
+  .foot-brand .mark{ font-family:"Fraunces",serif; font-size:1.5rem; color:var(--wine-deep); font-weight:600; }
+  .foot-brand p{ color:var(--ink-soft); font-size:0.9rem; margin-top:0.6rem; max-width:34ch; }
+  .foot-contact{ font-size:0.95rem; color:var(--ink-soft); text-align:right; }
+  .foot-contact a{ color:var(--wine-deep); border-bottom:1px solid var(--line); }
+  .foot-note{ margin-top:2.6rem; padding-top:1.4rem; border-top:1px solid var(--line); font-size:0.8rem; color:var(--ink-soft); display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.8rem; }
+  .credit{ color:var(--oak); }
+  @media (max-width:640px){ .foot-contact{ text-align:left; } }
+</style>
+</head>
+<body>
+<!-- Maquette de démonstration — proposition non sollicitée, aucune donnée privée utilisée -->
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <div class="brand">
+      <span class="mark">S'Bastberger Stuewel</span>
+      <span class="sub">Auberge-restaurant</span>
+    </div>
+    <nav class="links">
+      <a href="#table">La table</a>
+      <a href="#maison">L'esprit stuewel</a>
+      <a href="#bastberg">Le Bastberg</a>
+      <a href="#contact" class="btn">Réserver</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow" data-reveal>Imbsheim · Pays de Hanau</span>
+      <h1 data-reveal>La bonne table<br /><em>au pied du Bastberg.</em></h1>
+      <p class="lead" data-reveal>Une auberge de village comme on les aime : chaleureuse, sans façon, avec une cuisine généreuse du terroir. On y pousse la porte pour un déjeuner sur le pouce comme pour un repas qui s'étire, dans l'esprit d'une vraie winstub alsacienne.</p>
+      <div class="hero-cta" data-reveal>
+        <a href="tel:+33388707385" class="btn amber">Réserver une table</a>
+        <a href="#table" class="ghost">Voir la maison</a>
+      </div>
+    </div>
+    <div class="hero-visual" data-reveal>
+      <div class="badge-float">Cuisine<br />du terroir</div>
+      <div class="plate">
+        <span class="tag">Au cœur du village, au pied de la colline</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap strip-in">
+    <span data-reveal><b>Winstub</b> de village, à Imbsheim</span>
+    <span data-reveal><span class="dot"></span> <b>Cuisine</b> généreuse du terroir</span>
+    <span data-reveal><span class="dot"></span> <b>Au pied</b> du Bastberg</span>
+    <span data-reveal><span class="dot"></span> <b>Bouxwiller</b> à deux minutes</span>
+  </div>
+</div>
+
+<section id="table">
+  <div class="wrap story-grid">
+    <div class="story-copy">
+      <p class="kicker" data-reveal>La table</p>
+      <h2 class="sec-title" data-reveal>Une cuisine <em>simple et généreuse.</em></h2>
+      <p data-reveal>Ici, on mange bien sans chichis. Des assiettes franches, des saveurs d'Alsace, une ambiance de bistrot de village où l'on se sent tout de suite chez soi. C'est la promesse d'une auberge qui vit au rythme de son coin de campagne.</p>
+      <p data-reveal>Le midi, la salle se remplit d'habitués et de gens de passage ; le soir, on prend le temps. La table d'une winstub, c'est d'abord une histoire d'accueil — et celle-ci ne déroge pas à la règle.</p>
+    </div>
+    <div class="story-figure" data-reveal>
+      <div class="frame"></div>
+      <div class="cap">
+        <strong>« Stuewel »</strong>
+        <span>la petite salle, la parenthèse, le coin où l'on est bien</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="maison" class="room-sec">
+  <div class="wrap">
+    <p class="kicker" data-reveal>L'esprit de la maison</p>
+    <h2 class="sec-title" data-reveal>Ce qui fait <em>une vraie winstub.</em></h2>
+    <div class="feat">
+      <div class="card" data-reveal>
+        <span class="no">01</span>
+        <h3>L'accueil d'abord</h3>
+        <p>On vous reçoit comme à la maison, on prend le temps de conseiller, et l'on repart en se disant qu'on reviendra. C'est la marque des bonnes auberges de village.</p>
+      </div>
+      <div class="card" data-reveal>
+        <span class="no">02</span>
+        <h3>Le goût du terroir</h3>
+        <p>Des recettes d'Alsace et des produits de la région, dans l'assiette et dans le verre. Une cuisine sincère, pensée pour rassasier autant que pour régaler.</p>
+      </div>
+      <div class="card" data-reveal>
+        <span class="no">03</span>
+        <h3>Midi &amp; soir</h3>
+        <p>Une halte gourmande le midi, une table conviviale le soir, pour les familles, les tablées d'amis et les randonneurs de retour du Bastberg. Réservation conseillée.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="bastberg">
+  <div class="wrap">
+    <p class="kicker" data-reveal>Le Bastberg &amp; le Pays de Hanau</p>
+    <h2 class="sec-title" data-reveal>Une colline <em>chargée d'histoires.</em></h2>
+    <div class="stay-grid">
+      <div class="stay-card big" data-reveal>
+        <h3>La colline aux fossiles</h3>
+        <p>Le Bastberg domine Imbsheim et Bouxwiller : ancienne colline viticole, célèbre des géologues pour ses fossiles, entourée de sentiers et de légendes. De quoi marcher le matin et attabler l'appétit à midi.</p>
+      </div>
+      <div class="stay-card small" data-reveal>
+        <div>
+          <h3>Au cœur du Pays de Hanau</h3>
+          <p>Bouxwiller et ses maisons Renaissance, les villages fleuris, les vergers : une Alsace authentique, à l'écart des foules, où l'on prend le temps.</p>
+        </div>
+        <span class="amenity">Étape idéale pour randonneurs &amp; curieux</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="band" data-reveal>
+      <div>
+        <h2>Réservez votre table <em>à l'auberge.</em></h2>
+        <p>Pour réserver, le plus simple est d'appeler : on garde volontiers votre table. Une question ? Écrivez-nous, on vous répond.</p>
+        <a href="tel:+33388707385" class="btn amber" style="margin-top:1.8rem;">Appeler l'auberge</a>
+      </div>
+      <div class="info">
+        <div class="row"><span>L'auberge</span><strong>S'Bastberger Stuewel</strong></div>
+        <div class="row"><span>Adresse</span><strong>25 rue Principale · 67330 Imbsheim (Bouxwiller)</strong></div>
+        <div class="row"><span>Réservation</span><strong><a href="tel:+33388707385">03 88 70 73 85</a> · <a href="mailto:reixel.anny@orange.fr">reixel.anny@orange.fr</a></strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="mark">S'Bastberger Stuewel</div>
+        <p>Auberge-restaurant de village au pied du Bastberg, à Imbsheim, dans le Pays de Hanau.</p>
+      </div>
+      <div class="foot-contact">
+        Imbsheim · Bouxwiller, Bas-Rhin<br />
+        <a href="mailto:reixel.anny@orange.fr">reixel.anny@orange.fr</a><br />
+        03 88 70 73 85
+      </div>
+    </div>
+    <div class="foot-note">
+      <span>© S'Bastberger Stuewel — Imbsheim</span>
+      <span class="credit">Maquette proposée par Timeo Klein · Création de sites web</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+  try {
+    const { animate, inView, stagger } = await import("https://cdn.jsdelivr.net/npm/motion@11.11.13/+esm");
+    window.__motionReady = true;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      document.documentElement.classList.add("reveal-fallback");
+    } else {
+      const heroItems = document.querySelectorAll(".hero [data-reveal]");
+      animate(heroItems, { opacity: [0, 1], transform: ["translateY(26px)", "translateY(0px)"] },
+        { duration: 0.9, delay: stagger(0.09), easing: [0.16, 1, 0.3, 1] });
+      const groups = document.querySelectorAll("section:not(.hero), .strip, footer");
+      groups.forEach((g) => {
+        const items = g.querySelectorAll("[data-reveal]");
+        if (!items.length) return;
+        inView(g, () => {
+          animate(items, { opacity: [0, 1], transform: ["translateY(24px)", "translateY(0px)"] },
+            { duration: 0.85, delay: stagger(0.08), easing: [0.16, 1, 0.3, 1] });
+        }, { amount: 0.2 });
+      });
+    }
+  } catch (e) {
+    window.__motionReady = true;
+    document.documentElement.classList.add("reveal-fallback");
+  }
+</script>
+</body>
+</html>
