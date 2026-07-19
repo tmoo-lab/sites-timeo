@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SMS prêt — Maison Gaschy, Eguisheim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{ --cream:#f7f3ea; --ink:#302722; --ink-soft:#5f544c; --plum:#5b2330; --ochre:#c98a2e; --line:#e6ddcc; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:"Outfit",system-ui,sans-serif; background:radial-gradient(120% 80% at 80% -10%, #f3e7d4 0%, transparent 55%), var(--cream); color:var(--ink); line-height:1.6; min-height:100vh; display:grid; place-items:center; padding:1.5rem; }
+  .card{ width:min(520px,100%); background:#fffdf6; border:1px solid var(--line); border-radius:22px; padding:clamp(1.5rem,4vw,2.4rem); box-shadow:0 24px 60px -34px rgba(70,40,40,.5); }
+  .eyebrow{ font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ochre); font-weight:600; }
+  h1{ font-family:"Fraunces",serif; font-weight:600; font-size:clamp(1.5rem,4vw,2rem); margin:.35rem 0 .2rem; color:var(--plum); letter-spacing:-.01em; }
+  .who{ color:var(--ink-soft); font-size:.95rem; }
+  .num{ display:inline-flex; align-items:center; gap:.5rem; margin-top:1rem; background:#f3e7d4; color:var(--plum); font-weight:600; padding:.5rem .9rem; border-radius:999px; font-size:1.02rem; letter-spacing:.02em; }
+  .label{ font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); margin:1.5rem 0 .5rem; }
+  .msg{ background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:1rem 1.1rem; font-size:.98rem; color:#333; white-space:pre-wrap; }
+  .send{ display:flex; align-items:center; justify-content:center; gap:.6rem; margin-top:1.5rem; width:100%; background:var(--plum); color:#fff; text-decoration:none; font-weight:600; font-size:1.1rem; padding:1rem 1.25rem; border-radius:14px; transition:transform .2s, background .2s; }
+  .send:hover{ transform:translateY(-2px); background:#4a1c27; }
+  .qr-wrap{ margin-top:1.8rem; text-align:center; }
+  #qr{ display:inline-flex; padding:14px; background:#fff; border:1px solid var(--line); border-radius:16px; min-width:180px; min-height:180px; align-items:center; justify-content:center; }
+  #qr img, #qr canvas{ display:block; }
+  .qr-cap{ margin-top:.6rem; font-size:.85rem; color:var(--ink-soft); }
+  .note{ margin-top:1.6rem; font-size:.82rem; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:1rem; }
+  .fallback{ font-size:.8rem; color:var(--ink-soft); word-break:break-all; margin-top:.5rem; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="eyebrow">SMS à envoyer à la main</div>
+    <h1>Maison Gaschy — Eguisheim</h1>
+    <div class="who">Christiane Gaschy · chambres d'hôtes · Eguisheim (68420)</div>
+    <div class="num">📱 <span id="num">06 11 27 63 26</span></div>
+
+    <div class="label">Message</div>
+    <div class="msg" id="msg"></div>
+
+    <a class="send" id="send" href="sms:+33611276326&body=Bonjour%20Christiane%2C%20ici%20Timeo%20Klein%2C%20cr%C3%A9ation%20de%20sites%20web.%20J%27ai%20r%C3%A9alis%C3%A9%20une%20maquette%20de%20site%20rien%20que%20pour%20votre%20maison%20d%27h%C3%B4tes%20%C3%A0%20Eguisheim%20%3A%20https%3A%2F%2Ftmoo-lab.github.io%2Fsites-timeo%2Fmaison-gaschy-eguisheim%2F%20%E2%80%94%20pens%C3%A9e%20pour%20le%20mobile.%20Sans%20engagement%20%3A%20si%20le%20rendu%20vous%20pla%C3%AEt%2C%20on%20en%20discute%20%3F">📱 Envoyer le SMS</a>
+
+    <div class="qr-wrap">
+      <div id="qr">…</div>
+      <div class="qr-cap">Scannez avec l'appareil photo de l'iPhone pour ouvrir le SMS pré-rempli</div>
+    </div>
+
+    <div class="note">Rien n'est envoyé automatiquement : le bouton et le QR code ouvrent votre application Messages avec le texte déjà écrit — vous relisez, puis vous envoyez vous-même.</div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  var num = "+33611276326";
+  var text = "Bonjour Christiane, ici Timeo Klein, création de sites web. J'ai réalisé une maquette de site rien que pour votre maison d'hôtes à Eguisheim : https://tmoo-lab.github.io/sites-timeo/maison-gaschy-eguisheim/ — pensée pour le mobile. Sans engagement : si le rendu vous plaît, on en discute ?";
+  var link = "sms:" + num + "&body=" + encodeURIComponent(text);
+  document.getElementById("msg").textContent = text;
+  document.getElementById("send").setAttribute("href", link);
+  var qr = document.getElementById("qr");
+  qr.textContent = "";
+  try {
+    if (window.QRCode) {
+      new QRCode(qr, { text: link, width: 200, height: 200, correctLevel: QRCode.CorrectLevel.M });
+    } else { throw new Error("lib"); }
+  } catch (e) {
+    qr.innerHTML = '<div class="fallback">QR indisponible (hors-ligne).<br>Utilisez le bouton ci-dessus, ou ce lien :<br>' + link + '</div>';
+  }
+</script>
+</body>
+</html>
