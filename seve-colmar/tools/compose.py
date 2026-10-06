@@ -59,8 +59,8 @@ QUAD = [push(TL, cx, cy), push(TR, cx, cy), push(BR, cx, cy), push(BL, cx, cy)]
 print('écran détecté', TL, TR, BR, BL)
 
 # pièce neutre (le vert et le violet de la LED sont désaturés), puis lueur colorée ajoutée
-base = ImageEnhance.Color(mk).enhance(0.18)
-base = ImageEnhance.Brightness(base).enhance(0.9)
+base = ImageEnhance.Color(mk).enhance(0.16)
+base = ImageEnhance.Brightness(base).enhance(0.78)
 bd = ImageDraw.Draw(base); bd.polygon([tuple(map(int, p)) for p in QUAD], fill=(8, 8, 10))
 base_arr = np.asarray(base).astype(np.float32)
 
@@ -69,9 +69,10 @@ yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
 sw, sh = (TR[0] - TL[0]), (BL[1] - TL[1])
 dx = np.maximum(0, np.abs(xx - cx) - sw / 2); dy = np.maximum(0, np.abs(yy - cy) - sh / 2)
 dist = np.sqrt(dx * dx + dy * dy)
-halo = np.exp(-(dist / 420.0) ** 1.6)
-below = np.exp(-(np.maximum(0, yy - (cy + sh / 2)) / 520.0) ** 1.4) * np.exp(-(np.abs(xx - cx) / 560.0) ** 2) * (yy > cy)
-GLOW = np.clip(halo * 0.55 + below * 0.55, 0, 1)[..., None]
+halo = np.exp(-(dist / 250.0) ** 1.5)
+halo = halo * np.where(yy < cy - sh / 2, 0.45, 1.0)  # moins de lueur au-dessus de l'écran
+below = np.exp(-(np.maximum(0, yy - (cy + sh / 2)) / 380.0) ** 1.3) * np.exp(-(np.abs(xx - cx) / 500.0) ** 2) * (yy > cy)
+GLOW = np.clip(halo * 0.5 + below * 0.55, 0, 1)[..., None]
 GLOW[mask] = 0  # pas de lueur sur l'écran lui-même
 
 def find_coeffs(pa, pb):
@@ -136,7 +137,10 @@ vignette = None
 def canvas_frame(frame_path, label, caption_lines, local_t, browser=False, url=''):
     img = Image.new('RGBA', (W, H), CANVAS_BG + (255,))
     d = ImageDraw.Draw(img)
-    fr = Image.open(frame_path).convert('RGB').resize((FRAME_W, FRAME_H), Image.LANCZOS)
+    z = 1.0 + 0.025 * min(1.0, local_t / STEP)  # très lent zoom pour donner vie au canvas
+    fw, fh = int(FRAME_W * z), int(FRAME_H * z)
+    fr = Image.open(frame_path).convert('RGB').resize((fw, fh), Image.LANCZOS)
+    fr = fr.crop(((fw - FRAME_W) // 2, (fh - FRAME_H) // 2, (fw - FRAME_W) // 2 + FRAME_W, (fh - FRAME_H) // 2 + FRAME_H))
     chrome_h = 56 if browser else 0
     total_h = FRAME_H + chrome_h
     x0 = (W - FRAME_W) // 2; y0 = 880 - total_h // 2
