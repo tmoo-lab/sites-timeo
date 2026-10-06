@@ -1,0 +1,6 @@
+seve-colmar/assets/img/*
+!seve-colmar/assets/img/.gitkeep
+seve-colmar/tools/out/
+node_modules/
+seve-colmar/tools/package.json
+seve-colmar/tools/package-lock.json

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr" data-season="printemps">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SÈVE — Paysagistes à Colmar · Un jardin pensé pour ses quatre saisons</title>
+<meta name="description" content="SÈVE, paysagistes à Colmar. Conception, création et entretien de jardins dans le vignoble et le piémont des Vosges. Un jardin dessiné pour vivre quatre saisons.">
+<meta name="theme-color" content="#4F9B3B">
+<link rel="preload" href="assets/fonts/instrument-serif-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="bar" id="top">
+  <a class="brand" href="#top" aria-label="SÈVE — accueil">
+    <span class="brand__word">SÈVE</span>
+    <span class="brand__sub">Paysagistes</span>
+  </a>
+  <nav class="bar__nav" aria-label="Navigation principale">
+    <a href="#jardins">Jardins</a>
+    <a href="#savoir-faire">Savoir-faire</a>
+    <a href="#saisons">Saisons</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="bar__right">
+    <span class="bar__loc">Colmar — Alsace</span>
+    <a class="ulink" href="#contact">Demander une visite</a>
+  </div>
+</header>
+
+<!-- ============ HERO · SLIDER 4 SAISONS ============ -->
+<section class="hero" id="hero" aria-roledescription="carrousel" aria-label="Le jardin au fil des saisons">
+
+  <div class="hero__bg" aria-hidden="true">
+    <svg class="hero__pattern" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <defs>
+        <pattern id="leafpat" width="260" height="260" patternUnits="userSpaceOnUse" patternTransform="scale(1.45) rotate(-8)">
+          <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M40 200 C 40 120, 110 70, 190 60 C 180 140, 120 200, 40 200 Z"/>
+            <path d="M40 200 C 90 160, 140 110, 190 60"/>
+            <path d="M190 230 C 175 190, 195 150, 240 140 C 245 185, 225 220, 190 230 Z"/>
+            <path d="M190 230 C 205 200, 220 170, 240 140"/>
+            <path d="M80 70 C 60 50, 55 25, 70 8 C 90 20, 95 45, 80 70 Z"/>
+            <path d="M80 70 C 76 50, 73 30, 70 8"/>
+          </g>
+        </pattern>
+      </defs>
+      <rect class="hero__patrect" width="200%" height="200%" fill="url(#leafpat)"/>
+    </svg>
+  </div>
+
+  <!-- Mot géant de la saison -->
+  <div class="hero__words" aria-hidden="true">
+    <span class="word word--printemps" data-s="0">Printemps</span>
+    <span class="word word--ete" data-s="1">Été</span>
+    <span class="word word--automne" data-s="2">Automne</span>
+    <span class="word word--hiver" data-s="3">Hiver</span>
+  </div>
+
+  <!-- Éléments flottants -->
+  <div class="hero__floats" aria-hidden="true">
+    <!-- printemps -->
+    <div class="fw" data-s="0" style="--x:9%;--y:22%;--w:11vw;--r:-18deg;--d:0.9;--b:0px"><div class="fb"><img class="float" src="assets/img/el-blossom.png" alt=""></div></div>
+    <div class="fw" data-s="0" style="--x:78%;--y:66%;--w:15vw;--r:24deg;--d:1.5;--b:3px"><div class="fb"><img class="float" src="assets/img/el-blossom.png" alt=""></div></div>
+    <div class="fw" data-s="0" style="--x:84%;--y:14%;--w:9vw;--r:35deg;--d:0.6;--b:1px"><div class="fb"><img class="float" src="assets/img/el-leaf-spring.png" alt=""></div></div>
+    <div class="fw" data-s="0" style="--x:30%;--y:78%;--w:6vw;--r:60deg;--d:0.4;--b:2px"><div class="fb"><img class="float" src="assets/img/el-blossom.png" alt=""></div></div>
+    <!-- été -->
+    <div class="fw" data-s="1" style="--x:8%;--y:28%;--w:16vw;--r:-14deg;--d:1.2;--b:0px"><div class="fb"><img class="float" src="assets/img/el-lavender.png" alt=""></div></div>
+    <div class="fw" data-s="1" style="--x:82%;--y:18%;--w:10vw;--r:30deg;--d:0.7;--b:1px"><div class="fb"><img class="float" src="assets/img/el-oak.png" alt=""></div></div>
+    <div class="fw" data-s="1" style="--x:74%;--y:70%;--w:14vw;--r:-50deg;--d:1.6;--b:4px"><div class="fb"><img class="float" src="assets/img/el-oak.png" alt=""></div></div>
+    <div class="fw" data-s="1" style="--x:34%;--y:80%;--w:6vw;--r:110deg;--d:0.4;--b:2px"><div class="fb"><img class="float" src="assets/img/el-leaf-spring.png" alt=""></div></div>
+    <!-- automne -->
+    <div class="fw" data-s="2" style="--x:7%;--y:20%;--w:13vw;--r:-30deg;--d:1.0;--b:0px"><div class="fb"><img class="float" src="assets/img/el-maple.png" alt=""></div></div>
+    <div class="fw" data-s="2" style="--x:80%;--y:64%;--w:17vw;--r:40deg;--d:1.7;--b:4px"><div class="fb"><img class="float" src="assets/img/el-maple.png" alt=""></div></div>
+    <div class="fw" data-s="2" style="--x:84%;--y:16%;--w:9vw;--r:15deg;--d:0.6;--b:1px"><div class="fb"><img class="float" src="assets/img/el-chestnut.png" alt=""></div></div>
+    <div class="fw" data-s="2" style="--x:28%;--y:80%;--w:7vw;--r:140deg;--d:0.4;--b:2px"><div class="fb"><img class="float" src="assets/img/el-maple.png" alt=""></div></div>
+    <!-- hiver -->
+    <div class="fw" data-s="3" style="--x:8%;--y:18%;--w:12vw;--r:12deg;--d:0.9;--b:0px"><div class="fb"><img class="float" src="assets/img/el-snowflake.png" alt=""></div></div>
+    <div class="fw" data-s="3" style="--x:78%;--y:66%;--w:18vw;--r:-20deg;--d:1.8;--b:5px"><div class="fb"><img class="float" src="assets/img/el-snowflake.png" alt=""></div></div>
+    <div class="fw" data-s="3" style="--x:84%;--y:18%;--w:9vw;--r:-22deg;--d:0.6;--b:1px"><div class="fb"><img class="float" src="assets/img/el-pinecone.png" alt=""></div></div>
+    <div class="fw" data-s="3" style="--x:30%;--y:80%;--w:6vw;--r:50deg;--d:0.4;--b:2px"><div class="fb"><img class="float" src="assets/img/el-snowflake.png" alt=""></div></div>
+  </div>
+
+  <!-- Le jardin -->
+  <div class="hero__stage" aria-hidden="true">
+    <div class="stage__bob">
+      <img class="dio" data-s="0" src="assets/img/dio-printemps.png" alt="">
+      <img class="dio" data-s="1" src="assets/img/dio-ete.png" alt="">
+      <img class="dio" data-s="2" src="assets/img/dio-automne.png" alt="">
+      <img class="dio" data-s="3" src="assets/img/dio-hiver.png" alt="">
+      <div class="stage__shadow"></div>
+    </div>
+  </div>
+
+  <!-- Texte -->
+  <div class="hero__copy">
+    <p class="kicker">Paysagistes — Colmar, vignoble &amp; piémont des Vosges</p>
+    <h1 class="sr-only">SÈVE, paysagistes à Colmar : un jardin pensé pour ses quatre saisons</h1>
+    <div class="leads" aria-live="polite">
+      <p class="lead" data-s="0">Le jardin se réveille. Nous plantons, semons et dessinons ce qui fleurira trois saisons.</p>
+      <p class="lead" data-s="1">Le jardin se vit. Terrasses, ombrages et arrosage pensés pour des soirées sans fin.</p>
+      <p class="lead" data-s="2">Le jardin se prépare. Feuillages, structures et plantations d'avenir avant le repos.</p>
+      <p class="lead" data-s="3">Le jardin se dessine. Tailles, élagage et plans du prochain printemps.</p>
+    </div>
+    <div class="hero__actions">
+      <a class="pill" href="#contact"><span class="pill__label">Demander une visite</span><span class="pill__disc" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="ulink" href="#jardins">Voir nos jardins</a>
+    </div>
+  </div>
+
+  <!-- Index + saisons -->
+  <div class="hero__meta">
+    <div class="counter" aria-hidden="true"><span class="counter__cur">01</span><span class="counter__sep">/</span><span class="counter__tot">04</span></div>
+    <ol class="seasons-nav" aria-label="Choisir une saison">
+      <li><button type="button" class="snav is-active" data-go="0"><i></i>Printemps</button></li>
+      <li><button type="button" class="snav" data-go="1"><i></i>Été</button></li>
+      <li><button type="button" class="snav" data-go="2"><i></i>Automne</button></li>
+      <li><button type="button" class="snav" data-go="3"><i></i>Hiver</button></li>
+    </ol>
+  </div>
+
+  <!-- Flèches -->
+  <button type="button" class="arrow arrow--prev" aria-label="Saison précédente"><svg viewBox="0 0 24 24"><path d="M19 12H6M12 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button type="button" class="arrow arrow--next" aria-label="Saison suivante"><svg viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+  <!-- Progression autoplay -->
+  <div class="hero__progress" aria-hidden="true"><i></i></div>
+
+  <!-- Repères maquette (making-of) -->
+  <div class="wire" aria-hidden="true">
+    <span class="wire__box wire__box--word">Titre de saison</span>
+    <span class="wire__box wire__box--stage">Jardin 3D</span>
+    <span class="wire__box wire__box--copy">Accroche + appel à l'action</span>
+    <span class="wire__box wire__box--meta">Index</span>
+    <span class="wire__box wire__box--f1">Élément</span>
+    <span class="wire__box wire__box--f2">Élément</span>
+    <span class="wire__box wire__box--f3">Élément</span>
+  </div>
+</section>
+
+<!-- ============ BANDEAU ============ -->
+<div class="band" aria-hidden="true">
+  <div class="band__track">
+    <span>Colmar</span><span>Eguisheim</span><span>Turckheim</span><span>Kaysersberg</span><span>Riquewihr</span><span>Munster</span><span>Ribeauvillé</span><span>Wintzenheim</span><span>Depuis 2011</span>
+    <span>Colmar</span><span>Eguisheim</span><span>Turckheim</span><span>Kaysersberg</span><span>Riquewihr</span><span>Munster</span><span>Ribeauvillé</span><span>Wintzenheim</span><span>Depuis 2011</span>
+  </div>
+</div>
+
+<!-- ============ SAVOIR-FAIRE ============ -->
+<section class="sf" id="savoir-faire">
+  <div class="sf__head">
+    <p class="eyebrow">Savoir-faire</p>
+    <h2 class="h-serif">Un jardin se pense <em>en quatre saisons.</em></h2>
+    <p class="sf__intro">Nous dessinons, réalisons et entretenons des jardins privés autour de Colmar. Une seule équipe, du premier croquis au dernier passage de l'année.</p>
+  </div>
+  <ul class="rows">
+    <li class="row" data-img="assets/img/ph-terrasse.webp">
+      <span class="row__title">Conception</span>
+      <span class="row__text">Plans, ambiances et palette végétale dessinés pour votre terrain et votre lumière.</span>
+      <span class="row__arrow"><svg viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </li>
+    <li class="row" data-img="assets/img/ph-gravier.webp">
+      <span class="row__title">Création</span>
+      <span class="row__text">Terrassement, plantations, pierre et bois : l'équipe qui réalise ce qu'elle a dessiné.</span>
+      <span class="row__arrow"><svg viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </li>
+    <li class="row" data-img="assets/img/ph-bassin.webp">
+      <span class="row__title">Terrasses &amp; minéral</span>
+      <span class="row__text">Bois, grès des Vosges, corten : des sols et des lignes qui tiennent dans le temps.</span>
+      <span class="row__arrow"><svg viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </li>
+    <li class="row" data-img="assets/img/ph-automne.webp">
+      <span class="row__title">Entretien à l'année</span>
+      <span class="row__text">Un passage par saison, et un jardin qui gagne en caractère chaque année.</span>
+      <span class="row__arrow"><svg viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </li>
+  </ul>
+  <div class="row-peek" aria-hidden="true"><img src="" alt=""></div>
+</section>
+
+<!-- ============ JARDINS ============ -->
+<section class="jardins" id="jardins">
+  <div class="jardins__head">
+    <p class="eyebrow">Jardins</p>
+    <h2 class="h-serif">Quelques jardins <em>que l'on retourne voir.</em></h2>
+    <div class="jardins__ctrls">
+      <button type="button" class="arrow arrow--inline" data-scroll="-1" aria-label="Précédent"><svg viewBox="0 0 24 24"><path d="M19 12H6M12 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button type="button" class="arrow arrow--inline" data-scroll="1" aria-label="Suivant"><svg viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+  </div>
+  <div class="strip" tabindex="0">
+    <figure class="card">
+      <div class="card__img"><img src="assets/img/ph-terrasse.webp" alt="Terrasse en bois et bacs corten face au vignoble, Eguisheim"></div>
+      <figcaption><span>Terrasse sur le vignoble</span><span>Eguisheim · Été</span></figcaption>
+    </figure>
+    <figure class="card">
+      <div class="card__img"><img src="assets/img/ph-gravier.webp" alt="Jardin de graviers, amélanchiers et vivaces, Colmar"></div>
+      <figcaption><span>Jardin de graviers</span><span>Colmar Sud · Printemps</span></figcaption>
+    </figure>
+    <figure class="card">
+      <div class="card__img"><img src="assets/img/ph-bassin.webp" alt="Bassin de nage bordé de lavandes, Turckheim"></div>
+      <figcaption><span>Bassin de nage &amp; lavandes</span><span>Turckheim · Été</span></figcaption>
+    </figure>
+    <figure class="card">
+      <div class="card__img"><img src="assets/img/ph-automne.webp" alt="Érable rouge au bord d'un bassin, Munster"></div>
+      <figcaption><span>Jardin d'ombre</span><span>Munster · Automne</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ SAISONS ============ -->
+<section class="saisons" id="saisons">
+  <div class="saisons__head">
+    <p class="eyebrow">Entretien</p>
+    <h2 class="h-serif">Quatre rendez-vous <em>par an.</em></h2>
+  </div>
+  <ol class="cols">
+    <li class="col" data-go="0"><span class="col__swatch" style="--c:#4F9B3B"></span><span class="col__name">Printemps</span><span class="col__text">Plantations, semis, réveil des sols, premières tontes.</span></li>
+    <li class="col" data-go="1"><span class="col__swatch" style="--c:#E8B421"></span><span class="col__name">Été</span><span class="col__text">Arrosage raisonné, taille en vert, soin des terrasses.</span></li>
+    <li class="col" data-go="2"><span class="col__swatch" style="--c:#CF4F1F"></span><span class="col__name">Automne</span><span class="col__text">Plantation des arbres, feuillages, préparation des massifs.</span></li>
+    <li class="col" data-go="3"><span class="col__swatch" style="--c:#2C4A95"></span><span class="col__name">Hiver</span><span class="col__text">Taille de structure, élagage, plans du prochain jardin.</span></li>
+  </ol>
+  <p class="saisons__note">Cliquez une saison : le site change avec elle.</p>
+</section>
+
+<!-- ============ TÉMOIGNAGE ============ -->
+<section class="quote">
+  <blockquote>
+    <p class="h-serif">« Ils ont dessiné le jardin en janvier, planté en mars. <em>En juin, on dînait dehors tous les soirs.</em> »</p>
+    <footer>Claire &amp; Mathieu — Wintzenheim</footer>
+  </blockquote>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="contact__inner">
+    <p class="eyebrow">Contact</p>
+    <h2 class="h-serif">Parlons de <em>votre jardin.</em></h2>
+    <p class="contact__text">Une visite sur place, un plan sous quinze jours. Nous intervenons à 30 km autour de Colmar.</p>
+    <div class="contact__actions">
+      <a class="pill" href="mailto:bonjour@seve-paysages.fr"><span class="pill__label">Prendre rendez-vous</span><span class="pill__disc" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="ulink" href="tel:+33389000000">03 89 00 00 00</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div><span class="brand__word">SÈVE</span> — Paysagistes · 12 rue des Jardins, 68000 Colmar</div>
+  <div class="foot__right">Site concept réalisé par <a class="ulink" href="https://tmoo.site" target="_blank" rel="noopener">TMOO</a> · Démonstration, entreprise fictive · © 2026</div>
+</footer>
+
+<script src="assets/js/gsap.min.js"></script>
+<script src="assets/js/ScrollTrigger.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

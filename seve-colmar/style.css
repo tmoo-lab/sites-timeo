@@ -1,0 +1,283 @@
+/* ==========================================================================
+   SÈVE — Paysagistes à Colmar · concept TMOO
+   Un jardin, quatre saisons : toute la page suit la saison choisie.
+   ========================================================================== */
+
+@font-face{font-family:"Instrument Serif";font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/instrument-serif-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;font-display:swap;src:url(assets/fonts/instrument-serif-latin-400-italic.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;font-display:swap;src:url(assets/fonts/instrument-serif-latin-ext-400-italic.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Hanken Grotesk";font-style:normal;font-weight:100 900;font-display:swap;src:url(assets/fonts/hanken-grotesk-latin-wght-normal.woff2) format("woff2-variations"),url(assets/fonts/hanken-grotesk-latin-wght-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Hanken Grotesk";font-style:normal;font-weight:100 900;font-display:swap;src:url(assets/fonts/hanken-grotesk-latin-ext-wght-normal.woff2) format("woff2-variations"),url(assets/fonts/hanken-grotesk-latin-ext-wght-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+/* ---------- Palette par saison (tweenée en JS, valeurs initiales ici) ---------- */
+:root{
+  --bg:#4F9B3B; --bg2:#3F8630; --ink:#F6F2E8; --ink2:rgba(246,242,232,.72); --accent:#F3B8CB; --on-accent:#1B3A1E;
+  --paper:#F4F1EA; --paper-ink:#171A16; --paper-ink2:#5E645B; --rule:rgba(23,26,22,.14);
+  --serif:"Instrument Serif",Georgia,serif; --sans:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --gutter:clamp(20px,4vw,64px);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+html[data-season="printemps"]{--bg:#4F9B3B;--bg2:#3F8630;--ink:#F6F2E8;--ink2:rgba(246,242,232,.72);--accent:#F3B8CB;--on-accent:#1B3A1E}
+html[data-season="ete"]{--bg:#E8B421;--bg2:#D29F14;--ink:#1F3A22;--ink2:rgba(31,58,34,.72);--accent:#1F3A22;--on-accent:#F6E7B7}
+html[data-season="automne"]{--bg:#CF4F1F;--bg2:#B64217;--ink:#F7EBDC;--ink2:rgba(247,235,220,.74);--accent:#F7EBDC;--on-accent:#7A2A10}
+html[data-season="hiver"]{--bg:#2C4A95;--bg2:#243F85;--ink:#EEF3FA;--ink2:rgba(238,243,250,.72);--accent:#A8D4F0;--on-accent:#12254F}
+
+/* ---------- Base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html[data-capture] { scroll-behavior:auto }
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:420;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+ul,ol{list-style:none;margin:0;padding:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+::selection{background:var(--accent);color:var(--on-accent)}
+
+.h-serif{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;line-height:.98}
+.h-serif em{font-style:italic}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin:0 0 18px;opacity:.75}
+
+/* ---------- Liens soulignés d'un filet ---------- */
+.ulink{position:relative;display:inline-block;padding-bottom:3px;font-weight:500}
+.ulink::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform-origin:left;transition:transform .5s var(--ease)}
+.ulink:hover::after{transform:scaleX(0);transform-origin:right}
+
+/* ---------- Pastille à flèche (CTA) ---------- */
+.pill{display:inline-flex;align-items:center;gap:14px;font-weight:600;letter-spacing:.01em}
+.pill__disc{width:46px;height:46px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;transition:transform .5s var(--ease),background .4s}
+.pill__disc svg{width:20px;height:20px;transition:transform .5s var(--ease)}
+.pill:hover .pill__disc{transform:scale(1.08)}
+.pill:hover .pill__disc svg{transform:translateX(3px)}
+.pill__label{border-bottom:1px solid transparent;transition:border-color .3s}
+.pill:hover .pill__label{border-color:currentColor}
+
+/* ---------- Flèches circulaires ---------- */
+.arrow{width:56px;height:56px;border-radius:50%;border:1px solid var(--ink2);color:var(--ink);display:grid;place-items:center;transition:background .4s,color .4s,transform .4s var(--ease),border-color .4s}
+.arrow svg{width:22px;height:22px}
+.arrow:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.arrow:active{transform:scale(.94)}
+
+/* ==========================================================================
+   HEADER — fin, premium, toujours présent
+   ========================================================================== */
+.bar{position:fixed;inset:0 0 auto 0;z-index:50;height:64px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 var(--gutter);font-size:13.5px;letter-spacing:.01em;color:var(--ink);mix-blend-mode:normal}
+.bar::after{content:"";position:absolute;left:var(--gutter);right:var(--gutter);bottom:0;height:1px;background:currentColor;opacity:.18}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand__word{font-weight:800;letter-spacing:.22em;font-size:15px}
+.brand__sub{font-size:12px;letter-spacing:.06em;opacity:.7}
+.bar__nav{display:flex;gap:28px;font-weight:500}
+.bar__nav a{position:relative;padding:4px 0}
+.bar__nav a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+.bar__nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.bar__right{display:flex;justify-content:flex-end;align-items:center;gap:24px}
+.bar__loc{opacity:.7;font-weight:500}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero{position:relative;height:100vh;min-height:620px;overflow:hidden;color:var(--ink);isolation:isolate}
+.hero__bg{position:absolute;inset:0;z-index:0}
+.hero__pattern{position:absolute;inset:0;width:100%;height:100%;color:var(--bg2);opacity:.75}
+.hero__patrect{transform:translate(-18%,-16%)}
+
+/* mot géant */
+.hero__words{position:absolute;inset:0;z-index:1;display:grid;place-items:center;pointer-events:none}
+.word{grid-area:1/1;font-family:var(--serif);font-style:italic;font-weight:400;line-height:.8;letter-spacing:-.03em;color:var(--ink);white-space:nowrap;opacity:0;will-change:transform,opacity}
+.word--printemps{font-size:19.5vw}
+.word--ete{font-size:25vw}
+.word--automne{font-size:21vw}
+.word--hiver{font-size:24vw}
+
+/* jardin */
+.hero__stage{position:absolute;left:50%;top:50%;z-index:3;width:min(62vh,40vw);aspect-ratio:1/1;translate:-50% -54%;pointer-events:none}
+.stage__bob{position:absolute;inset:0}
+.dio{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;will-change:transform,opacity;filter:drop-shadow(0 40px 50px rgba(0,0,0,.22))}
+.stage__shadow{position:absolute;left:14%;right:14%;bottom:2%;height:10%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.26),rgba(0,0,0,0));filter:blur(6px);opacity:0}
+
+/* éléments flottants */
+.hero__floats{position:absolute;inset:0;z-index:2;pointer-events:none}
+.fw{position:absolute;left:var(--x);top:var(--y);width:var(--w);aspect-ratio:1/1;translate:-50% -50%;z-index:2}
+.fw[style*="--d:1."]{z-index:4} /* les plus proches passent devant le jardin */
+.fb{position:absolute;inset:0}
+.float{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:blur(var(--b)) drop-shadow(0 18px 24px rgba(0,0,0,.18));opacity:0;will-change:transform,opacity}
+
+/* texte */
+.hero__copy{position:absolute;left:var(--gutter);bottom:clamp(28px,6vh,64px);z-index:5;max-width:min(440px,40vw)}
+.kicker{margin:0 0 14px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;opacity:.8}
+.leads{position:relative;min-height:3.2em;margin-bottom:22px}
+.lead{position:absolute;inset:0 auto auto 0;margin:0;font-size:clamp(16px,1.25vw,20px);line-height:1.45;font-weight:450;opacity:0;will-change:transform,opacity}
+.hero__actions{display:flex;align-items:center;gap:28px}
+
+/* index + saisons */
+.hero__meta{position:absolute;right:var(--gutter);bottom:clamp(28px,6vh,64px);z-index:5;display:flex;flex-direction:column;align-items:flex-end;gap:18px}
+.counter{font-family:var(--serif);font-style:italic;font-size:clamp(26px,2.4vw,38px);line-height:1;display:flex;gap:8px;align-items:baseline}
+.counter__sep,.counter__tot{opacity:.5;font-size:.7em}
+.seasons-nav{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.snav{display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;opacity:.55;transition:opacity .35s}
+.snav i{display:block;width:18px;height:1px;background:currentColor}
+.snav:hover,.snav.is-active{opacity:1}
+
+/* flèches */
+.arrow--prev,.arrow--next{position:absolute;top:50%;z-index:6;transform:translateY(-50%)}
+.arrow--prev{left:var(--gutter)}
+.arrow--next{right:var(--gutter)}
+.arrow--prev:active,.arrow--next:active{transform:translateY(-50%) scale(.94)}
+
+/* progression */
+.hero__progress{display:none}
+
+/* ==========================================================================
+   BANDEAU
+   ========================================================================== */
+.band{position:relative;background:var(--bg);color:var(--ink);border-top:1px solid color-mix(in srgb,var(--ink) 18%,transparent);border-bottom:1px solid color-mix(in srgb,var(--ink) 18%,transparent);overflow:hidden;padding:14px 0;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.band__track{display:flex;gap:0;width:max-content;animation:band 42s linear infinite}
+.band__track span{padding:0 28px;position:relative}
+.band__track span::after{content:"";position:absolute;right:-3px;top:50%;width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.6;transform:translateY(-50%)}
+@keyframes band{to{transform:translateX(-50%)}}
+
+/* ==========================================================================
+   SAVOIR-FAIRE — sur fond papier, encre sombre
+   ========================================================================== */
+.sf{position:relative;background:var(--paper);color:var(--paper-ink);padding:clamp(80px,12vh,140px) var(--gutter) clamp(80px,12vh,120px)}
+.sf__head{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:end;margin-bottom:56px}
+.sf__head .eyebrow{grid-column:1/-1;margin:0}
+.sf__head .h-serif{font-size:clamp(40px,5.6vw,84px);margin:0}
+.sf__intro{margin:0;max-width:44ch;color:var(--paper-ink2);font-size:17px}
+.rows{border-top:1px solid var(--rule)}
+.row{display:grid;grid-template-columns:minmax(220px,.9fr) 2fr auto;gap:32px;align-items:center;padding:30px 0;border-bottom:1px solid var(--rule);cursor:pointer;position:relative}
+.row__title{font-family:var(--serif);font-size:clamp(28px,3vw,44px);line-height:1;letter-spacing:-.01em;transition:transform .5s var(--ease)}
+.row__text{color:var(--paper-ink2);font-size:16px;max-width:52ch}
+.row__arrow{width:46px;height:46px;border-radius:50%;border:1px solid var(--rule);display:grid;place-items:center;transition:background .4s,color .4s,transform .5s var(--ease)}
+.row__arrow svg{width:18px;height:18px}
+.row:hover .row__title{transform:translateX(10px)}
+.row:hover .row__arrow{background:var(--paper-ink);color:var(--paper);transform:rotate(-30deg)}
+.row-peek{position:fixed;z-index:40;width:280px;aspect-ratio:4/3;pointer-events:none;border-radius:6px;overflow:hidden;opacity:0;transform:scale(.9);left:0;top:0;box-shadow:0 30px 60px rgba(0,0,0,.25)}
+.row-peek img{width:100%;height:100%;object-fit:cover}
+
+/* ==========================================================================
+   JARDINS — bande horizontale
+   ========================================================================== */
+.jardins{background:var(--paper);color:var(--paper-ink);padding:0 0 clamp(80px,12vh,140px)}
+.jardins__head{display:flex;align-items:end;justify-content:space-between;gap:32px;padding:0 var(--gutter);margin-bottom:40px;flex-wrap:wrap}
+.jardins__head .h-serif{font-size:clamp(40px,5.6vw,84px);margin:0}
+.jardins__head .eyebrow{width:100%;margin:0 0 18px}
+.jardins__ctrls{display:flex;gap:10px}
+.arrow--inline{border-color:var(--rule);color:var(--paper-ink)}
+.arrow--inline:hover{background:var(--paper-ink);color:var(--paper);border-color:var(--paper-ink)}
+.strip{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 var(--gutter) 20px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.card{flex:0 0 min(640px,70vw);margin:0;scroll-snap-align:start}
+.card__img{aspect-ratio:3/2;overflow:hidden;border-radius:6px;clip-path:inset(0 0 0 0);background:#ddd}
+.card__img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.card:hover .card__img img{transform:scale(1.04)}
+.card figcaption{display:flex;justify-content:space-between;gap:16px;padding:14px 2px 0;font-size:14px;color:var(--paper-ink2)}
+.card figcaption span:first-child{color:var(--paper-ink);font-weight:600}
+
+/* ==========================================================================
+   SAISONS — quatre colonnes
+   ========================================================================== */
+.saisons{background:var(--bg);color:var(--ink);padding:clamp(80px,12vh,140px) var(--gutter);position:relative;overflow:hidden}
+.saisons__head .h-serif{font-size:clamp(40px,5.6vw,84px);margin:0 0 56px}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid color-mix(in srgb,var(--ink) 22%,transparent)}
+.col{padding:32px 24px 36px 0;border-right:1px solid color-mix(in srgb,var(--ink) 22%,transparent);cursor:pointer;display:flex;flex-direction:column;gap:16px;transition:background .4s}
+.col:last-child{border-right:0}
+.col + .col{padding-left:24px}
+.col__swatch{width:52px;height:52px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08),0 10px 30px rgba(0,0,0,.18);transition:transform .5s var(--ease)}
+.col:hover .col__swatch{transform:scale(1.12) rotate(10deg)}
+.col__name{font-family:var(--serif);font-style:italic;font-size:clamp(30px,3vw,46px);line-height:1}
+.col__text{font-size:15px;opacity:.78;max-width:28ch}
+.saisons__note{margin:28px 0 0;font-size:13px;opacity:.6;letter-spacing:.04em}
+
+/* ==========================================================================
+   CITATION
+   ========================================================================== */
+.quote{background:var(--paper);color:var(--paper-ink);padding:clamp(90px,14vh,160px) var(--gutter)}
+.quote blockquote{margin:0 auto;max-width:1100px;text-align:center}
+.quote .h-serif{font-size:clamp(30px,4.2vw,62px);margin:0 0 28px;line-height:1.08}
+.quote footer{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--paper-ink2)}
+
+/* ==========================================================================
+   CONTACT
+   ========================================================================== */
+.contact{background:var(--bg);color:var(--ink);padding:clamp(100px,16vh,180px) var(--gutter)}
+.contact__inner{max-width:900px}
+.contact .h-serif{font-size:clamp(56px,9vw,150px);margin:0 0 28px;letter-spacing:-.02em}
+.contact__text{margin:0 0 36px;font-size:18px;max-width:46ch;opacity:.85}
+.contact__actions{display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+
+/* ==========================================================================
+   PIED
+   ========================================================================== */
+.foot{background:var(--bg);color:var(--ink);padding:26px var(--gutter) 34px;display:flex;justify-content:space-between;gap:24px;font-size:13px;opacity:.85;border-top:1px solid color-mix(in srgb,var(--ink) 18%,transparent);flex-wrap:wrap}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width:900px){
+  .bar{grid-template-columns:1fr auto}
+  .bar__nav{display:none}
+  .bar__loc{display:none}
+  .hero{min-height:560px}
+  .hero__stage{width:min(42vh,62vw);transform:translate(-50%,-58%)}
+  .word--printemps{font-size:30vw}.word--ete{font-size:40vw}.word--automne{font-size:33vw}.word--hiver{font-size:38vw}
+  .hero__copy{max-width:calc(100% - 2*var(--gutter));bottom:96px}
+  .hero__meta{right:auto;left:var(--gutter);bottom:28px;flex-direction:row;align-items:center;gap:20px}
+  .seasons-nav{flex-direction:row;gap:14px}
+  .snav{font-size:11px}.snav i{width:10px}.snav.is-active i{width:24px}
+  .arrow--prev,.arrow--next{top:auto;bottom:28px;transform:none;width:48px;height:48px}
+  .arrow--prev{left:auto;right:calc(var(--gutter) + 58px)}
+  .arrow--prev:active,.arrow--next:active{transform:scale(.94)}
+  .float{--w:calc(var(--w) * 1.6)}
+  .sf__head{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr auto;gap:12px 20px}
+  .row__text{grid-column:1/-1}
+  .row-peek{display:none}
+  .cols{grid-template-columns:1fr 1fr}
+  .col{border-right:0;border-bottom:1px solid color-mix(in srgb,var(--ink) 22%,transparent);padding-left:0 !important}
+  .col:nth-child(odd){padding-right:20px}
+  .col:nth-child(even){padding-left:20px !important;border-left:1px solid color-mix(in srgb,var(--ink) 22%,transparent)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .band__track{animation:none}
+  *{transition-duration:.01ms !important}
+}
+
+/* ==========================================================================
+   MAKING-OF — états de construction pilotés par ?step=
+   1 structure · 2 typographie · 3 palette · 4 jardin & éléments · 5 animation
+   ========================================================================== */
+.wire{display:none}
+html[data-step]{--bg:#F3F1EC;--bg2:#E6E3DB;--ink:#1E1E1E;--ink2:rgba(30,30,30,.6);--accent:#1E1E1E;--on-accent:#F3F1EC}
+html[data-step] .hero__pattern{display:none}
+html[data-step] .hero__progress,html[data-step] .band,html[data-step] .sf,html[data-step] .jardins,html[data-step] .saisons,html[data-step] .quote,html[data-step] .contact,html[data-step] .foot{display:none}
+
+/* étape 1 — structure : boîtes à traits, texte neutre */
+html[data-step="1"] .hero__words,html[data-step="1"] .hero__stage,html[data-step="1"] .hero__floats,html[data-step="1"] .hero__copy,html[data-step="1"] .hero__meta,html[data-step="1"] .arrow--prev,html[data-step="1"] .arrow--next{visibility:hidden}
+html[data-step="1"] .wire{display:block;position:absolute;inset:0;z-index:7;pointer-events:none}
+.wire__box{position:absolute;border:1px dashed rgba(30,30,30,.55);border-radius:4px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-family:var(--sans);color:rgba(30,30,30,.7);padding:8px 10px;background:rgba(30,30,30,.03);transform-origin:center}
+.wire__box--word{left:14%;right:14%;top:33%;height:34%}
+.wire__box--stage{left:50%;top:50%;width:min(62vh,40vw);aspect-ratio:1;transform:translate(-50%,-54%);border-radius:50%;display:grid;place-items:center;background:rgba(30,30,30,.05)}
+.wire__box--copy{left:var(--gutter);bottom:6vh;width:min(440px,40vw);height:150px}
+.wire__box--meta{right:var(--gutter);bottom:6vh;width:150px;height:150px}
+.wire__box--f1{left:5%;top:14%;width:9vw;height:9vw;border-radius:50%}
+.wire__box--f2{right:6%;top:9%;width:7vw;height:7vw;border-radius:50%}
+.wire__box--f3{right:10%;top:58%;width:12vw;height:12vw;border-radius:50%}
+html[data-step="1"] .bar{border-bottom:0}
+html[data-step="1"] .bar::after{border-top:1px dashed rgba(30,30,30,.55);background:none;height:0}
+
+/* étape 2 — typographie : vrai type, pas d'images, boîtes images restantes */
+html[data-step="2"] .hero__stage,html[data-step="2"] .hero__floats{visibility:hidden}
+html[data-step="2"] .wire{display:block;position:absolute;inset:0;z-index:7;pointer-events:none}
+html[data-step="2"] .wire__box--word,html[data-step="2"] .wire__box--copy,html[data-step="2"] .wire__box--meta{display:none}
+
+/* étape 3 — palette : couleurs réelles (pilotées en JS), pas d'images */
+html[data-step="3"]{--bg:#4F9B3B;--bg2:#3F8630;--ink:#F6F2E8;--ink2:rgba(246,242,232,.72);--accent:#F3B8CB;--on-accent:#1B3A1E}
+html[data-step="3"] .hero__pattern{display:block}
+html[data-step="3"] .hero__stage,html[data-step="3"] .hero__floats{visibility:hidden}
+
+/* étapes 4 et 5 — tout est visible, palette réelle */
+html[data-step="4"],html[data-step="5"]{--bg:#4F9B3B;--bg2:#3F8630;--ink:#F6F2E8;--ink2:rgba(246,242,232,.72);--accent:#F3B8CB;--on-accent:#1B3A1E}
+html[data-step="4"] .hero__pattern,html[data-step="5"] .hero__pattern{display:block}
+html[data-step="5"] .hero__progress{display:block}

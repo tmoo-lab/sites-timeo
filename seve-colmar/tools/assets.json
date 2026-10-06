@@ -1,0 +1,24 @@
+{
+  "base": "https://d8j0ntlcm91z4.cloudfront.net/user_3GXfcNumyTOhLmp1Z2ejBROBcXq/",
+  "site": {
+    "dio-printemps.png": {"src": "hf_20261006_172948_abf913ae-7d57-41ab-b40d-e8a48684a844.png", "max": 1400},
+    "dio-ete.png":       {"src": "hf_20261006_173143_f949ac20-4070-459c-9b14-9111cc5b4e9d.png", "max": 1400},
+    "dio-automne.png":   {"src": "hf_20261006_173152_d0ee4c61-8545-494b-9bf4-7a5ba4750e8d.png", "max": 1400},
+    "dio-hiver.png":     {"src": "hf_20261006_173200_daabd90c-ef77-41af-8e66-23f1d5741d77.png", "max": 1400},
+    "el-blossom.png":    {"src": "hf_20261006_173000_b31e36fd-5793-4839-b835-653b302e5f45.png", "max": 700},
+    "el-leaf-spring.png":{"src": "hf_20261006_173015_c4564cee-77dd-43ff-8eda-a087794fac06.png", "max": 700},
+    "el-lavender.png":   {"src": "hf_20261006_173026_043f75eb-4bcb-497e-9250-c7f61e63ed11.png", "max": 700},
+    "el-oak.png":        {"src": "hf_20261006_173034_84333f12-21d3-4bb4-b6a1-ba5302368bc0.png", "max": 700},
+    "el-maple.png":      {"src": "hf_20261006_173045_5e847037-67e1-4d40-985b-a64339d611f0.png", "max": 700},
+    "el-chestnut.png":   {"src": "hf_20261006_173052_13ac3703-502a-4120-9bf1-a336ebfe268e.png", "max": 700},
+    "el-snowflake.png":  {"src": "hf_20261006_173100_af7f920e-6efa-4f5c-95f3-63c1c6e9b8d1.png", "max": 700},
+    "el-pinecone.png":   {"src": "hf_20261006_173109_631c3ce9-086f-4803-9ff3-59e115ee0a76.png", "max": 700},
+    "ph-terrasse.webp":  {"src": "hf_20261006_172728_a5dbb150-6ff2-4ce0-9c38-a4151b239c4b.png", "max": 1800},
+    "ph-gravier.webp":   {"src": "hf_20261006_172728_cf430a91-a885-45c6-a8e0-97fa71323adc.png", "max": 1800},
+    "ph-bassin.webp":    {"src": "hf_20261006_172928_3c39ce65-0c00-4e73-826e-a6d554026dab.png", "max": 1800},
+    "ph-automne.webp":   {"src": "hf_20261006_172928_37b94fe7-c90a-4a86-95bb-d0b760e163c9.png", "max": 1800}
+  },
+  "video": {
+    "mockup.png": {"src": "hf_20261006_172728_490f9a8b-1894-4a37-ab10-21910a97fee7.png"}
+  }
+}
