@@ -24,7 +24,7 @@ for name, spec in man['site'].items():
     raw = get(base + spec['src'], os.path.join(tmp, spec['src']))
     im = Image.open(raw)
     out = os.path.join(IMG, name)
-    if name.endswith('.png'):
+    if name.startswith(('dio-', 'el-')):
         im = im.convert('RGBA')
         bbox = im.getchannel('A').getbbox()
         if bbox:
@@ -38,7 +38,7 @@ for name, spec in man['site'].items():
         im = sq
         if im.width > spec['max']:
             im = im.resize((spec['max'], spec['max']), Image.LANCZOS)
-        im.save(out, optimize=True)
+        im.save(out, 'WEBP', quality=88, method=6)  # WebP avec alpha
     else:
         im = im.convert('RGB')
         if im.width > spec['max']:
