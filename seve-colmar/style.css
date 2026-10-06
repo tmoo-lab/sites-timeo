@@ -49,7 +49,7 @@ ul,ol{list-style:none;margin:0;padding:0}
 .pill__disc svg{width:20px;height:20px;transition:transform .5s var(--ease)}
 .pill:hover .pill__disc{transform:scale(1.08)}
 .pill:hover .pill__disc svg{transform:translateX(3px)}
-.pill__label{border-bottom:1px solid transparent;transition:border-color .3s}
+.pill__label{border-bottom:1px solid transparent;transition:border-color .3s;white-space:nowrap}
 .pill:hover .pill__label{border-color:currentColor}
 
 /* ---------- Flèches circulaires ---------- */
@@ -225,8 +225,7 @@ ul,ol{list-style:none;margin:0;padding:0}
   .word--printemps{font-size:23vw}.word--ete{font-size:31vw}.word--automne{font-size:25vw}.word--hiver{font-size:29vw}
   .hero__copy{max-width:calc(100% - 2*var(--gutter));bottom:96px}
   .hero__meta{right:auto;left:var(--gutter);bottom:28px;flex-direction:row;align-items:center;gap:20px}
-  .seasons-nav{flex-direction:row;gap:14px}
-  .snav{font-size:11px}.snav i{width:10px}.snav.is-active i{width:24px}
+  .seasons-nav{display:none}
   .arrow--prev,.arrow--next{top:auto;bottom:28px;transform:none;width:48px;height:48px}
   .arrow--prev{left:auto;right:calc(var(--gutter) + 58px)}
   .arrow--prev:active,.arrow--next:active{transform:scale(.94)}
