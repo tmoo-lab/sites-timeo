@@ -183,6 +183,14 @@
     if (e.key === 'ArrowLeft') userGo(cur - 1, -1);
   });
 
+  /* ---------- Header : encre sombre au-dessus des sections papier ---------- */
+  const bar = $('.bar'), papers = $$('.paper');
+  const barTone = () => {
+    const onPaper = papers.some(s => { const r = s.getBoundingClientRect(); return r.top <= 40 && r.bottom >= 40; });
+    bar.classList.toggle('on-paper', onPaper);
+  };
+  if (!CAPTURE) { addEventListener('scroll', barTone, { passive: true }); barTone(); }
+
   /* ---------- Aperçu image au survol des lignes savoir-faire ---------- */
   const peek = $('.row-peek'), peekImg = peek && $('img', peek);
   if (peek && matchMedia('(hover:hover)').matches) {
