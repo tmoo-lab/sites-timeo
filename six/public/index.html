@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SIX</title>
+<meta name="description" content="Six objectifs en jeu : front lever, guitare, chanson par cœur, italien, jiu-jitsu, tour de magie. Séance du jour, guides, caméra, progression.">
+<meta name="theme-color" content="#FBF8F9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15121A" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SIX">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" href="/icons/icon-192.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="wordmark"><button class="back" id="backbtn" hidden aria-label="Retour aux quêtes" onclick="location.hash='#quetes'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>SI<i>X</i></div>
+    <div class="top-right">
+      <span class="chip" id="hdr-streak" aria-label="Série en cours"></span>
+      <span class="belt" id="hdr-belt"></span>
+    </div>
+  </div>
+  <div class="note" id="note"></div>
+</header>
+
+<main class="app pending" id="app">
+  <section class="view" id="v-jour"></section>
+  <section class="view" id="v-quetes" hidden></section>
+  <section class="view" id="v-quest" hidden></section>
+  <section class="view" id="v-progression" hidden></section>
+  <section class="view" id="v-methodes" hidden></section>
+  <section class="view" id="v-reglages" hidden></section>
+</main>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs-in">
+    <a class="tab" href="#jour" data-view="jour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Aujourd’hui</a>
+    <a class="tab" href="#quetes" data-view="quetes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l6-6M14 4l6 6-9 9H5v-6z"/></svg>Quêtes</a>
+    <a class="tab" href="#progression" data-view="progression"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 15l4-5 4 3 4-7"/></svg>Progression</a>
+    <a class="tab" href="#methodes" data-view="methodes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h9a4 4 0 014 4v12H9a4 4 0 00-4 4z"/><path d="M5 4v16"/></svg>Méthodes</a>
+    <a class="tab" href="#reglages" data-view="reglages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>Réglages</a>
+  </div>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<canvas id="fx"></canvas>
+
+<script src="/content.js"></script>
+<script src="/audio.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

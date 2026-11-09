@@ -1,0 +1,11 @@
+{
+  "name": "six",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SIX — l'app des six objectifs de Timéo (front lever, guitare, chanson, italien, JJB, tourniquet)",
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.5",
+    "@netlify/functions": "^6.0.3"
+  }
+}
