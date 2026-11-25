@@ -101,22 +101,25 @@ def context(lang):
     plates = [p for p in plates if p['price'] is not None]          # un plat retiré de la carte disparaît aussi de la bande
     for p in plates: p['alt'] = p['name'] + ' — ' + p['desc']
     marquee = [dict(img=k, name=t['mq.' + k]) for k in ('choucroute', 'tarte', 'jarret', 'baeckeoffe', 'gaufre', 'bieres', 'vins')]
-    sp, sl = '(min-width: 900px) 28vw, 72vw', '(min-width: 900px) 50vw, 92vw'
+    # galerie : photos redéveloppées depuis les rushs (scripts/r4_stills.py) ; les deux vues en largeur ont un cadrage vertical pour le téléphone
+    sp, sl = '(min-width: 700px) 30vw, 66vw', '(min-width: 700px) 56vw, 66vw'
+    P = dict(kind='p', widths=[480, 720], w=720, h=900, sizes=sp, mob='')
     gallery = [
-        dict(img='salle', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g2']),
-        dict(img='salle-rouge', kind='l', widths=[900, 1600], w=1600, h=900, sizes=sl, cap=t['g5']),
-        dict(img='terrasse', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g3']),
-        dict(img='horloge', kind='l', widths=[800, 1300], w=1300, h=975, sizes=sl, cap=t['g7']),
-        dict(img='ouverture', kind='a', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g6']),
-        dict(img='entree', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g4']),
-        dict(img='salle-b', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g8']),
-        dict(img='ardoise', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g9']),
+        dict(P, img='g-banquettes', cap=t['g2']),
+        dict(img='g-rouge', kind='l', widths=[640, 960], w=960, h=600, sizes=sl, mob='g-rouge-p', cap=t['g5']),
+        dict(P, img='terrasse', widths=[600, 1000], w=1000, h=1250, cap=t['g3']),
+        dict(P, img='g-gres', kind='a', cap=t['g6']),
+        dict(img='g-horloge', kind='l', widths=[640, 960], w=960, h=600, sizes=sl, mob='g-horloge-p', cap=t['g7']),
+        dict(P, img='g-entree', cap=t['g4']),
+        dict(P, img='g-paniers', cap=t['g8']),
+        dict(P, img='g-ardoise', cap=t['g9']),
     ]
+    lqip = open(os.path.join(HERE, 'hero_lqip.txt')).read().strip()
     return dict(lang=lang, t=t, a=('' if lang == 'fr' else '../'), rel=rel_links(lang), langs=ST.LANGS,
                 lang_names=ST.LANG_NAMES, lang_path=ST.LANG_PATH, site_url=ST.SITE_URL, share_url=SHARE_URL, preview=not LIVE, ver=VER,
                 phone=typo(ST.PHONE_DISPLAY if lang == 'fr' else ST.PHONE_INTL, lang).replace(' ', NB), phone_href=ST.PHONE_HREF,
                 maps_dir=ST.MAPS_DIR, maps_place=ST.MAPS_PLACE, jsonld=jsonld(t, lang), px=px,
-                plates=plates, marquee=marquee, gallery=gallery, tartes=T(tartes), tabs=T(M.TABS), food=T(M.FOOD), beers=T(M.BEERS),
+                plates=plates, marquee=marquee, gallery=gallery, lqip=lqip, tartes=T(tartes), tabs=T(M.TABS), food=T(M.FOOD), beers=T(M.BEERS),
                 apero=T(M.APERITIFS), cocktails=T(M.COCKTAILS), wines=T(M.WINES), softs=T(M.SOFTS), hot=T(M.HOT),
                 digestifs=T(M.DIGESTIFS), shared=T(M.SHARED))
 
@@ -131,6 +134,7 @@ def not_found():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no, address=no, date=no, email=no">
 <title>{T['fr']['nf.title']} — Au 119, Kaysersberg</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F0E6D2">
@@ -148,7 +152,6 @@ def not_found():
 </style>
 </head>
 <body>
-<div class="grain" aria-hidden="true"></div>
 <header class="bar is-solid"><a class="bar__logo" href="/" aria-label="Au 119"><span>Au</span> <b>119</b></a></header>
 <main class="nf">
   <div>

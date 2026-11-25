@@ -166,7 +166,7 @@ S = {
     'dr.c.p': ("Cocktail alsacien au crémant et au gewurztraminer, spritz, hugo, mojito. Et trois recettes sans alcool.",
                'The Alsatian cocktail with crémant and gewurztraminer, spritz, hugo, mojito. And three alcohol-free recipes.',
                'Elsässer Cocktail mit Crémant und Gewürztraminer, Spritz, Hugo, Mojito. Dazu drei alkoholfreie Rezepte.'),
-    'dr.c.alt': ('Un plateau de quatre cocktails aux pailles rayées', 'A tray of four cocktails with striped straws', 'Ein Tablett mit vier Cocktails und gestreiften Strohhalmen'),
+    'dr.c.alt': ('Un plateau de cocktails aux pailles rayées', 'A tray of cocktails with striped straws', 'Ein Tablett mit Cocktails und gestreiften Strohhalmen'),
 
     # ---------------------------------------------------------------- the house
     'ho.label': ('La maison', 'The house', 'Das Haus'),

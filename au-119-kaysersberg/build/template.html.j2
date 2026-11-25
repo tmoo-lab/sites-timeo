@@ -5,6 +5,10 @@
 <img {% if cls %}class="{{ cls }}" {% endif %}src="{{ a }}assets/img/{{ name }}-{{ widths[-1] }}.webp" srcset="{% for x in widths %}{{ a }}assets/img/{{ name }}-{{ x }}.webp {{ x }}w{% if not loop.last %}, {% endif %}{% endfor %}" sizes="{{ sizes }}" width="{{ w }}" height="{{ h }}" alt="{{ alt }}"{% if lazy %} loading="lazy"{% endif %} decoding="async"{{ attrs|safe }}>
 {%- endmacro -%}
 
+{%- macro media(name, widths, alt, sizes, w, h, film='', cls='', mob='') -%}
+<div class="m{% if cls %} {{ cls }}{% endif %}{% if film %} m--film{% endif %}" data-m>{% if mob %}<picture><source media="(max-width: 699px)" srcset="{{ a }}assets/img/{{ mob }}-480.webp 480w, {{ a }}assets/img/{{ mob }}-720.webp 720w" sizes="66vw">{% endif %}{{ img(name, widths, alt, sizes, w, h, cls='m__img') }}{% if mob %}</picture>{% endif %}{% if film %}<video class="m__vid" muted loop playsinline webkit-playsinline disablepictureinpicture disableremoteplayback preload="none" aria-hidden="true" tabindex="-1" data-film="{{ a }}assets/video/{{ film }}.mp4"></video>{% endif %}<span class="m__cover" aria-hidden="true"></span></div>
+{%- endmacro -%}
+
 {%- macro arrow() -%}
 <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 {%- endmacro -%}
@@ -42,6 +46,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no, address=no, date=no, email=no">
 <title>{{ t['meta.title'] }}</title>
 <meta name="description" content="{{ t['meta.desc'] }}">
 {% if preview %}<meta name="robots" content="noindex, nofollow">
@@ -67,13 +72,13 @@
 <link rel="preload" href="{{ a }}assets/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ a }}assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="{{ a }}assets/img/facade-1080.webp" imagesrcset="{{ a }}assets/img/facade-720.webp 720w, {{ a }}assets/img/facade-1080.webp 1080w" imagesizes="(min-width: 900px) 30vw, 84vw" fetchpriority="high">
-<script>document.documentElement.className="js"</script>
+<script>(function(d){d.className="js";setTimeout(function(){if(!/\bready\b/.test(d.className))d.className=d.className.replace(/\bjs\b/,"")},4500)})(document.documentElement)</script>
+<script src="{{ a }}assets/js/main.js?v={{ ver }}" defer></script>
 <link rel="stylesheet" href="{{ a }}assets/css/styles.css?v={{ ver }}">
 <script type="application/ld+json">{{ jsonld|safe }}</script>
 </head>
 <body data-lang="{{ lang }}">
 <a class="skip" href="#main">{{ t['skip'] }}</a>
-<div class="grain" aria-hidden="true"></div>
 
 <header class="bar" id="bar">
   <a class="bar__logo" href="#top" aria-label="Au 119"><span>Au</span> <b>119</b></a>
@@ -123,14 +128,15 @@
   <div class="hero__stage" data-fit=".hero__w">
     <h1 class="hero__word"><span class="hero__w"><span>Au</span> <b>119</b></span><span class="sr"> — {{ t['st.label'] }}, Kaysersberg</span></h1>
     <div class="hero__archwrap">
-      <div class="hero__arch" data-hero-arch>
+      <div class="hero__arch m" data-hero-arch style="background-image:url({{ lqip }})">
         <div class="hero__media" data-hero-media>
-          <img class="hero__gravure" src="{{ a }}assets/img/facade-gravure-900.webp" width="900" height="1380" alt="" aria-hidden="true" decoding="async">
+          <img class="hero__gravure" data-src="{{ a }}assets/img/facade-gravure-900.webp" width="900" height="1380" alt="" aria-hidden="true" decoding="async">
           <div class="hero__live" data-hero-live>
             <img class="hero__photo" src="{{ a }}assets/img/facade-1080.webp" srcset="{{ a }}assets/img/facade-720.webp 720w, {{ a }}assets/img/facade-1080.webp 1080w" sizes="(min-width: 900px) 30vw, 84vw" width="1080" height="1656" alt="{{ t['hero.alt'] }}" fetchpriority="high" decoding="async">
-            <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-hero-video data-src="{{ a }}assets/video/facade.mp4"></video>
+            <video class="hero__video" muted loop playsinline webkit-playsinline disablepictureinpicture disableremoteplayback preload="none" aria-hidden="true" tabindex="-1" data-hero-video data-film="{{ a }}assets/video/facade.mp4"></video>
           </div>
         </div>
+        <span class="m__cover" aria-hidden="true"></span>
       </div>
       <span class="status hero__status" data-status data-o="{{ t['status.open'] }}" data-o2="{{ t['status.until'] }}" data-c="{{ t['status.closed'] }}" data-c2="{{ t['status.opens'] }}" hidden><i aria-hidden="true"></i><b data-status-text></b> <span data-status-sub></span></span>
       <a class="spin" href="#carte" aria-label="{{ t['hero.cta1'] }}">
@@ -160,29 +166,12 @@
     {%- for rep in range(2) %}
     <ul class="mq__set">
       {%- for m in marquee %}
-      <li><img src="{{ a }}assets/img/med-{{ m.img }}-200.webp" width="200" height="200" alt="" decoding="async"><span>{{ m.name }}</span></li>
+      <li><img src="{{ a }}assets/img/med-{{ m.img }}-240.webp" width="240" height="240" alt="" decoding="async"><span>{{ m.name }}</span></li>
       {%- endfor %}
     </ul>
     {%- endfor %}
   </div>
 </div>
-
-{# ------------------------------------------------------------------ STATEMENT #}
-<section class="statement" id="maison-intro">
-  <p class="eyebrow red" data-fade>{{ t['st.label'] }}</p>
-  <h2 class="statement__h" data-lines data-fit-lines aria-label="{{ t['st.sr'] }}">
-    <span class="line" aria-hidden="true"><span class="line__i"><span>{{ t['st.l1a'] }}</span><span class="pillimg" data-pop><img src="{{ a }}assets/img/pill-choucroute-360.webp" width="360" height="202" alt="" loading="lazy" decoding="async"></span><span>{{ t['st.l1b'] }}</span></span></span>
-    <span class="line" aria-hidden="true"><span class="line__i"><span>{{ t['st.l2a'] }}</span><span class="pillimg" data-pop><img src="{{ a }}assets/img/pill-tarte-360.webp" width="360" height="202" alt="" loading="lazy" decoding="async"></span><span>{{ t['st.l2b'] }}</span></span></span>
-    <span class="line" aria-hidden="true"><span class="line__i"><em>{{ t['st.l3'] }}</em></span></span>
-  </h2>
-  <div class="seal" data-fade>{{ seal(t['seal'], '119', 'sealp1') }}</div>
-  <dl class="facts" data-fade>
-    <div><dt>{{ t['st.f1a'] }}</dt><dd>{{ t['st.f1b'] }}</dd></div>
-    <div><dt>{{ t['st.f2a'] }}</dt><dd>{{ t['st.f2b'] }}</dd></div>
-    <div><dt>{{ t['st.f3a'] }}</dt><dd>{{ t['st.f3b'] }}</dd></div>
-    <div><dt>{{ t['st.f4a'] }}</dt><dd>{{ t['st.f4b'] }}</dd></div>
-  </dl>
-</section>
 
 {# ------------------------------------------------------------------ PLAT SIGNATURE #}
 <section class="sig" id="choucroute">
@@ -214,9 +203,7 @@
       </dl>
     </div>
     <figure class="sig__film">
-      <div class="arch frame" data-img>
-        <video muted loop playsinline preload="none" poster="{{ a }}assets/img/choucroute-film-720.webp" aria-label="{{ t['sig.valt'] }}" data-video data-par-in="0.05"><source src="{{ a }}assets/video/choucroute.mp4" type="video/mp4"></video>
-      </div>
+      {{ media('choucroute-film', [720], t['sig.valt'], '(min-width: 900px) 26vw, 84vw', 720, 1080, film='choucroute', cls='arch') }}
       <figcaption>{{ t['sig.cap'] }}</figcaption>
     </figure>
   </div>
@@ -237,7 +224,7 @@
     <ul class="band__track">
       {%- for p in plates %}
       <li class="plate">
-        <div class="plate__img arch"><div class="plate__in" data-bx><video muted loop playsinline preload="none" poster="{{ a }}assets/img/plat-{{ p.img }}-600.webp" width="600" height="796" aria-label="{{ p.alt }}" data-video="quiet"><source src="{{ a }}assets/video/plat-{{ p.img }}.mp4" type="video/mp4"></video></div></div>
+        {{ media('plat-' ~ p.img, [480, 720], p.alt, '(min-width: 900px) 24vw, 62vw', 720, 954, cls='plate__img arch') }}
         <h3 class="plate__n">{{ p.name }}</h3>
         <p class="plate__d">{{ p.desc }}</p>
         <p class="plate__p">{% if p.fr %}<span>{{ t['from'] }}</span> {% endif %}{{ p.price|price }}</p>
@@ -247,6 +234,23 @@
     </ul>
   </div>
   <div class="band__bar" aria-hidden="true"><i data-band-bar="assiettes"></i></div>
+</section>
+
+{# ------------------------------------------------------------------ STATEMENT #}
+<section class="statement" id="maison-intro">
+  <p class="eyebrow red" data-fade>{{ t['st.label'] }}</p>
+  <h2 class="statement__h" data-lines data-fit-lines aria-label="{{ t['st.sr'] }}">
+    <span class="line" aria-hidden="true"><span class="line__i"><span>{{ t['st.l1a'] }}</span><span class="pillimg" data-pop><img src="{{ a }}assets/img/pill-choucroute-360.webp" width="360" height="194" alt="" decoding="async"></span><span>{{ t['st.l1b'] }}</span></span></span>
+    <span class="line" aria-hidden="true"><span class="line__i"><span>{{ t['st.l2a'] }}</span><span class="pillimg" data-pop><img src="{{ a }}assets/img/pill-tarte-360.webp" width="360" height="194" alt="" decoding="async"></span><span>{{ t['st.l2b'] }}</span></span></span>
+    <span class="line" aria-hidden="true"><span class="line__i"><em>{{ t['st.l3'] }}</em></span></span>
+  </h2>
+  <div class="seal" data-fade>{{ seal(t['seal'], '119', 'sealp1') }}</div>
+  <dl class="facts" data-fade>
+    <div><dt>{{ t['st.f1a'] }}</dt><dd>{{ t['st.f1b'] }}</dd></div>
+    <div><dt>{{ t['st.f2a'] }}</dt><dd>{{ t['st.f2b'] }}</dd></div>
+    <div><dt>{{ t['st.f3a'] }}</dt><dd>{{ t['st.f3b'] }}</dd></div>
+    <div><dt>{{ t['st.f4a'] }}</dt><dd>{{ t['st.f4b'] }}</dd></div>
+  </dl>
 </section>
 
 {# ------------------------------------------------------------------ TARTES FLAMBÉES #}
@@ -273,9 +277,7 @@
       <p class="tf__now" data-clock-text data-open="{{ t['tf.clock.open'] }}" data-closed="{{ t['tf.clock.closed'] }}" aria-live="off">{{ t['hero.hours.label'] }} · {{ t['hero.hours'] }}</p>
     </div>
     <figure class="tf__film">
-      <div class="arch frame" data-img>
-        <video muted loop playsinline preload="none" poster="{{ a }}assets/img/tarte-film-720.webp" aria-label="{{ t['tf.valt'] }}" data-video data-par-in="0.04"><source src="{{ a }}assets/video/tarte-flambee.mp4" type="video/mp4"></video>
-      </div>
+      {{ media('tarte-film', [480, 720], t['tf.valt'], '(min-width: 900px) 36vw, 92vw', 720, 900, film='tarte-flambee', cls='arch') }}
       <figcaption>{{ t['tf.cap'] }}</figcaption>
     </figure>
     <div class="tf__list" data-fade>
@@ -357,7 +359,7 @@
   </header>
   <div class="drinks__grid">
     <article class="drink drink--a">
-      <div class="arch frame" data-img>{{ img('vins', [600, 1000], t['dr.w.alt'], '(min-width: 900px) 34vw, 92vw', 1000, 1250, attrs=' data-par-in="0.05"') }}</div>
+      {{ media('verre-vins', [480, 720], t['dr.w.alt'], '(min-width: 900px) 34vw, 92vw', 720, 900, cls='arch') }}
       <div class="drink__t" data-fade>
         <h3>{{ t['dr.w.t'] }}</h3>
         <p>{{ t['dr.w.p'] }}</p>
@@ -366,9 +368,7 @@
       </div>
     </article>
     <article class="drink drink--b">
-      <div class="arch frame" data-img>
-        <video muted loop playsinline preload="none" poster="{{ a }}assets/img/pression-film-720.webp" aria-label="{{ t['dr.b.valt'] }}" data-video><source src="{{ a }}assets/video/pression.mp4" type="video/mp4"></video>
-      </div>
+      {{ media('verre-bieres', [480, 720], t['dr.b.valt'], '(min-width: 900px) 26vw, 92vw', 720, 720, cls='drink__sq') }}
       <div class="drink__t" data-fade>
         <h3>{{ t['dr.b.t'] }}</h3>
         <p>{{ t['dr.b.p'] }}</p>
@@ -376,9 +376,7 @@
       </div>
     </article>
     <article class="drink drink--c">
-      <div class="arch frame" data-img>
-        <video muted loop playsinline preload="none" poster="{{ a }}assets/img/cocktails-film-640.webp" aria-label="{{ t['dr.c.alt'] }}" data-video><source src="{{ a }}assets/video/cocktails.mp4" type="video/mp4"></video>
-      </div>
+      {{ media('verre-cocktails', [480, 720], t['dr.c.alt'], '(min-width: 900px) 24vw, 92vw', 720, 900, cls='arch') }}
       <div class="drink__t" data-fade>
         <h3>{{ t['dr.c.t'] }}</h3>
         <p>{{ t['dr.c.p'] }}</p>
@@ -395,7 +393,7 @@
     <h2 class="h1" data-lines><span class="line"><span class="line__i">{{ t['ho.t1'] }}</span></span><span class="line"><span class="line__i"><em>{{ t['ho.t2'] }}</em></span></span></h2></div>
   </header>
   <div class="house__grid">
-    <div class="house__big frame frame--arch-wide" data-img><video muted loop playsinline preload="none" poster="{{ a }}assets/img/maison-film-1280.webp" width="1280" height="848" aria-label="{{ t['ho.valt'] }}" data-video data-par-in="0.05"><source src="{{ a }}assets/video/maison.mp4" type="video/mp4"></video></div>
+    {{ media('maison', [800, 1280], t['ho.valt'], '(min-width: 900px) 58vw, 92vw', 1280, 848, film='maison', cls='house__big frame--arch-wide') }}
     <div class="house__txt" data-fade>
       <p>{{ t['ho.p1'] }}</p>
       <p>{{ t['ho.p2'] }}</p>
@@ -414,7 +412,7 @@
   <div class="band band--gallery" data-band="maison" tabindex="0" aria-label="{{ t['ho.label'] }}">
     <ul class="band__track">
       {%- for g in gallery %}
-      <li class="shot shot--{{ g.kind }}"><figure><div class="shot__img"><div class="shot__in" data-bx>{{ img(g.img, g.widths, g.cap, g.sizes, g.w, g.h) }}</div></div><figcaption>{{ g.cap }}</figcaption></figure></li>
+      <li class="shot shot--{{ g.kind }}"><figure>{{ media(g.img, g.widths, g.cap, g.sizes, g.w, g.h, cls='shot__img', mob=g.mob) }}<figcaption>{{ g.cap }}</figcaption></figure></li>
       {%- endfor %}
     </ul>
   </div>
@@ -435,7 +433,7 @@
     </dl>
     <div class="find__sign">
       <div class="find__signv">
-        <div class="arch frame" data-img>{{ img('enseigne', [600, 900], t['fi.sign.alt'], '(min-width: 900px) 24vw, 70vw', 900, 1125, attrs=' data-par-in="0.05"') }}</div>
+        {{ media('enseigne', [600, 900], t['fi.sign.alt'], '(min-width: 900px) 24vw, 70vw', 900, 1125, cls='arch') }}
         <img class="find__mascot" src="{{ a }}assets/img/mascotte-640.webp" srcset="{{ a }}assets/img/mascotte-360.webp 360w, {{ a }}assets/img/mascotte-640.webp 640w" sizes="(min-width: 900px) 12vw, 34vw" width="640" height="1165" alt="{{ t['fi.mascot.alt'] }}" loading="lazy" decoding="async" data-sticker>
       </div>
       <div class="find__signt" data-fade><h3>{{ t['fi.sign.t'] }}</h3><p>{{ t['fi.sign.p']|nb }}</p></div>
@@ -485,6 +483,5 @@
   </div>
 </footer>
 
-<script src="{{ a }}assets/js/main.js?v={{ ver }}" defer></script>
 </body>
 </html>

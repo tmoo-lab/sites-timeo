@@ -10,6 +10,7 @@
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
   var smooth = function (v, a, b) { v = clamp((v - a) / (b - a), 0, 1); return v * v * (3 - 2 * v); };
   var fontsReady = (d.fonts && d.fonts.ready && d.fonts.ready.then) ? d.fonts.ready : { then: function (f) { setTimeout(f, 0); } };
+  var hasIO = 'IntersectionObserver' in window;
 
   /* ------------------------------------------------------------ heure de Kaysersberg, statut ouvert / fermé */
   var OPEN_H = 10, CLOSE_H = 18;
@@ -126,54 +127,135 @@
   fitWords(true);
   fontsReady.then(function () { fitWords(true); fitRings(); measure(); onScroll(); });
 
-  /* ------------------------------------------------------------ apparitions */
-  var revealSel = '[data-fade], [data-lines], [data-img], [data-rise], [data-sticker], .band';
-  if ('IntersectionObserver' in window && !reduce) {
+  /* ------------------------------------------------------------ apparitions
+     Textes : d'un bloc. Photos : un rideau se lève, mais seulement sur une image réellement chargée. */
+  var revealSel = '[data-fade], [data-lines], [data-rise], [data-sticker], .band';
+  var medias = $$('[data-m]');
+  function eager(scope) { $$('img[loading="lazy"]', scope).forEach(function (im) { im.loading = 'eager'; }); }
+  // chaque cadre sait quand sa photo est arrivée : une image en retard (réseau lent) entre en fondu au lieu de surgir
+  medias.forEach(function (m) {
+    var im = $('img', m);
+    function ok() { m.classList.add('loaded'); }
+    if (!im || (im.complete && im.naturalWidth)) ok(); else { im.addEventListener('load', ok); im.addEventListener('error', ok); }
+  });
+  function whenPainted(m, cb) {
+    var im = $('img', m), done = false;
+    function go() { if (done) return; done = true; cb(); }
+    if (!im) return go();
+    im.loading = 'eager';
+    function ok() { if (im.decode) im.decode().then(go, go); else go(); }
+    if (im.complete && im.naturalWidth) ok(); else { im.addEventListener('load', ok); im.addEventListener('error', go); }
+    setTimeout(go, 1500);                                // réseau lent : on ne laisse jamais un rideau fermé
+  }
+  function reveal(el) {
+    if (el.hasAttribute('data-m')) {
+      whenPainted(el, function () {
+        el.classList.add('in');
+        // le film d'un cadre ne démarre qu'une fois le rideau levé : on voit son début, pas son milieu
+        if (el.__film) setTimeout(function () { el.__film.open = true; el.__film.sync(); }, 950);
+      });
+      return;
+    }
+    el.classList.add('in');
+    if (el.classList.contains('band')) $$('[data-m]', el).forEach(reveal);   // toute la bande s'ouvre d'un coup, cartes hors champ comprises
+  }
+  if (hasIO && !reduce) {
     var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+      es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); reveal(e.target); } });
+    }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
     $$(revealSel).forEach(function (el) { io.observe(el); });
+    medias.forEach(function (m) { if (!m.closest('.band')) io.observe(m); });
+    // un écran d'avance : les photos commencent à se charger avant d'arriver
+    var pre = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { pre.unobserve(e.target); eager(e.target); } });
+    }, { rootMargin: '110% 0px 110% 0px' });
+    medias.forEach(function (m) { if (!m.closest('.band')) pre.observe(m); });
+    $$('.band').forEach(function (b) { pre.observe(b); });
+    // à l'écran, la photo vit (très lent rapproché, voir la feuille de style) ; hors champ, elle se repose
+    var onScreen = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.target.classList.toggle('is-on', e.isIntersecting); });
+    }, { threshold: 0 });
+    medias.forEach(function (m) { onScreen.observe(m); });
   } else {
     $$(revealSel).forEach(function (el) { el.classList.add('in'); });
+    medias.forEach(function (m) { m.classList.add('in'); });
   }
 
-  /* ------------------------------------------------------------ hero : la gravure, puis la photo, puis le film */
-  var hero = $('.hero'), heroLive = $('[data-hero-live]'), heroMedia = $('[data-hero-media]'), heroW = $('.hero__w'), heroVid = $('[data-hero-video]');
-  var heroStarted = false, heroVisible = true, heroAway = false;
-  var gestureQueue = [];                                 // vidéos refusées par le navigateur (mode économie d'énergie) : relancées au premier geste
-  function play(v) {
-    var p; try { p = v.play(); } catch (e) { return; }
-    if (p && p.catch) p.catch(function () { if (gestureQueue.indexOf(v) < 0) gestureQueue.push(v); });
+  /* ------------------------------------------------------------ films
+     La photo reste toujours en place. Le film se charge quand son cadre est à l'écran et ne se montre (fondu)
+     qu'une fois qu'il joue vraiment. Si le téléphone refuse la lecture automatique (mode économie d'énergie),
+     on garde simplement la photo : aucun trou, aucun flash, aucun bouton de lecture. */
+  var canFilm = hasIO && !reduce && !saveData;
+  var films = [];
+  function film(box, v, wanted) {
+    var f = { box: box, v: v, vis: false, open: false, dead: false };
+    v.muted = true; v.defaultMuted = true;
+    v.addEventListener('timeupdate', function () { if (!f.dead && !v.paused && v.currentTime > 0.04 && wanted(f)) box.classList.add('is-live'); });
+    v.addEventListener('error', function () { if (v.getAttribute('src')) { f.dead = true; box.classList.remove('is-live'); box.classList.add('is-still'); } });
+    f.sync = function () {
+      if (f.dead) return;
+      if (wanted(f) && !d.hidden) {
+        if (!v.getAttribute('src')) v.src = v.getAttribute('data-film');
+        var p; try { p = v.play(); } catch (e) { return; }
+        if (p && p.catch) p.catch(function (err) { if (err && err.name === 'NotAllowedError') box.classList.add('is-still'); });
+      } else if (v.getAttribute('src') && !v.paused) { v.pause(); }
+    };
+    f.unload = function () {                             // loin de l'écran, le film rend son décodeur (un téléphone n'en a que quelques-uns)
+      if (!v.getAttribute('src')) return;
+      v.pause(); box.classList.remove('is-live'); v.removeAttribute('src'); try { v.load(); } catch (e) {}
+    };
+    box.__film = f; films.push(f); return f;
   }
+  if (canFilm) {
+    var seeFilm = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { var f = e.target.__film; f.vis = e.isIntersecting; f.sync(); });
+    }, { threshold: 0.3 });
+    var farFilm = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (!e.isIntersecting) e.target.__film.unload(); });
+    }, { rootMargin: '160% 0px 160% 0px' });
+    $$('.m--film').forEach(function (box) {
+      var v = $('.m__vid', box); if (!v) return;
+      film(box, v, function (f) { return f.vis && f.open; });
+      seeFilm.observe(box); farFilm.observe(box);
+    });
+    d.addEventListener('visibilitychange', function () { films.forEach(function (f) { f.sync(); }); });
+    // Lecture automatique refusée (mode économie d'énergie) : on n'insiste pas, et surtout on ne lance rien au toucher —
+    // dans certains navigateurs intégrés aux applis, cela ouvrirait le film en plein écran. La photo suffit.
+  } else {
+    $$('.m--film').forEach(function (box) { box.classList.add('is-still'); });
+  }
+
+  /* ------------------------------------------------------------ hero : le store se lève sur la façade, puis le film prend le relais */
+  var hero = $('.hero'), heroArch = $('[data-hero-arch]'), heroLive = $('[data-hero-live]'), heroMedia = $('[data-hero-media]'), heroW = $('.hero__w'), heroVid = $('[data-hero-video]'), heroGrav = $('.hero__gravure');
+  var heroFilm = null, heroVisible = true, heroAway = false, heroStarted = false, gravOk = false;
   (function () {
     if (!hero) return;
-    var photo = $('.hero__photo'), okImg = !photo || photo.complete, okFont = false, done = false;
-    function go() { if (done) return; done = true; fitWords(true); requestAnimationFrame(function () { hero.classList.add('is-in'); }); }
+    var photo = $('.hero__photo'), okImg = !photo || (photo.complete && photo.naturalWidth > 0), okFont = false, done = false;
+    var introAt = 0;
+    function go() { if (done) return; done = true; introAt = Date.now(); fitWords(true); requestAnimationFrame(function () { hero.classList.add('is-in'); }); }
     function check() { if (okImg && okFont) go(); }
-    if (photo && !photo.complete) { photo.addEventListener('load', function () { okImg = true; check(); }); photo.addEventListener('error', function () { okImg = true; check(); }); }
+    if (photo && !okImg) { photo.addEventListener('load', function () { okImg = true; check(); }); photo.addEventListener('error', function () { okImg = true; check(); }); }
     fontsReady.then(function () { okFont = true; check(); });
     setTimeout(go, 1700);
-    if (!heroVid || reduce || saveData) return;
-    function start() {
-      if (heroStarted) return; heroStarted = true;
-      heroVid.addEventListener('playing', function () { heroVid.classList.add('is-playing'); });
-      heroVid.src = heroVid.getAttribute('data-src');
-      heroVid.load();
-      if (heroVisible && !heroAway) play(heroVid);
+    function later() {
+      // la gravure (sous la photo) n'est demandée qu'une fois la page chargée : elle ne dispute pas la bande passante à la façade
+      if (heroGrav && !reduce) {
+        heroGrav.addEventListener('load', function () { gravOk = true; onScroll(); });
+        heroGrav.src = heroGrav.getAttribute('data-src');
+      }
+      if (heroVid && heroArch && canFilm) {
+        heroFilm = film(heroArch, heroVid, function () { return heroStarted && heroVisible && !heroAway; });
+        new IntersectionObserver(function (es) { heroVisible = es[0].isIntersecting; heroFilm.sync(); }, { threshold: 0.05 }).observe(hero);
+        farFilm.observe(heroArch);                         // très loin du haut de page, la façade rend elle aussi son décodeur
+        // le film ne démarre qu'une fois le store levé et la photo posée : jamais de vidéo animée pendant l'ouverture
+        setTimeout(function () { heroStarted = true; heroFilm.sync(); }, Math.max(0, 2400 - (Date.now() - (introAt || Date.now()))));
+      }
     }
-    if (d.readyState === 'complete') setTimeout(start, 900); else window.addEventListener('load', function () { setTimeout(start, 900); });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        heroVisible = es[0].isIntersecting;
-        if (!heroStarted) return;
-        if (heroVisible && !heroAway) play(heroVid); else heroVid.pause();
-      }, { threshold: 0.05 }).observe(hero);
-    }
+    if (d.readyState === 'complete') setTimeout(later, 700); else window.addEventListener('load', function () { setTimeout(later, 700); });
   })();
 
   /* ------------------------------------------------------------ parallaxe, fondu photo -> gravure, barre */
   var pars = $$('[data-par]').map(function (el) { return { el: el, k: parseFloat(el.getAttribute('data-par')) || 0, y: 0, h: 0 }; });
-  var inner = $$('[data-par-in]').map(function (el) { return { el: el, k: parseFloat(el.getAttribute('data-par-in')) || 0, y: 0, h: 0 }; });
   var darkEl = $('[data-dark]'), darkIn = darkEl && $('.tf__in', darkEl), gTop = 1e9, gIn = 1e9, gOut = -1, gEnd = -1;   // section sombre et ses deux fondus
   var vh = window.innerHeight, ticking = false, barH = 58;
 
@@ -187,10 +269,6 @@
       var r = p.el.getBoundingClientRect();
       p.y = r.top + sy; p.h = r.height;
       if (prev) p.el.style.setProperty('--py', prev);
-    });
-    inner.forEach(function (q) {
-      var r = q.el.parentElement.getBoundingClientRect();
-      q.y = r.top + sy; q.h = r.height;
     });
     if (darkEl && darkIn) {
       var dr = darkEl.getBoundingClientRect(), ir = darkIn.getBoundingClientRect();
@@ -214,9 +292,9 @@
       var away = hp > (heroAway ? 0.07 : 0.13);
       if (heroVid && away !== heroAway) {
         heroAway = away; heroVid.classList.toggle('is-away', away);
-        if (heroStarted) { if (away) heroVid.pause(); else if (heroVisible) play(heroVid); }
+        if (heroFilm) heroFilm.sync();
       }
-      heroLive.style.opacity = (1 - smooth(hp, 0.3, 0.98)).toFixed(3);
+      heroLive.style.opacity = gravOk ? (1 - smooth(hp, 0.3, 0.98)).toFixed(3) : '1';   // sans gravure chargée, la photo reste
       if (heroMedia) heroMedia.style.scale = (1 + hp * 0.07).toFixed(4);
       if (heroW) heroW.style.translate = '0 ' + (-hp * 12).toFixed(2) + '%';
     }
@@ -225,12 +303,6 @@
       var p = pars[i];
       if (p.y > sy + vh * 1.3 || p.y + p.h < sy - vh * 0.3) continue;
       p.el.style.setProperty('--py', ((p.y + p.h / 2 - mid) * -p.k).toFixed(1) + 'px');
-    }
-    for (var j = 0; j < inner.length; j++) {
-      var q = inner[j];
-      if (q.y > sy + vh * 1.2 || q.y + q.h < sy - vh * 0.2) continue;
-      var rel = clamp((q.y + q.h / 2 - mid) / (vh / 2 + q.h / 2), -1, 1);
-      q.el.style.translate = '0 ' + (rel * -q.k * 100).toFixed(2) + '%';
     }
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
@@ -246,7 +318,7 @@
     var id = band.getAttribute('data-band');
     var prev = $('[data-band-prev="' + id + '"]'), next = $('[data-band-next="' + id + '"]');
     var barI = $('[data-band-bar="' + id + '"]');
-    var bxs = $$('[data-bx]', band), raf = false;
+    var raf = false;
 
     function step() { var it = $('.band__track > li', band); return it ? (it.getBoundingClientRect().width + 24) * (window.innerWidth < 700 ? 1 : 2) : band.clientWidth * 0.8; }
     function update() {
@@ -258,14 +330,6 @@
       }
       if (prev) prev.disabled = x <= 2;
       if (next) next.disabled = x >= max - 2;
-      if (reduce) return;
-      var bw = band.clientWidth, br = band.getBoundingClientRect().left;
-      for (var i = 0; i < bxs.length; i++) {
-        var card = bxs[i].parentElement, r = card.getBoundingClientRect();
-        if (r.right < br - 200 || r.left > br + bw + 200) continue;
-        var rel = clamp((r.left + r.width / 2 - (br + bw / 2)) / bw, -1, 1);
-        bxs[i].style.transform = 'translate3d(' + (rel * -r.width * 0.07).toFixed(1) + 'px,0,0)';
-      }
     }
     function req() { if (!raf) { raf = true; requestAnimationFrame(update); } }
     band.addEventListener('scroll', req, { passive: true });
@@ -338,38 +402,6 @@
     });
   })();
 
-  /* ------------------------------------------------------------ films : chargés à l'approche, lus seulement à l'écran, libérés quand ils sont loin */
-  (function () {
-    var vids = $$('[data-video]');
-    // sans script, la balise <source> laisse le film lisible à la main ; avec script, c'est nous qui chargeons et libérons
-    vids.forEach(function (v) { var so = $('source', v); if (so) { v.setAttribute('data-src', so.getAttribute('src')); v.removeChild(so); } });
-    function load(v) { if (!v.getAttribute('src')) v.src = v.getAttribute('data-src'); }
-    if (reduce || saveData || !('IntersectionObserver' in window)) {
-      // moins de mouvement ou économie de données : rien ne démarre tout seul ; les grands films gardent un bouton de lecture, les assiettes restent des photos
-      vids.forEach(function (v) { if (v.getAttribute('data-video') !== 'quiet') { load(v); v.controls = true; } });
-      return;
-    }
-    var vo = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        var v = e.target;
-        if (e.isIntersecting) { v.setAttribute('data-on', '1'); load(v); play(v); } else { v.removeAttribute('data-on'); v.pause(); }
-      });
-    }, { threshold: 0.25 });
-    // loin de l'écran, le film rend son décodeur (un téléphone n'en a que quelques-uns) : l'affiche, identique à la première image, reste en place
-    var far = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        var v = e.target;
-        if (!e.isIntersecting && v.getAttribute('src')) { v.pause(); v.removeAttribute('src'); try { v.load(); } catch (err) {} }
-      });
-    }, { rootMargin: '150% 0px 150% 0px' });
-    vids.forEach(function (v) { vo.observe(v); far.observe(v); });
-    var unlock = function () {
-      var q = gestureQueue.splice(0, gestureQueue.length);
-      q.forEach(function (v) { if (v === heroVid ? (heroVisible && !heroAway) : v.hasAttribute('data-on')) play(v); });
-    };
-    ['pointerdown', 'touchend', 'keydown'].forEach(function (ev) { window.addEventListener(ev, unlock, { passive: true }); });
-  })();
-
   /* ------------------------------------------------------------ lien actif dans la barre */
   (function () {
     var links = $$('.bar__nav a'); if (!links.length || !('IntersectionObserver' in window)) return;
@@ -413,4 +445,8 @@
   })();
 
   var y = $('[data-year]'); if (y) y.textContent = new Date().getFullYear();
+
+  // Tout s'est installé sans erreur : la page garde ses animations. (Sinon, 4,5 s après le début du chargement,
+  // le petit script de l'en-tête retire la classe « js » et tout le contenu s'affiche simplement, sans rien attendre.)
+  root.classList.add('ready');
 })();
