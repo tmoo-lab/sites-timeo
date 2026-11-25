@@ -112,10 +112,12 @@
       var el = $(stage.getAttribute('data-fit'), stage); if (!el) return;
       stage.style.fontSize = '';
       if (w >= 900) return;                           // sur grand écran le mot est centré avec de la marge : la feuille de style suffit
+      // La feuille de style donne déjà la bonne taille (voir .hero__stage, .sig__stage). Ceci n'est qu'un filet de sécurité :
+      // si une police de secours, plus large, faisait déborder le mot, on le réduit — on ne l'agrandit jamais.
       var cs = getComputedStyle(stage), fs = parseFloat(cs.fontSize);
       var avail = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
       var ww = el.getBoundingClientRect().width;
-      if (ww > 0 && avail > 0) stage.style.fontSize = (fs * avail / ww).toFixed(2) + 'px';
+      if (ww > avail + 1 && avail > 0) stage.style.fontSize = (fs * avail / ww).toFixed(2) + 'px';
     });
     $$('[data-fit-lines]').forEach(function (h) {
       h.style.fontSize = '';
@@ -162,9 +164,13 @@
   if (hasIO && !reduce) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); reveal(e.target); } });
-    }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
-    $$(revealSel).forEach(function (el) { io.observe(el); });
-    medias.forEach(function (m) { if (!m.closest('.band')) io.observe(m); });
+    }, { threshold: 0, rootMargin: '0px 0px -4% 0px' });
+    // les photos partent un rien plus tôt que les textes : en défilant vite, on ne croise pas un rideau encore fermé au milieu de l'écran
+    var ioM = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { ioM.unobserve(e.target); reveal(e.target); } });
+    }, { threshold: 0, rootMargin: '0px 0px 6% 0px' });
+    $$(revealSel).forEach(function (el) { (el.classList.contains('band') ? ioM : io).observe(el); });
+    medias.forEach(function (m) { if (!m.closest('.band')) ioM.observe(m); });
     // un écran d'avance : les photos commencent à se charger avant d'arriver
     var pre = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { pre.unobserve(e.target); eager(e.target); } });

@@ -31,11 +31,22 @@ Les prix cités dans les textes du site (choucroute à 30 €, vin au verre dès
 
 ## Images et films
 
-Toutes les photos et tous les films (plats, salle, façade, bières, cocktails) viennent des rushs tournés au restaurant. Les gravures (façade du hero, maison du pied de page) sont calculées à partir de la vraie photo de la façade, redressée pour que les maisons soient d'aplomb. Seule la cigogne du pied de page est une illustration générée.
+Toutes les photos et tous les films viennent des rushs tournés au restaurant. Les rushs d'intérieur (10 bits) ont une forte dominante orange due à l'éclairage : les photos sont donc **développées** à partir de ces rushs, avec une balance des blancs faite en lumière linéaire, puis recadrées une par une pour le cadre qui les reçoit (arche, carré, carte de galerie). Aucun sujet n'est coupé par le cadre ; chaque fichier a exactement les proportions de son cadre, le navigateur ne recadre donc rien de plus.
 
-Chaque film est une courte boucle muette (`public/assets/video/`) dont l'affiche (`public/assets/img/*-film-*.webp`, `plat-*-600.webp`) est exactement la première image : le passage de la photo au film ne se voit pas. Les films ne se chargent qu'à l'approche, ne jouent qu'à l'écran et se déchargent quand ils sont loin (`build/main.js`, « films »). Avec « réduire les animations » activé sur l'appareil, rien ne démarre tout seul.
+| Fichiers (`public/assets/img/`) | Usage |
+| --- | --- |
+| `plat-*-480/720.webp` | les six assiettes de la bande « Les assiettes de la maison » |
+| `verre-*-480/720.webp` | vins, bières, cocktails |
+| `g-*.webp`, `terrasse-*.webp` | galerie ; les deux vues en largeur (`g-rouge`, `g-horloge`) ont un cadrage vertical pour le téléphone (`-p-`) |
+| `med-*-240.webp`, `pill-*-360.webp` | médaillons du bandeau défilant, pastilles du titre |
+| `choucroute-cut-*.webp` | la choucroute royale détourée |
+| `facade-*.webp`, `facade-gravure-900.webp`, `gravure-maison-800.webp` | façade du hero et gravures calculées à partir de la vraie photo |
 
-Sur le film et la photo de la façade, le visage des clients assis en terrasse et des passants est estompé. La photo « terrasse » de la galerie est cadrée sans clients. Les films des bières et des cocktails sont cadrés sous le visage.
+Il reste **quatre films** (`public/assets/video/`) : la façade, la choucroute, les tartes flambées et la salle voûtée. Ce sont de courtes boucles muettes. Sur la page, la photo est toujours présente ; le film vient se poser dessus en fondu seulement quand il joue réellement. Si le téléphone refuse la lecture automatique (mode économie d'énergie, économiseur de données, « réduire les animations »), on voit simplement la photo : pas de cadre vide, pas de bouton de lecture, rien ne se lance au toucher. Un film se charge quand son cadre arrive à l'écran et rend la main quand il est loin.
+
+Chaque photo est dévoilée par un rideau (rouge du store, ou braise dans la section des tartes) qui ne se lève que lorsque l'image est chargée. Si le script du site n'arrive pas (réseau coupé), toute la page s'affiche simplement au bout de 4,5 secondes.
+
+Sur le film et la photo de la façade, le visage des clients assis en terrasse et des passants est estompé. La photo « terrasse » de la galerie est cadrée sans clients ; les bières et les cocktails sont cadrés sous le visage.
 
 ## Divers
 
