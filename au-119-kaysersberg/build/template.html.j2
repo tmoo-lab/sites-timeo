@@ -85,7 +85,7 @@
     <a href="#trouver">{{ t['nav.trouver'] }}</a>
   </nav>
   <div class="bar__right">
-    <span class="status bar__status" data-status data-o="{{ t['status.open'] }}" data-o2="{{ t['status.until'] }}" data-c="{{ t['status.closed'] }}" data-c2="{{ t['status.opens'] }}" hidden><i aria-hidden="true"></i><b data-status-text></b><span data-status-sub></span></span>
+    <span class="status bar__status" data-status data-o="{{ t['status.open'] }}" data-o2="{{ t['status.until'] }}" data-c="{{ t['status.closed'] }}" data-c2="{{ t['status.opens'] }}" hidden><i aria-hidden="true"></i><b data-status-text></b> <span data-status-sub></span></span>
     <div class="lang" role="group" aria-label="{{ t['nav.lang'] }}">
       {%- for l in langs %}
       <a href="{{ rel[l] }}" hreflang="{{ l }}" lang="{{ l }}"{% if l == lang %} aria-current="true"{% endif %} title="{{ lang_names[l] }}">{{ l|upper }}</a>
@@ -132,7 +132,7 @@
           </div>
         </div>
       </div>
-      <span class="status hero__status" data-status data-o="{{ t['status.open'] }}" data-o2="{{ t['status.until'] }}" data-c="{{ t['status.closed'] }}" data-c2="{{ t['status.opens'] }}" hidden><i aria-hidden="true"></i><b data-status-text></b><span data-status-sub></span></span>
+      <span class="status hero__status" data-status data-o="{{ t['status.open'] }}" data-o2="{{ t['status.until'] }}" data-c="{{ t['status.closed'] }}" data-c2="{{ t['status.opens'] }}" hidden><i aria-hidden="true"></i><b data-status-text></b> <span data-status-sub></span></span>
       <a class="spin" href="#carte" aria-label="{{ t['hero.cta1'] }}">
         <svg class="spin__ring" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
           <defs><path id="spinp" d="M60 60 m-45 0 a45 45 0 1 1 90 0 a45 45 0 1 1 -90 0"/></defs>

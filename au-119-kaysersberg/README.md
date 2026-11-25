@@ -3,7 +3,7 @@
 Refonte du site du 119 (119 rue du Général de Gaulle, 68240 Kaysersberg). Site statique en trois langues (français, anglais, allemand), sans dépendance externe : polices, photos et vidéos sont servies depuis le site.
 
 - `public/` : le site prêt à mettre en ligne (c'est ce dossier que Netlify publie).
-- `build/` : les sources. Le site se régénère avec `python3 build/build.py` (Python 3 + `jinja2` + `pillow`).
+- `build/` : les sources. Le site se régénère avec `python3 build/build.py` (Python 3 + `jinja2`).
 
 ## Aperçu ou vrai site
 
