@@ -419,6 +419,8 @@ html:not(.js) [data-tabs] { display: none; }
 
 @media (max-width: 899px) {
   html[lang="en"] .statement__h { font-size: clamp(26px, 8.6vw, 136px); }
+  /* le grand mot ne remonte jamais jusque sous le surtitre */
+  .sig__word[data-par] { margin-top: .22em; transform: translate3d(0, calc(var(--py, 0px) * .4), 0); }
 }
 @media (max-width: 389px) {
   .sig__title { gap: 14px; }
