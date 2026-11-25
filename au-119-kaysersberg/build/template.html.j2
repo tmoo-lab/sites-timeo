@@ -19,7 +19,7 @@
   {%- if c.note %}<p class="cat__note">{{ c.note[lang] }}</p>{% endif %}
   <ul class="dishes">
   {%- for it in c['items'] %}
-    <li class="dish"><span class="dish__n">{{ it.name[lang] }}</span><span class="dish__dots" aria-hidden="true"></span><span class="dish__p">{{ it.price|price }}</span>
+    <li class="dish"><span class="dish__n">{{ it.name[lang] }}</span><span class="dish__p">{{ it.price|price }}</span>
       {%- if it.desc and it.desc[lang] %}<span class="dish__d">{{ it.desc[lang] }}</span>{% endif %}</li>
   {%- endfor %}
   </ul>
@@ -27,12 +27,13 @@
 </section>
 {%- endmacro -%}
 
+{#- texte en anneau : l'espacement des lettres est calculé pour que le texte boucle exactement sur le cercle -#}
 {%- macro seal(text, center, uid) -%}
 <svg class="seal__svg" viewBox="0 0 120 120" role="img" aria-label="{{ text|trim }}">
   <defs><path id="{{ uid }}" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
   <circle cx="60" cy="60" r="58" fill="none" stroke="currentColor" stroke-width="1.2"/>
   <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width=".7" opacity=".55"/>
-  <g class="seal__ring"><text font-size="9.2" letter-spacing="{{ '%.2f' % (276.46 / (text|length) - 5.36) }}"><textPath href="#{{ uid }}" startOffset="0">{{ text }}</textPath></text></g>
+  <g class="seal__ring"><text data-ring="276.46" font-size="9.2" letter-spacing="{{ '%.2f' % (276.46 / (text|length) - 5.36) }}"><textPath href="#{{ uid }}" startOffset="0">{{ text }}</textPath></text></g>
   <text class="seal__c" x="60" y="68" text-anchor="middle">{{ center }}</text>
 </svg>
 {%- endmacro -%}
@@ -84,7 +85,7 @@
     <a href="#trouver">{{ t['nav.trouver'] }}</a>
   </nav>
   <div class="bar__right">
-    <span class="status" data-status data-o="{{ t['status.open'] }} · {{ t['status.until'] }}" data-c="{{ t['status.closed'] }} · {{ t['status.opens'] }}" hidden><i aria-hidden="true"></i><span data-status-text></span></span>
+    <span class="status bar__status" data-status data-o="{{ t['status.open'] }}" data-o2="{{ t['status.until'] }}" data-c="{{ t['status.closed'] }}" data-c2="{{ t['status.opens'] }}" hidden><i aria-hidden="true"></i><b data-status-text></b><span data-status-sub></span></span>
     <div class="lang" role="group" aria-label="{{ t['nav.lang'] }}">
       {%- for l in langs %}
       <a href="{{ rel[l] }}" hreflang="{{ l }}" lang="{{ l }}"{% if l == lang %} aria-current="true"{% endif %} title="{{ lang_names[l] }}">{{ l|upper }}</a>
@@ -118,37 +119,60 @@
 
 {# ------------------------------------------------------------------ HERO #}
 <section class="hero" id="top">
-  <p class="eyebrow hero__eyebrow">{{ t['hero.eyebrow'] }}</p>
-  <div class="hero__stage">
+  <p class="eyebrow hero__eyebrow"><span class="hero__eb-l">{{ t['hero.eyebrow'] }}</span><span class="hero__eb-s">{{ t['hero.eyebrow.s'] }}</span></p>
+  <div class="hero__stage" data-fit=".hero__w">
     <h1 class="hero__word"><span class="hero__w"><span>Au</span> <b>119</b></span><span class="sr"> — {{ t['st.label'] }}, Kaysersberg</span></h1>
-    <div class="hero__arch arch" data-hero-arch>
-      <img class="hero__gravure" src="{{ a }}assets/img/facade-gravure-720.webp" srcset="{{ a }}assets/img/facade-gravure-720.webp 720w, {{ a }}assets/img/facade-gravure-1080.webp 1080w" sizes="(min-width: 900px) 30vw, 84vw" width="1080" height="1920" alt="" aria-hidden="true" decoding="async">
-      <img class="hero__photo" src="{{ a }}assets/img/facade-1080.webp" srcset="{{ a }}assets/img/facade-720.webp 720w, {{ a }}assets/img/facade-1080.webp 1080w" sizes="(min-width: 900px) 30vw, 84vw" width="1080" height="1920" alt="{{ t['hero.alt'] }}" fetchpriority="high" decoding="async">
+    <div class="hero__archwrap">
+      <div class="hero__arch" data-hero-arch>
+        <div class="hero__media" data-hero-media>
+          <picture><source type="image/avif" srcset="{{ a }}assets/img/facade-gravure-900.avif 900w, {{ a }}assets/img/facade-gravure-1440.avif 1440w" sizes="(min-width: 900px) 30vw, 84vw"><img class="hero__gravure" src="{{ a }}assets/img/facade-gravure-900.webp" width="900" height="1380" alt="" aria-hidden="true" decoding="async"></picture>
+          <div class="hero__live" data-hero-live>
+            <img class="hero__photo" src="{{ a }}assets/img/facade-1080.webp" srcset="{{ a }}assets/img/facade-720.webp 720w, {{ a }}assets/img/facade-1080.webp 1080w" sizes="(min-width: 900px) 30vw, 84vw" width="1080" height="1656" alt="{{ t['hero.alt'] }}" fetchpriority="high" decoding="async">
+            <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-hero-video data-src="{{ a }}assets/video/facade.mp4"></video>
+          </div>
+        </div>
+      </div>
+      <span class="status hero__status" data-status data-o="{{ t['status.open'] }}" data-o2="{{ t['status.until'] }}" data-c="{{ t['status.closed'] }}" data-c2="{{ t['status.opens'] }}" hidden><i aria-hidden="true"></i><b data-status-text></b><span data-status-sub></span></span>
+      <a class="spin" href="#carte" aria-label="{{ t['hero.cta1'] }}">
+        <svg class="spin__ring" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <defs><path id="spinp" d="M60 60 m-45 0 a45 45 0 1 1 90 0 a45 45 0 1 1 -90 0"/></defs>
+          <text data-ring="282.74" font-size="10" letter-spacing="{{ '%.2f' % (282.74 / (t['hero.ring']|length) - 5.83) }}"><textPath href="#spinp" startOffset="0">{{ t['hero.ring'] }}</textPath></text>
+        </svg>
+        <svg class="spin__a" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v15M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
   </div>
   <div class="hero__left" data-fade>
     <p class="hero__lead">{{ t['hero.lead'] }}</p>
-    <div class="hero__cta">
-      {{ go('#carte', t['hero.cta1'], 'go--fill') }}
-      <a class="under" href="{{ phone_href }}">{{ t['hero.cta2'] }} <span>{{ phone }}</span></a>
-    </div>
+    <p class="hero__cta"><a class="under" href="{{ phone_href }}">{{ t['hero.cta2'] }} <span>{{ phone }}</span></a></p>
   </div>
   <div class="hero__right" data-fade>
     <dl class="hero__info">
       <div><dt>{{ t['hero.hours.label'] }}</dt><dd><strong>{{ t['hero.hours'] }}</strong><span>{{ t['hero.days'] }}</span></dd></div>
-      <div><dt>{{ t['hero.addr.label'] }}</dt><dd><strong>119 rue du Général de Gaulle</strong><span>68240 Kaysersberg</span></dd></div>
+      <div><dt>{{ t['hero.addr.label'] }}</dt><dd><strong>119 rue du Général de Gaulle</strong><span>68240 Kaysersberg</span><a class="hero__map" href="#trouver">{{ t['hero.map'] }} {{ arrow() }}</a></dd></div>
     </dl>
-    <a class="chip chip--map" href="#trouver"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 21s6.5-5.600 6.500-11A6.500 6.500 0 0 0 5.500 10c0 5.400 6.500 11 6.500 11z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.200" fill="currentColor"/></svg><span>{{ t['hero.map'] }}</span>{{ arrow() }}</a>
   </div>
 </section>
 
+{# ------------------------------------------------------------------ BANDEAU DÉFILANT #}
+<div class="mq" aria-hidden="true">
+  <div class="mq__track">
+    {%- for rep in range(2) %}
+    <ul class="mq__set">
+      {%- for m in marquee %}
+      <li><img src="{{ a }}assets/img/med-{{ m.img }}-200.webp" width="200" height="200" alt="" decoding="async"><span>{{ m.name }}</span></li>
+      {%- endfor %}
+    </ul>
+    {%- endfor %}
+  </div>
+</div>
+
 {# ------------------------------------------------------------------ STATEMENT #}
 <section class="statement" id="maison-intro">
-  <img class="statement__sign" src="{{ a }}assets/img/enseigne-cut.webp" width="{{ sign_w }}" height="{{ sign_h }}" alt="" aria-hidden="true" loading="lazy" decoding="async">
   <p class="eyebrow red" data-fade>{{ t['st.label'] }}</p>
-  <h2 class="statement__h" data-lines aria-label="{{ t['st.sr'] }}">
-    <span class="line" aria-hidden="true"><span class="line__i"><span>{{ t['st.l1a'] }}</span><span class="pillimg" data-pop><img src="{{ a }}assets/img/pill-choucroute-420.webp" width="420" height="420" alt="" loading="lazy" decoding="async"></span><span>{{ t['st.l1b'] }}</span></span></span>
-    <span class="line" aria-hidden="true"><span class="line__i"><span>{{ t['st.l2a'] }}</span><span class="pillimg" data-pop><img src="{{ a }}assets/img/pill-tarte-420.webp" width="420" height="420" alt="" loading="lazy" decoding="async"></span><span>{{ t['st.l2b'] }}</span></span></span>
+  <h2 class="statement__h" data-lines data-fit-lines aria-label="{{ t['st.sr'] }}">
+    <span class="line" aria-hidden="true"><span class="line__i"><span>{{ t['st.l1a'] }}</span><span class="pillimg" data-pop><img src="{{ a }}assets/img/pill-choucroute-360.webp" width="360" height="202" alt="" loading="lazy" decoding="async"></span><span>{{ t['st.l1b'] }}</span></span></span>
+    <span class="line" aria-hidden="true"><span class="line__i"><span>{{ t['st.l2a'] }}</span><span class="pillimg" data-pop><img src="{{ a }}assets/img/pill-tarte-360.webp" width="360" height="202" alt="" loading="lazy" decoding="async"></span><span>{{ t['st.l2b'] }}</span></span></span>
     <span class="line" aria-hidden="true"><span class="line__i"><em>{{ t['st.l3'] }}</em></span></span>
   </h2>
   <div class="seal" data-fade>{{ seal(t['seal'], '119', 'sealp1') }}</div>
@@ -160,12 +184,12 @@
   </dl>
 </section>
 
-{# ------------------------------------------------------------------ SIGNATURE DISH #}
+{# ------------------------------------------------------------------ PLAT SIGNATURE #}
 <section class="sig" id="choucroute">
-  <div class="sig__stage">
+  <div class="sig__stage" data-fit=".sig__word span">
     <p class="eyebrow red" data-fade>{{ t['sig.eyebrow'] }}</p>
-    <div class="sig__word" aria-hidden="true" data-par="-0.10"><span>Royale</span></div>
-    <img class="sig__cut" src="{{ a }}assets/img/choucroute-cut-1200.webp" srcset="{{ a }}assets/img/choucroute-cut-700.webp 700w, {{ a }}assets/img/choucroute-cut-1200.webp 1200w" sizes="(min-width: 900px) 46vw, 92vw" width="1200" height="1265" alt="{{ t['sig.alt'] }}" loading="lazy" decoding="async" data-par="0.07" data-rise>
+    <div class="sig__word" aria-hidden="true" data-par="-0.05"><span>Royale</span></div>
+    <div class="sig__plate" data-par="0.04" data-rise><img class="sig__cut" src="{{ a }}assets/img/choucroute-cut-1600.webp" srcset="{{ a }}assets/img/choucroute-cut-900.webp 900w, {{ a }}assets/img/choucroute-cut-1600.webp 1600w" sizes="(min-width: 900px) 50vw, 100vw" width="1600" height="1567" alt="{{ t['sig.alt'] }}" loading="lazy" decoding="async"></div>
   </div>
   <div class="sig__grid">
     <div class="sig__title">
@@ -173,31 +197,30 @@
       <div class="badge" data-fade>
         <svg viewBox="0 0 120 120" aria-hidden="true">
           <defs><path id="bdg" d="M60 60 m-47 0 a47 47 0 1 1 94 0 a47 47 0 1 1 -94 0"/></defs>
-          <g class="badge__ring"><text font-size="8.4" letter-spacing="1.700"><textPath href="#bdg">{{ t['sig.badge'] }}</textPath></text></g>
+          <g class="badge__ring"><text data-ring="295.31" font-size="8.4" letter-spacing="{{ '%.2f' % (295.31 / (t['sig.badge']|length) - 4.9) }}"><textPath href="#bdg">{{ t['sig.badge'] }}</textPath></text></g>
           <circle cx="60" cy="60" r="34" fill="currentColor"/>
         </svg>
-        <span class="badge__p">{{ 30|price }}</span>
+        <span class="badge__p">{{ px.royale|price }}</span>
       </div>
     </div>
     <div class="sig__text" data-fade>
       <p>{{ t['sig.p'] }}</p>
-      <dl class="rows">
-        <div><dt>{{ t['sig.r1a'] }}</dt><dd>{{ t['sig.r1b'] }}</dd></div>
-        <div><dt>{{ t['sig.r2a'] }}</dt><dd>{{ 30|price }}</dd></div>
-        <div><dt>{{ t['sig.r3a'] }}</dt><dd>{{ 20|price }}</dd></div>
+      <dl class="rows rows--price">
+        <div><dt>{{ t['sig.r2a'] }}</dt><dd>{{ px.royale|price }}</dd></div>
+        <div><dt>{{ t['sig.r3a'] }}</dt><dd>{{ px.classique|price }}</dd></div>
         <div><dt>{{ t['sig.r4a'] }}</dt><dd>{{ t['sig.r4b'] }}</dd></div>
       </dl>
     </div>
     <figure class="sig__film">
       <div class="arch frame" data-img>
-        <video muted loop playsinline preload="none" poster="{{ a }}assets/img/choucroute-600.webp" aria-label="{{ t['sig.valt'] }}" data-video data-par-in="0.07"><source src="{{ a }}assets/video/choucroute.mp4" type="video/mp4"></video>
+        <video muted loop playsinline preload="none" poster="{{ a }}assets/img/choucroute-film-720.webp" aria-label="{{ t['sig.valt'] }}" data-video data-par-in="0.05"><source src="{{ a }}assets/video/choucroute.mp4" type="video/mp4"></video>
       </div>
       <figcaption>{{ t['sig.cap'] }}</figcaption>
     </figure>
   </div>
 </section>
 
-{# ------------------------------------------------------------------ PLATES BAND #}
+{# ------------------------------------------------------------------ ASSIETTES #}
 <section class="plates" id="assiettes">
   <header class="head">
     <div><p class="eyebrow red" data-fade>{{ t['band.label'] }}</p>
@@ -224,8 +247,8 @@
   <div class="band__bar" aria-hidden="true"><i data-band-bar="assiettes"></i></div>
 </section>
 
-{# ------------------------------------------------------------------ TARTES FLAMBEES #}
-<section class="tf" id="tartes">
+{# ------------------------------------------------------------------ TARTES FLAMBÉES #}
+<section class="tf" id="tartes" data-dark>
   <div class="tf__in">
     <div class="tf__head">
       <p class="eyebrow" data-fade>{{ t['tf.label'] }}</p>
@@ -234,35 +257,33 @@
     </div>
     <div class="tf__clock" data-fade>
       <svg class="clock" viewBox="0 0 200 200" role="img" aria-label="{{ t['tf.clock.alt'] }}" data-clock>
-        <circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width="1"/>
-        <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width=".5" opacity=".5"/>
-        <path class="clock__open" d="M38.500 64.500 A71 71 0 0 1 100 29" fill="none" stroke-width="7" stroke-linecap="butt"/>
-        <path class="clock__open" d="M100 29 A71 71 0 0 1 171 100 A71 71 0 0 1 100 171" fill="none" stroke-width="7" stroke-linecap="butt" data-clock-pm/>
+        <circle class="clock__rim" cx="100" cy="100" r="97" fill="none" stroke="currentColor" stroke-width="1"/>
         <g class="clock__ticks" data-clock-ticks></g>
-        <g class="clock__nums" font-size="13" text-anchor="middle">
-          <text x="100" y="26">XII</text><text x="180" y="105">III</text><text x="100" y="186">VI</text><text x="20" y="105">IX</text>
+        <path class="clock__open" d="M32.450 61 A78 78 0 1 1 100 178" fill="none" stroke-width="4" stroke-linecap="round"/>
+        <g class="clock__nums" font-size="12.500" text-anchor="middle">
+          <text x="100" y="45">XII</text><text x="160" y="104.500">III</text><text x="100" y="164">VI</text><text x="40" y="104.500">IX</text>
         </g>
-        <line class="clock__h" x1="100" y1="100" x2="100" y2="54" data-clock-h/>
-        <line class="clock__m" x1="100" y1="100" x2="100" y2="30" data-clock-m/>
-        <line class="clock__s" x1="100" y1="112" x2="100" y2="24" data-clock-s/>
-        <circle cx="100" cy="100" r="4"/>
+        <line class="clock__h" x1="100" y1="100" x2="100" y2="66" data-clock-h/>
+        <line class="clock__m" x1="100" y1="100" x2="100" y2="48" data-clock-m/>
+        <line class="clock__s" x1="100" y1="114" x2="100" y2="30" data-clock-s/>
+        <circle class="clock__hub" cx="100" cy="100" r="3.600"/>
       </svg>
       <p class="tf__now" data-clock-text data-open="{{ t['tf.clock.open'] }}" data-closed="{{ t['tf.clock.closed'] }}" aria-live="off">{{ t['hero.hours.label'] }} · {{ t['hero.hours'] }}</p>
     </div>
     <figure class="tf__film">
       <div class="arch frame" data-img>
-        <video muted loop playsinline preload="none" poster="{{ a }}assets/img/tarte-prep-600.webp" aria-label="{{ t['tf.valt'] }}" data-video><source src="{{ a }}assets/video/tarte-flambee.mp4" type="video/mp4"></video>
+        <video muted loop playsinline preload="none" poster="{{ a }}assets/img/tarte-film-720.webp" aria-label="{{ t['tf.valt'] }}" data-video><source src="{{ a }}assets/video/tarte-flambee.mp4" type="video/mp4"></video>
       </div>
       <figcaption>{{ t['tf.cap'] }}</figcaption>
     </figure>
     <figure class="tf__photo">
-      <div class="frame frame--soft" data-img>{{ img('tartes', [600, 900], t['tf.photo.alt'], '(min-width: 900px) 26vw, 70vw', 900, 1125, attrs=' data-par-in="0.06"') }}</div>
+      <div class="frame frame--soft" data-img>{{ img('tartes', [600, 900], t['tf.photo.alt'], '(min-width: 900px) 26vw, 70vw', 900, 1125, attrs=' data-par-in="0.05"') }}</div>
     </figure>
     <div class="tf__list" data-fade>
       <h3 class="eyebrow">{{ t['tf.list'] }}</h3>
       <ul class="dishes dishes--light">
         {%- for it in tartes %}
-        <li class="dish"><span class="dish__n">{{ it.name[lang] }}</span><span class="dish__dots" aria-hidden="true"></span><span class="dish__p">{{ it.price|price }}</span><span class="dish__d">{{ it.desc[lang] }}</span></li>
+        <li class="dish"><span class="dish__n">{{ it.name[lang] }}</span><span class="dish__p">{{ it.price|price }}</span><span class="dish__d">{{ it.desc[lang] }}</span></li>
         {%- endfor %}
       </ul>
     </div>
@@ -285,6 +306,7 @@
     {%- for id, label in tabs %}
     <div class="panel{% if loop.first %} is-on{% endif %}" role="tabpanel" id="panel-{{ id }}" aria-labelledby="tab-{{ id }}">
       {%- for c in food if c.tab == id %}{{ cat(c) }}{% endfor %}
+      {%- if id == 'plats' %}<p class="panel__note">{{ shared[lang] }}</p>{% endif %}
       {%- if id == 'bieres' %}
       <section class="cat cat--table" aria-labelledby="cat-bieres">
         <h3 class="cat__t" id="cat-bieres">{{ beers.title[lang] }}</h3>
@@ -294,7 +316,7 @@
         </table></div>
         <p class="cat__foot">{{ beers.foot[lang] }}</p>
       </section>
-      {{ cat(cocktails[1]) }}{{ cat(cocktails[0]) }}
+      {{ cat(apero) }}{{ cat(cocktails[0]) }}{{ cat(cocktails[1]) }}
       {%- endif %}
       {%- if id == 'vins' %}
       <section class="cat cat--table cat--wide" aria-labelledby="cat-vins">
@@ -307,24 +329,27 @@
           {%- endfor %}
         </table></div>
       </section>
-      <section class="cat" aria-labelledby="cat-cremants">
-        <h3 class="cat__t" id="cat-cremants">{{ {'fr':'Crémants &amp; cidre','en':'Crémants &amp; cider','de':'Crémants &amp; Cidre'}[lang]|safe }}</h3>
+      {%- for title, note, rows in wines.extras %}
+      <section class="cat" aria-labelledby="cat-x{{ loop.index }}">
+        <h3 class="cat__t" id="cat-x{{ loop.index }}">{{ title[lang] }}</h3>
+        {%- if note %}<p class="cat__note">{{ note[lang] }}</p>{% endif %}
         <ul class="dishes">
-          {%- for n, d, fs in wines.extras %}
-          <li class="dish"><span class="dish__n">{{ n[lang] }}</span><span class="dish__dots" aria-hidden="true"></span><span class="dish__p">{% for f, p in fs %}{% if f %}<small>{{ f }}</small> {% endif %}{{ p|price }}{% if not loop.last %} · {% endif %}{% endfor %}</span>
+          {%- for n, d, fs in rows %}
+          <li class="dish"><span class="dish__n">{{ n[lang] }}</span><span class="dish__p">{% for f, p in fs %}{% if f %}<small>{{ f }}</small> {% endif %}{{ p|price }}{% if not loop.last %} · {% endif %}{% endfor %}</span>
             {%- if d %}<span class="dish__d">{{ d[lang] }}</span>{% endif %}</li>
           {%- endfor %}
         </ul>
       </section>
+      {%- endfor %}
       {%- endif %}
-      {%- if id == 'chaud' %}{{ cat(hot) }}{{ cat(digestifs) }}{% endif %}
+      {%- if id == 'chaud' %}{{ cat(softs) }}{{ cat(hot) }}{{ cat(digestifs) }}{% endif %}
     </div>
     {%- endfor %}
   </div>
   <p class="carte__legal">{{ t['legal.photos'] }}<br>{{ t['legal.alcohol'] }}</p>
 </section>
 
-{# ------------------------------------------------------------------ DRINKS #}
+{# ------------------------------------------------------------------ À BOIRE #}
 <section class="drinks" id="boire">
   <header class="head">
     <div><p class="eyebrow red" data-fade>{{ t['dr.label'] }}</p>
@@ -332,7 +357,7 @@
   </header>
   <div class="drinks__grid">
     <article class="drink drink--a">
-      <div class="arch frame" data-img>{{ img('vins', [600, 1000], t['dr.w.alt'], '(min-width: 900px) 30vw, 84vw', 1000, 1250, attrs=' data-par-in="0.06"') }}</div>
+      <div class="arch frame" data-img>{{ img('vins', [600, 1000], t['dr.w.alt'], '(min-width: 900px) 34vw, 92vw', 1000, 1250, attrs=' data-par-in="0.05"') }}</div>
       <div class="drink__t" data-fade>
         <h3>{{ t['dr.w.t'] }}</h3>
         <p>{{ t['dr.w.p'] }}</p>
@@ -342,7 +367,7 @@
     </article>
     <article class="drink drink--b">
       <div class="arch frame" data-img>
-        <video muted loop playsinline preload="none" poster="{{ a }}assets/img/bieres-600.webp" aria-label="{{ t['dr.b.valt'] }}" data-video><source src="{{ a }}assets/video/pression.mp4" type="video/mp4"></video>
+        <video muted loop playsinline preload="none" poster="{{ a }}assets/img/pression-film-720.webp" aria-label="{{ t['dr.b.valt'] }}" data-video><source src="{{ a }}assets/video/pression.mp4" type="video/mp4"></video>
       </div>
       <div class="drink__t" data-fade>
         <h3>{{ t['dr.b.t'] }}</h3>
@@ -351,25 +376,24 @@
       </div>
     </article>
     <article class="drink drink--c">
-      <div class="arch frame" data-img>{{ img('cocktails', [600, 900], t['dr.c.alt'], '(min-width: 900px) 24vw, 84vw', 900, 1125, attrs=' data-par-in="0.06"') }}</div>
+      <div class="arch frame" data-img>{{ img('cocktails', [600, 900], t['dr.c.alt'], '(min-width: 900px) 24vw, 92vw', 900, 1125, attrs=' data-par-in="0.05"') }}</div>
       <div class="drink__t" data-fade>
         <h3>{{ t['dr.c.t'] }}</h3>
         <p>{{ t['dr.c.p'] }}</p>
-        <a class="under" href="#carte" data-tab-link="bieres">{{ t['dr.b.link'] }}</a>
+        <a class="under" href="#carte" data-tab-link="bieres">{{ t['dr.c.link'] }}</a>
       </div>
     </article>
-    <figure class="drinks__pair" data-img>{{ img('bieres', [600, 900], t['dr.b.alt'], '(min-width: 900px) 18vw, 44vw', 900, 1125) }}</figure>
   </div>
 </section>
 
-{# ------------------------------------------------------------------ THE HOUSE #}
+{# ------------------------------------------------------------------ LA MAISON #}
 <section class="house" id="maison">
   <header class="head">
     <div><p class="eyebrow red" data-fade>{{ t['ho.label'] }}</p>
     <h2 class="h1" data-lines><span class="line"><span class="line__i">{{ t['ho.t1'] }}</span></span><span class="line"><span class="line__i"><em>{{ t['ho.t2'] }}</em></span></span></h2></div>
   </header>
   <div class="house__grid">
-    <div class="house__big frame frame--arch-wide" data-img>{{ img('arche-salle', [900, 1600], t['g1'], '(min-width: 900px) 58vw, 92vw', 1600, 900, attrs=' data-par-in="0.07"') }}</div>
+    <div class="house__big frame frame--arch-wide" data-img>{{ img('arche-salle', [900, 1600], t['g1'], '(min-width: 900px) 58vw, 92vw', 1600, 900, attrs=' data-par-in="0.05"') }}</div>
     <div class="house__txt" data-fade>
       <p>{{ t['ho.p1'] }}</p>
       <p>{{ t['ho.p2'] }}</p>
@@ -395,7 +419,7 @@
   <div class="band__bar" aria-hidden="true"><i data-band-bar="maison"></i></div>
 </section>
 
-{# ------------------------------------------------------------------ FIND US #}
+{# ------------------------------------------------------------------ NOUS TROUVER #}
 <section class="find" id="trouver">
   <header class="head">
     <div><p class="eyebrow red" data-fade>{{ t['fi.label'] }}</p>
@@ -408,8 +432,10 @@
       <div><dt>{{ t['fi.book'] }}</dt><dd><strong><a class="tel" href="{{ phone_href }}">{{ phone }}</a></strong><span>{{ t['fi.book.d'] }}</span></dd></div>
     </dl>
     <div class="find__sign">
-      <div class="arch frame" data-img>{{ img('enseigne', [600, 900], t['fi.sign.alt'], '(min-width: 900px) 22vw, 60vw', 900, 1125, attrs=' data-par-in="0.06"') }}</div>
-      <img class="find__mascot" src="{{ a }}assets/img/mascotte.webp" width="520" height="957" alt="{{ t['fi.mascot.alt'] }}" loading="lazy" decoding="async" data-par="0.05">
+      <div class="find__signv">
+        <div class="arch frame" data-img>{{ img('enseigne', [600, 900], t['fi.sign.alt'], '(min-width: 900px) 24vw, 70vw', 900, 1125, attrs=' data-par-in="0.05"') }}</div>
+        <img class="find__mascot" src="{{ a }}assets/img/mascotte-640.webp" srcset="{{ a }}assets/img/mascotte-360.webp 360w, {{ a }}assets/img/mascotte-640.webp 640w" sizes="(min-width: 900px) 12vw, 34vw" width="640" height="1165" alt="{{ t['fi.mascot.alt'] }}" loading="lazy" decoding="async" data-sticker>
+      </div>
       <div class="find__signt" data-fade><h3>{{ t['fi.sign.t'] }}</h3><p>{{ t['fi.sign.p'] }}</p></div>
     </div>
     <div class="route" data-fade role="group" aria-label="{{ t['fi.line'] }}">
@@ -433,7 +459,7 @@
 
 </main>
 
-{# ------------------------------------------------------------------ FOOTER #}
+{# ------------------------------------------------------------------ PIED DE PAGE #}
 <footer class="foot">
   <div class="foot__c">
     <div class="seal seal--foot">{{ seal(t['seal'], '119', 'sealp2') }}</div>
@@ -452,7 +478,7 @@
     <p class="foot__copy">© <span data-year>2026</span> Au 119 · {{ t['fo.credit'] }} <a href="https://tmoo.site" target="_blank" rel="noopener">TMOO</a></p>
   </div>
   <div class="foot__art" aria-hidden="true">
-    <img class="foot__house" src="{{ a }}assets/img/gravure-maison.webp" width="1000" height="1412" alt="" loading="lazy" decoding="async">
+    <picture><source type="image/avif" srcset="{{ a }}assets/img/gravure-maison-800.avif 800w, {{ a }}assets/img/gravure-maison-1500.avif 1500w" sizes="(min-width: 900px) 46vw, 96vw"><img class="foot__house" src="{{ a }}assets/img/gravure-maison-800.webp" width="800" height="1226" alt="" loading="lazy" decoding="async"></picture>
     <img class="stork" src="{{ a }}assets/img/cigogne.webp" width="600" height="398" alt="" loading="lazy" decoding="async">
   </div>
 </footer>

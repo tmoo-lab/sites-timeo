@@ -3,7 +3,7 @@
 """Génère le site du 119 (fr, en, de) dans ../public à partir du gabarit et des contenus.
 Usage :  python3 build.py            -> aperçu (non indexé par Google)
          python3 build.py --live     -> version à mettre sur le vrai domaine (indexable)"""
-import json, os, shutil, sys, time
+import json, os, re, shutil, sys, time
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import menu as M
 import strings as ST
@@ -14,20 +14,43 @@ LIVE = '--live' in sys.argv
 PREVIEW_URL = 'https://au119-kaysersberg.netlify.app'   # adresse de l'aperçu (cartes de partage)
 SHARE_URL = ST.SITE_URL if LIVE else PREVIEW_URL
 VER = time.strftime('%Y%m%d%H%M')
+NB = '\u00a0'   # espace insécable
 
 
 def price(v, lang):
     """20 -> '20 €' / '€20' ; 3.5 -> '3,50 €' / '€3.50'."""
     s = ('%d' % v) if float(v).is_integer() else ('%.2f' % v)
     if lang == 'en': return '€' + s
-    return s.replace('.', ',') + ' €'
+    return s.replace('.', ',') + NB + '€'
 
 
 def price2(v, lang):
-    """Toujours deux décimales, pour les tableaux (bières, vins)."""
+    """Toujours deux décimales, pour les tableaux (bières, vins). Case vide : tiret."""
+    if v is None: return '—'
     s = '%.2f' % v
     if lang == 'en': return '€' + s
-    return s.replace('.', ',') + ' €'
+    return s.replace('.', ',') + NB + '€'
+
+
+def typo(s, lang):
+    """Finitions typographiques : apostrophes courbes, espaces insécables (unités, ponctuation française, heures)."""
+    s = s.replace("'", '’')
+    s = re.sub(r'(?<=[\d¼½]) (?=(?:€|cl|g|h|l|min|Min\.|Uhr|am|pm)(?![\w]))', NB, s)       # 22 €, 33 cl, 10 h, 8 min, 6 pm
+    s = re.sub(r'(?<=[\dhm]) – (?=\d)', NB + '–' + NB, s)                                    # 10 h – 18 h
+    s = re.sub(r'(?<=h) (?=\d\d\b)', NB, s)                                                  # 11 h 53
+    s = re.sub(r'\+ (?=\d)', '+' + NB, s)                                                    # + 1,50 €
+    s = s.replace(' · ', NB + '· ')                                                           # jamais de point médian en début de ligne
+    if lang == 'fr':
+        s = re.sub(r' (?=[:;?!»])', NB, s).replace('« ', '«' + NB)
+    return s
+
+
+def deep(o, f):
+    """Applique f à toutes les chaînes d'une structure (dictionnaires, listes, tuples)."""
+    if isinstance(o, str): return f(o)
+    if isinstance(o, dict): return {k: (v if k in ('id', 'tab') else deep(v, f)) for k, v in o.items()}
+    if isinstance(o, (list, tuple)): return type(o)(deep(v, f) for v in o)
+    return o
 
 
 def jsonld(t, lang):
@@ -53,39 +76,48 @@ def rel_links(lang):
 
 
 def context(lang):
+    T = lambda o: deep(o, lambda x: typo(x, lang))
     t = ST.strings(lang)
-    P = lambda v: price(v, lang)
+    # prix repris de la carte (un seul endroit à modifier : menu.py)
+    px = dict(royale=M.find('specialites', 'Choucroute Royale'), classique=M.find('specialites', 'Choucroute Alsacienne'),
+              jarret=M.find('specialites', 'Jarret de porc braisé, frites'), baeckeoffe=M.find('specialites', 'Baeckeoffe'),
+              quiche=M.find('specialites', 'Quiche'), filet=M.find('viandes', 'Filet de bœuf'), burger=M.find('burgers', 'Alsacien'),
+              gaufre=min(i['price'] for c in M.FOOD if c['id'] == 'gaufres' for i in c['items']),
+              vin=min(r[1][0] for g in M.WINES['groups'] for r in g[1]))
+    tartes = M.tartes()
+    n = ST.NUMBERS[lang][len(tartes)]
+    t['dr.w.p'] = t['dr.w.p'].replace('{p}', price(px['vin'], lang))
+    for k in ('tf.p', 'tf.list'): t[k] = t[k].replace('{n}', n)
+    t = T(t)
     plates = [
-        dict(img='choucroute', big=1000, name='Choucroute Royale', desc=t['c1.d'], price=30, fr=False),
-        dict(img='jarret', big=900, name=t['c2.n'], desc=t['c2.d'], price=22, fr=False),
-        dict(img='tartes', big=900, name=t['c3.n'], desc=t['c3.d'], price=10, fr=True),
-        dict(img='baeckeoffe', big=900, name=t['c4.n'], desc=t['c4.d'], price=20, fr=False),
-        dict(img='quiche', big=900, name=t['c5.n'], desc=t['c5.d'], price=18, fr=False),
-        dict(img='filet', big=900, name=t['c6.n'], desc=t['c6.d'], price=28, fr=False),
-        dict(img='burger', big=900, name=t['c7.n'], desc=t['c7.d'], price=13, fr=False),
-        dict(img='gaufre', big=900, name=t['c8.n'], desc=t['c8.d'], price=3.5, fr=True),
+        dict(img='jarret', big=900, name=t['c2.n'], desc=t['c2.d'], price=px['jarret'], fr=False),
+        dict(img='baeckeoffe', big=900, name=t['c4.n'], desc=t['c4.d'], price=px['baeckeoffe'], fr=False),
+        dict(img='quiche', big=900, name=t['c5.n'], desc=t['c5.d'], price=px['quiche'], fr=False),
+        dict(img='filet', big=900, name=t['c6.n'], desc=t['c6.d'], price=px['filet'], fr=False),
+        dict(img='burger', big=900, name=t['c7.n'], desc=t['c7.d'], price=px['burger'], fr=False),
+        dict(img='gaufre', big=900, name=t['c8.n'], desc=t['c8.d'], price=px['gaufre'], fr=True),
     ]
+    plates = [p for p in plates if p['price'] is not None]          # un plat retiré de la carte disparaît aussi de la bande
     for p in plates: p['alt'] = p['name'] + ' — ' + p['desc']
+    marquee = [dict(img=k, name=t['mq.' + k]) for k in ('choucroute', 'tarte', 'jarret', 'baeckeoffe', 'gaufre', 'bieres', 'vins')]
     sp, sl = '(min-width: 900px) 28vw, 72vw', '(min-width: 900px) 50vw, 92vw'
     gallery = [
         dict(img='salle', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g2']),
-        dict(img='terrasse', kind='l', widths=[800, 1440], w=1440, h=960, sizes=sl, cap=t['g3']),
-        dict(img='entree', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g4']),
         dict(img='salle-rouge', kind='l', widths=[900, 1600], w=1600, h=900, sizes=sl, cap=t['g5']),
-        dict(img='ouverture', kind='a', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g6']),
+        dict(img='terrasse', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g3']),
         dict(img='horloge', kind='l', widths=[800, 1300], w=1300, h=975, sizes=sl, cap=t['g7']),
+        dict(img='ouverture', kind='a', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g6']),
+        dict(img='entree', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g4']),
         dict(img='salle-b', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g8']),
         dict(img='arche', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g1']),
     ]
-    tartes = [c for c in M.FOOD if c['id'] == 'tartes'][0]['items'][:9]
-    from PIL import Image
-    sw, sh = Image.open(os.path.join(PUB, 'assets', 'img', 'enseigne-cut.webp')).size
     return dict(lang=lang, t=t, a=('' if lang == 'fr' else '../'), rel=rel_links(lang), langs=ST.LANGS,
                 lang_names=ST.LANG_NAMES, lang_path=ST.LANG_PATH, site_url=ST.SITE_URL, share_url=SHARE_URL, preview=not LIVE, ver=VER,
-                phone=ST.PHONE_DISPLAY if lang == 'fr' else ST.PHONE_INTL, phone_href=ST.PHONE_HREF,
-                maps_dir=ST.MAPS_DIR, maps_place=ST.MAPS_PLACE, jsonld=jsonld(t, lang),
-                plates=plates, gallery=gallery, tartes=tartes, tabs=M.TABS, food=M.FOOD, beers=M.BEERS,
-                cocktails=M.COCKTAILS, wines=M.WINES, hot=M.HOT, digestifs=M.DIGESTIFS, sign_w=sw, sign_h=sh)
+                phone=typo(ST.PHONE_DISPLAY if lang == 'fr' else ST.PHONE_INTL, lang).replace(' ', NB), phone_href=ST.PHONE_HREF,
+                maps_dir=ST.MAPS_DIR, maps_place=ST.MAPS_PLACE, jsonld=jsonld(t, lang), px=px,
+                plates=plates, marquee=marquee, gallery=gallery, tartes=T(tartes), tabs=T(M.TABS), food=T(M.FOOD), beers=T(M.BEERS),
+                apero=T(M.APERITIFS), cocktails=T(M.COCKTAILS), wines=T(M.WINES), softs=T(M.SOFTS), hot=T(M.HOT),
+                digestifs=T(M.DIGESTIFS), shared=T(M.SHARED))
 
 
 def main():

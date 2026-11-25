@@ -4,10 +4,12 @@
   var d = document, root = d.documentElement, body = d.body;
   var lang = body.getAttribute('data-lang') || 'fr';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var saveData = !!(navigator.connection && navigator.connection.saveData);
   var $ = function (s, c) { return (c || d).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || d).querySelectorAll(s)); };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
   var smooth = function (v, a, b) { v = clamp((v - a) / (b - a), 0, 1); return v * v * (3 - 2 * v); };
+  var fontsReady = (d.fonts && d.fonts.ready && d.fonts.ready.then) ? d.fonts.ready : { then: function (f) { setTimeout(f, 0); } };
 
   /* ------------------------------------------------------------ heure de Kaysersberg, statut ouvert / fermé */
   var OPEN_H = 10, CLOSE_H = 18;
@@ -29,17 +31,18 @@
     return t.h >= OPEN_H && t.h < CLOSE_H;
   }
   function fmtTime(t) {
-    var mm = (t.m < 10 ? '0' : '') + t.m;
-    if (lang === 'en') { var h = t.h % 12 || 12; return h + ':' + mm + (t.h < 12 ? ' am' : ' pm'); }
+    var mm = (t.m < 10 ? '0' : '') + t.m, nb = '\u00a0';
+    if (lang === 'en') { var h = t.h % 12 || 12; return h + ':' + mm + nb + (t.h < 12 ? 'am' : 'pm'); }
     if (lang === 'de') return t.h + ':' + mm;
-    return t.h + ' h ' + mm;
+    return t.h + nb + 'h' + nb + mm;
   }
   function refreshStatus() {
     var t = paris(), open = isOpen(t);
     $$('[data-status]').forEach(function (el) {
       el.classList.toggle('is-open', open);
-      var txt = $('[data-status-text]', el);
+      var txt = $('[data-status-text]', el), sub = $('[data-status-sub]', el);
       if (txt) txt.textContent = el.getAttribute(open ? 'data-o' : 'data-c');
+      if (sub) sub.textContent = el.getAttribute(open ? 'data-o2' : 'data-c2');
       el.hidden = false;
     });
     $$('[data-status-long]').forEach(function (el) { el.textContent = el.getAttribute(open ? 'data-o' : 'data-c'); });
@@ -56,7 +59,7 @@
     for (var i = 0; i < 60; i++) {
       var l = d.createElementNS(ns, 'line'), big = i % 5 === 0;
       l.setAttribute('x1', 100); l.setAttribute('x2', 100);
-      l.setAttribute('y1', 12); l.setAttribute('y2', big ? 20 : 15);
+      l.setAttribute('y1', 8); l.setAttribute('y2', big ? 15 : 11);
       l.setAttribute('transform', 'rotate(' + i * 6 + ' 100 100)');
       if (!big) l.setAttribute('opacity', '.5');
       ticks.appendChild(l);
@@ -83,61 +86,138 @@
   if (burger) burger.addEventListener('click', function () { setMenu(!root.classList.contains('menu-open')); });
   if (menu) menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
   d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('menu-open')) { setMenu(false); burger.focus(); } });
-  window.matchMedia('(min-width: 900px)').addEventListener('change', function (m) { if (m.matches) setMenu(false); });
+  (function () {
+    var mq = window.matchMedia('(min-width: 900px)'), f = function (m) { if (m.matches) setMenu(false); };
+    if (mq.addEventListener) mq.addEventListener('change', f); else if (mq.addListener) mq.addListener(f);
+  })();
+
+  /* ------------------------------------------------------------ ajustements au pixel : textes en anneau, grands mots */
+  function fitRings() {
+    $$('text[data-ring]').forEach(function (tx) {
+      var C = parseFloat(tx.getAttribute('data-ring')), n = tx.textContent.length, was = tx.getAttribute('letter-spacing');
+      try {
+        tx.setAttribute('letter-spacing', '0');
+        var len = tx.getComputedTextLength();
+        tx.setAttribute('letter-spacing', (len > 20 && n) ? ((C - len) / n).toFixed(3) : was);
+      } catch (e) { tx.setAttribute('letter-spacing', was); }
+    });
+  }
+  var lastFitW = -1;
+  function fitWords(force) {
+    var w = window.innerWidth;
+    if (!force && w === lastFitW) return;            // la barre d'adresse du téléphone change la hauteur, pas la largeur
+    lastFitW = w;
+    $$('[data-fit]').forEach(function (stage) {
+      var el = $(stage.getAttribute('data-fit'), stage); if (!el) return;
+      stage.style.fontSize = '';
+      if (w >= 900) return;                           // sur grand écran le mot est centré avec de la marge : la feuille de style suffit
+      var cs = getComputedStyle(stage), fs = parseFloat(cs.fontSize);
+      var avail = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      var ww = el.getBoundingClientRect().width;
+      if (ww > 0 && avail > 0) stage.style.fontSize = (fs * avail / ww).toFixed(2) + 'px';
+    });
+    $$('[data-fit-lines]').forEach(function (h) {
+      h.style.fontSize = '';
+      var fs = parseFloat(getComputedStyle(h).fontSize), k = 1;
+      $$('.line__i', h).forEach(function (l) { if (l.scrollWidth > l.clientWidth + 1) k = Math.min(k, l.clientWidth / l.scrollWidth); });
+      if (k < 1) h.style.fontSize = (fs * k * 0.985).toFixed(2) + 'px';
+    });
+  }
+  fitWords(true);
+  fontsReady.then(function () { fitWords(true); fitRings(); measure(); onScroll(); });
 
   /* ------------------------------------------------------------ apparitions */
-  var revealSel = '[data-fade], [data-lines], [data-img], [data-rise], .band';
+  var revealSel = '[data-fade], [data-lines], [data-img], [data-rise], [data-sticker], .band';
   if ('IntersectionObserver' in window && !reduce) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+    }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
     $$(revealSel).forEach(function (el) { io.observe(el); });
   } else {
     $$(revealSel).forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* ------------------------------------------------------------ intro du hero : la gravure, puis la photo */
+  /* ------------------------------------------------------------ hero : la gravure, puis la photo, puis le film */
+  var hero = $('.hero'), heroLive = $('[data-hero-live]'), heroMedia = $('[data-hero-media]'), heroW = $('.hero__w'), heroVid = $('[data-hero-video]');
+  var gestureQueue = [];                                 // vidéos refusées par le navigateur (mode économie d'énergie) : relancées au premier geste
+  function play(v) {
+    var p; try { p = v.play(); } catch (e) { return; }
+    if (p && p.catch) p.catch(function () { if (gestureQueue.indexOf(v) < 0) gestureQueue.push(v); });
+  }
   (function () {
-    var hero = $('.hero'), photo = $('.hero__photo'); if (!hero) return;
-    var done = false, go = function () { if (done) return; done = true; requestAnimationFrame(function () { hero.classList.add('is-in'); }); };
-    if (!photo || photo.complete) go(); else { photo.addEventListener('load', go); photo.addEventListener('error', go); }
-    setTimeout(go, 1600);
+    if (!hero) return;
+    var photo = $('.hero__photo'), okImg = !photo || photo.complete, okFont = false, done = false;
+    function go() { if (done) return; done = true; fitWords(true); requestAnimationFrame(function () { hero.classList.add('is-in'); }); }
+    function check() { if (okImg && okFont) go(); }
+    if (photo && !photo.complete) { photo.addEventListener('load', function () { okImg = true; check(); }); photo.addEventListener('error', function () { okImg = true; check(); }); }
+    fontsReady.then(function () { okFont = true; check(); });
+    setTimeout(go, 1700);
+    if (!heroVid || reduce || saveData) return;
+    var started = false, visible = true;
+    function start() {
+      if (started) return; started = true;
+      heroVid.addEventListener('playing', function () { heroVid.classList.add('is-playing'); });
+      heroVid.src = heroVid.getAttribute('data-src');
+      heroVid.load();
+      if (visible) play(heroVid);
+    }
+    if (d.readyState === 'complete') setTimeout(start, 900); else window.addEventListener('load', function () { setTimeout(start, 900); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        visible = es[0].isIntersecting;
+        if (!started) return;
+        if (visible) play(heroVid); else heroVid.pause();
+      }, { threshold: 0.05 }).observe(hero);
+    }
   })();
 
-  /* ------------------------------------------------------------ parallaxe et fondu photo -> gravure */
+  /* ------------------------------------------------------------ parallaxe, fondu photo -> gravure, barre */
   var pars = $$('[data-par]').map(function (el) { return { el: el, k: parseFloat(el.getAttribute('data-par')) || 0, y: 0, h: 0 }; });
   var inner = $$('[data-par-in]').map(function (el) { return { el: el, k: parseFloat(el.getAttribute('data-par-in')) || 0, y: 0, h: 0 }; });
-  var heroPhoto = $('.hero__photo'), heroGrav = $('.hero__gravure'), heroW = $('.hero__w');
-  var vh = window.innerHeight, ticking = false;
+  var darkEl = $('[data-dark]'), darkIn = darkEl && $('.tf__in', darkEl), gTop = 1e9, gIn = 1e9, gOut = -1, gEnd = -1;   // section sombre et ses deux fondus
+  var vh = window.innerHeight, ticking = false, barH = 58;
 
   function measure() {
     vh = window.innerHeight;
     var sy = window.pageYOffset;
-    pars.concat(inner).forEach(function (p) {
-      var host = p.el.hasAttribute('data-par-in') ? p.el.parentElement : p.el;
+    barH = bar ? bar.offsetHeight : 58;
+    pars.forEach(function (p) {
       var prev = p.el.style.getPropertyValue('--py');
-      if (!p.el.hasAttribute('data-par-in')) p.el.style.setProperty('--py', '0px');
-      var r = host.getBoundingClientRect();
+      p.el.style.setProperty('--py', '0px');
+      var r = p.el.getBoundingClientRect();
       p.y = r.top + sy; p.h = r.height;
-      if (!p.el.hasAttribute('data-par-in') && prev) p.el.style.setProperty('--py', prev);
+      if (prev) p.el.style.setProperty('--py', prev);
     });
+    inner.forEach(function (q) {
+      var r = q.el.parentElement.getBoundingClientRect();
+      q.y = r.top + sy; q.h = r.height;
+    });
+    if (darkEl && darkIn) {
+      var dr = darkEl.getBoundingClientRect(), ir = darkIn.getBoundingClientRect();
+      gTop = dr.top + sy; gIn = ir.top + sy; gOut = ir.bottom + sy; gEnd = dr.bottom + sy;
+    }
   }
   function frame() {
     ticking = false;
     var sy = window.pageYOffset;
-    if (bar) bar.classList.toggle('is-solid', sy > 24);
+    if (bar) {
+      bar.classList.toggle('is-solid', sy > 24);
+      var mid0 = sy + barH / 2, bot0 = sy + barH;
+      // dans les deux fondus de la section sombre, la barre devient transparente et se fond dans le dégradé
+      bar.classList.toggle('is-clear', (sy >= gTop && bot0 <= gIn) || (sy >= gOut && bot0 <= gEnd));
+      bar.classList.toggle('is-dark', mid0 > gTop + (gIn - gTop) * 0.45 && mid0 < gEnd - (gEnd - gOut) * 0.45);
+    }
     if (reduce) return;
-    var hp = clamp(sy / (vh * 0.8), 0, 1);
-    if (heroPhoto && sy < vh * 1.4) {
-      heroPhoto.style.opacity = (1 - smooth(hp, 0.22, 0.95)).toFixed(3);
-      var drift = (hp * 4).toFixed(2) + '%';
-      heroPhoto.style.translate = '0 ' + drift; if (heroGrav) heroGrav.style.translate = '0 ' + drift;
-      if (heroW) heroW.style.translate = '0 ' + (-hp * 10).toFixed(2) + '%';
+    if (heroLive && sy < vh * 1.4) {
+      var hp = clamp(sy / (vh * 0.85), 0, 1);
+      heroLive.style.opacity = (1 - smooth(hp, 0.3, 0.98)).toFixed(3);
+      if (heroMedia) heroMedia.style.scale = (1 + hp * 0.07).toFixed(4);
+      if (heroW) heroW.style.translate = '0 ' + (-hp * 12).toFixed(2) + '%';
     }
     var mid = sy + vh / 2;
     for (var i = 0; i < pars.length; i++) {
       var p = pars[i];
-      if (p.y > sy + vh * 1.4 || p.y + p.h < sy - vh * 0.4) continue;
+      if (p.y > sy + vh * 1.3 || p.y + p.h < sy - vh * 0.3) continue;
       p.el.style.setProperty('--py', ((p.y + p.h / 2 - mid) * -p.k).toFixed(1) + 'px');
     }
     for (var j = 0; j < inner.length; j++) {
@@ -150,8 +230,9 @@
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
   measure(); frame();
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function () { measure(); onScroll(); });
-  window.addEventListener('load', function () { measure(); onScroll(); });
+  window.addEventListener('resize', function () { fitWords(false); measure(); onScroll(); });
+  window.addEventListener('orientationchange', function () { setTimeout(function () { fitWords(true); measure(); onScroll(); }, 250); });
+  window.addEventListener('load', function () { fitWords(true); measure(); onScroll(); });
   if ('ResizeObserver' in window) new ResizeObserver(function () { measure(); onScroll(); }).observe(body);
 
   /* ------------------------------------------------------------ bandes à glisser */
@@ -164,7 +245,7 @@
     function step() { var it = $('.band__track > li', band); return it ? (it.getBoundingClientRect().width + 24) * (window.innerWidth < 700 ? 1 : 2) : band.clientWidth * 0.8; }
     function update() {
       raf = false;
-      var max = band.scrollWidth - band.clientWidth, x = band.scrollLeft, p = max > 0 ? x / max : 0;
+      var max = band.scrollWidth - band.clientWidth, x = band.scrollLeft, p = max > 0 ? clamp(x / max, 0, 1) : 0;
       if (barI) {
         var track = barI.parentElement.clientWidth, w = Math.max(40, track * band.clientWidth / band.scrollWidth);
         barI.style.width = w + 'px'; barI.style.transform = 'translateX(' + (p * (track - w)).toFixed(1) + 'px)';
@@ -192,7 +273,7 @@
       if (e.key === 'ArrowLeft') { band.scrollBy({ left: -step() / 2, behavior: 'smooth' }); e.preventDefault(); }
     });
 
-    /* glisser à la souris, avec un peu d'élan */
+    /* glisser à la souris, avec un peu d'élan (au doigt, le défilement natif s'en charge) */
     var down = false, moved = false, sx = 0, sl = 0, lastX = 0, lastT = 0, v = 0;
     band.addEventListener('pointerdown', function (e) {
       if (e.pointerType !== 'mouse' || e.button !== 0) return;
@@ -253,15 +334,20 @@
 
   /* ------------------------------------------------------------ vidéos : lecture seulement à l'écran */
   (function () {
-    var vids = $$('[data-video]'); if (!vids.length) return;
+    var vids = $$('[data-video]');
     if (reduce || !('IntersectionObserver' in window)) { vids.forEach(function (v) { v.controls = true; }); return; }
     var vo = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         var v = e.target;
-        if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause();
+        if (e.isIntersecting) { v.setAttribute('data-on', '1'); play(v); } else { v.removeAttribute('data-on'); v.pause(); }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.25 });
     vids.forEach(function (v) { vo.observe(v); });
+    var unlock = function () {
+      var q = gestureQueue.splice(0, gestureQueue.length);
+      q.forEach(function (v) { if (v === heroVid || v.hasAttribute('data-on')) play(v); });
+    };
+    ['pointerdown', 'touchend', 'keydown'].forEach(function (ev) { window.addEventListener(ev, unlock, { passive: true }); });
   })();
 
   /* ------------------------------------------------------------ lien actif dans la barre */
@@ -297,8 +383,13 @@
     var hide = function () { if (gone) return; gone = true; box.classList.remove('is-on'); remember(); setTimeout(function () { if (box.parentNode) box.parentNode.removeChild(box); }, 700); };
     a.addEventListener('click', remember);
     x.addEventListener('click', hide);
-    setTimeout(function () { box.classList.add('is-on'); }, 1700);
-    setTimeout(hide, 18000);
+    // elle n'apparaît qu'une fois le premier écran dépassé : elle ne recouvre jamais le bouton « Voir la carte »
+    var shown = false, show = function () {
+      if (shown || window.pageYOffset < 160) return;
+      shown = true; window.removeEventListener('scroll', show);
+      box.classList.add('is-on'); setTimeout(hide, 16000);
+    };
+    window.addEventListener('scroll', show, { passive: true }); show();
   })();
 
   var y = $('[data-year]'); if (y) y.textContent = new Date().getFullYear();
