@@ -1,0 +1,4 @@
+# Au 119 — site statique. Le dossier publié est public/ (déjà généré, rien à construire côté Netlify).
+[build]
+  publish = "public"
+  command = "echo 'Au 119 : site statique, rien à construire'"
