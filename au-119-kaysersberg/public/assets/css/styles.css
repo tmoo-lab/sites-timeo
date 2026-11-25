@@ -125,9 +125,9 @@ ul, ol { padding: 0; list-style: none; }
 [data-par] { transform: translate3d(0, var(--py, 0px), 0); }
 
 /* ------------------------------------------------------------------ barre */
-.bar { position: fixed; top: 0; left: 0; right: 0; z-index: 80; height: var(--bar-h); display: flex; align-items: center; gap: 24px; padding: 0 var(--pad); color: var(--ink); border-bottom: 1px solid transparent; transition: background-color .35s, border-color .35s, color .35s; }
-.bar.is-solid { background: var(--paper); border-bottom-color: var(--line); }
-.bar.is-solid:not(.is-dark):not(.is-clear) { transition-duration: .16s, .16s, .35s; }   /* dès qu'on quitte le haut de page, le fond arrive vite : rien ne passe sous le logo */
+/* la barre a toujours un fond : en haut de page c'est le papier de la page (invisible), donc rien ne passe jamais sous le logo */
+.bar { position: fixed; top: 0; left: 0; right: 0; z-index: 80; height: var(--bar-h); display: flex; align-items: center; gap: 24px; padding: 0 var(--pad); color: var(--ink); background: var(--paper); border-bottom: 1px solid transparent; transition: background-color .35s, border-color .35s, color .35s; }
+.bar.is-solid { border-bottom-color: var(--line); }
 .bar.is-dark { --ink: #F4E9D4; --ink-2: rgba(244, 233, 212, .78); --line: rgba(244, 233, 212, .22); --red: var(--ember); --paper-3: transparent; background: var(--dark); border-bottom-color: var(--line); }
 .bar.is-clear { background: transparent; border-bottom-color: transparent; }
 .menu-open .bar { --ink: #2F1B1C; --ink-2: rgba(47, 27, 28, .76); --line: rgba(47, 27, 28, .18); --red: #A31F34; --paper-3: #F7F0E2; background: transparent; border-bottom-color: transparent; }
