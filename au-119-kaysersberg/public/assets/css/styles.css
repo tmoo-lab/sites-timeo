@@ -30,7 +30,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; overflow-x: clip; scroll-behavior: smooth; scroll-padding-top: calc(var(--bar-h) + 12px); }
-body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.58; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: clip; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.58; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; overflow-x: clip; }
 img, video, svg { display: block; max-width: 100%; }
 img, video { height: auto; }
 a { color: inherit; text-decoration: none; }
@@ -45,8 +45,9 @@ ul, ol { padding: 0; list-style: none; }
 .skip:focus { top: 12px; }
 
 /* grain du papier */
-.grain { position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .34; mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42  0 0 0 0 .36  0 0 0 0 .30  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+/* grain du papier : simple calque en alpha (pas de mix-blend-mode, trop coûteux au défilement sur téléphone) */
+.grain { position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .30  0 0 0 0 .22  0 0 0 0 .18  0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
 /* ------------------------------------------------------------------ type */
 .eyebrow { font-family: var(--sans); font-weight: 600; font-size: 11px; line-height: 1.3; letter-spacing: .22em; text-transform: uppercase; color: var(--ink); }
@@ -78,6 +79,14 @@ ul, ol { padding: 0; list-style: none; }
 .chip { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 15px; border-radius: 999px; border: 1px solid var(--line); background: rgba(247, 240, 226, .66); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; transition: background .3s, color .3s, border-color .3s; }
 .chip:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 .chip--map { height: 44px; padding: 0 18px 0 16px; }
+/* suggestion de langue (créée par le script, voir main.js) */
+.langhint { position: fixed; left: 0; right: 0; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 60; display: flex; justify-content: center; align-items: center; gap: 8px; padding: 0 12px; pointer-events: none; transform: translateY(160%); opacity: 0; transition: transform .8s var(--ease), opacity .45s ease; }
+.langhint.is-on { transform: none; opacity: 1; }
+.langhint > * { pointer-events: auto; }
+.langhint .chip svg { flex: none; }
+.langhint .chip { height: 44px; padding: 0 18px 0 20px; background: var(--ink); border-color: var(--ink); color: var(--paper); box-shadow: 0 18px 34px -16px rgba(47, 27, 28, .7); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.langhint .chip:hover { background: var(--red); border-color: var(--red); }
+.langhint__x { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); color: var(--ink); font-size: 22px; line-height: 1; padding: 0 0 2px; box-shadow: 0 18px 34px -18px rgba(47, 27, 28, .6); }
 .chip--map svg:last-child { transition: transform .5s var(--ease); }
 .chip--map:hover svg:last-child { transform: translateX(4px); }
 

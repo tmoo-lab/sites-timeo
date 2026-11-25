@@ -274,5 +274,32 @@
     Object.keys(map).forEach(function (id) { var s = d.getElementById(id); if (s) so.observe(s); });
   })();
 
+  /* ------------------------------------------------------------ suggestion de langue : discrète, une seule fois, jamais de redirection */
+  (function () {
+    var KEY = 'au119-lang', seen = false;
+    try { seen = !!window.localStorage.getItem(KEY); } catch (e) {}
+    var remember = function () { try { window.localStorage.setItem(KEY, '1'); } catch (e) {} };
+    $$('a[hreflang]').forEach(function (a) { a.addEventListener('click', remember); });
+    if (seen) return;
+    var nav = String((navigator.languages && navigator.languages[0]) || navigator.language || '').slice(0, 2).toLowerCase();
+    if (!nav) return;
+    var want = (nav === 'fr' || nav === 'de' || nav === 'en') ? nav : 'en';   // autres langues : on propose l'anglais
+    if (want === lang) return;
+    var link = $('.menu a[hreflang="' + want + '"]') || $('a[hreflang="' + want + '"]'); if (!link) return;
+    var T = { fr: ['Version française', 'Fermer'], en: ['English version', 'Close'], de: ['Deutsche Version', 'Schließen'] }[want];
+    var box = d.createElement('div'); box.className = 'langhint'; box.setAttribute('lang', want);
+    var a = d.createElement('a'); a.className = 'chip'; a.href = link.getAttribute('href'); a.setAttribute('hreflang', want);
+    a.innerHTML = '<span></span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    a.firstChild.textContent = T[0];
+    var x = d.createElement('button'); x.type = 'button'; x.className = 'langhint__x'; x.setAttribute('aria-label', T[1]); x.textContent = '×';
+    box.appendChild(a); box.appendChild(x); body.appendChild(box);
+    var gone = false;
+    var hide = function () { if (gone) return; gone = true; box.classList.remove('is-on'); remember(); setTimeout(function () { if (box.parentNode) box.parentNode.removeChild(box); }, 700); };
+    a.addEventListener('click', remember);
+    x.addEventListener('click', hide);
+    setTimeout(function () { box.classList.add('is-on'); }, 1700);
+    setTimeout(hide, 18000);
+  })();
+
   var y = $('[data-year]'); if (y) y.textContent = new Date().getFullYear();
 })();
