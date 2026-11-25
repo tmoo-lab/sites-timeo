@@ -54,14 +54,14 @@ S = {
     # ---------------------------------------------------------------- statement
     'st.label': ('Une brasserie alsacienne', 'An Alsatian brasserie', 'Eine Elsässer Brasserie'),
     'st.l1a': ('La', 'Alsatian', 'Elsässer'),
-    'st.l1b': ('cuisine', 'cooking', 'Küche'),
-    'st.l2a': ("d'Alsace", 'the way', 'wie'),
-    'st.l2b': ('comme', 'home', 'bei uns'),
-    'st.l3': ('à la maison', 'makes it', 'zu Hause'),
-    'st.sr': ("La cuisine d'Alsace comme à la maison", 'Alsatian cooking the way home makes it', 'Elsässer Küche wie bei uns zu Hause'),
+    'st.l1b': ('cuisine', 'cooking,', 'Küche'),
+    'st.l2a': ("d'Alsace", 'just', 'wie'),
+    'st.l2b': ('comme', 'like', 'bei uns'),
+    'st.l3': ('à la maison', 'at home', 'zu Hause'),
+    'st.sr': ("La cuisine d'Alsace comme à la maison", 'Alsatian cooking, just like at home', 'Elsässer Küche wie bei uns zu Hause'),
     'st.f1a': ('Tartes flambées', 'Tartes flambées', 'Flammkuchen'),
     'st.f1b': ('à toute heure', 'all day long', 'durchgehend'),
-    'st.f2a': ('Service continu', 'Open non-stop', 'Durchgehend geöffnet'),
+    'st.f2a': ('Service continu', 'Open non-stop', 'Geöffnet'),
     'st.f2b': ('de 10 h à 18 h', '10 am to 6 pm', '10 bis 18 Uhr'),
     'st.f3a': ('Viandes', 'Meat', 'Fleisch'),
     'st.f3b': ('origine France', 'French origin', 'aus Frankreich'),
@@ -127,16 +127,16 @@ S = {
     'tf.p': ("Étalées, garnies à la main et enfournées à la commande. Nature, gratinée, Munster, saumon ou myrtilles : il y en a {n}, et elles sortent du four quand vous arrivez, pas quand ça nous arrange.",
              'Rolled out, topped by hand and baked to order. Plain, gratinée, Munster, salmon or blueberry: there are {n}, and they come out of the oven when you arrive, not when it suits us.',
              'Ausgerollt, von Hand belegt und auf Bestellung gebacken. Natur, gratiniert, Munster, Lachs oder Heidelbeere: Es gibt {n} Sorten, und sie kommen aus dem Ofen, wenn Sie da sind, nicht wenn es uns passt.'),
-    'tf.cap': ("En cuisine : le fromage blanc, les lardons, l'emmental.", 'In the kitchen: fromage blanc, bacon, Emmental.', 'In der Küche: Frischkäse, Speck, Emmentaler.'),
-    'tf.valt': ('Une tarte flambée garnie à la main en cuisine', 'A tarte flambée being topped by hand in the kitchen', 'Ein Flammkuchen wird in der Küche von Hand belegt'),
-    'tf.photo.alt': ('Deux tartes flambées à la sortie du four, sur leurs planches', 'Two tartes flambées fresh from the oven on their boards', 'Zwei Flammkuchen frisch aus dem Ofen auf ihren Brettern'),
+    'tf.cap': ("En cuisine : le fromage blanc, les lardons, l'emmental, puis le four.", 'In the kitchen: fromage blanc, bacon, Emmental, then the oven.', 'In der Küche: Frischkäse, Speck, Emmentaler, dann der Ofen.'),
+    'tf.valt': ('Deux tartes flambées à la sortie du four, puis une tarte garnie à la main en cuisine', 'Two tartes flambées fresh from the oven, then one being topped by hand in the kitchen', 'Zwei Flammkuchen frisch aus dem Ofen, dann wird einer in der Küche von Hand belegt'),
+    'tf.link': ('Toutes les garnitures, dans la carte', 'Every topping, on the menu', 'Alle Beläge in der Karte'),
     'tf.clock.open': ('Il est {t} à Kaysersberg. Le four est chaud.', "It's {t} in Kaysersberg. The oven is hot.", 'In Kaysersberg ist es {t} Uhr. Der Ofen ist heiß.'),
     'tf.clock.closed': ('Il est {t} à Kaysersberg. Le four se rallume à 10 h.', "It's {t} in Kaysersberg. The oven is back on at 10 am.", 'In Kaysersberg ist es {t} Uhr. Ab 10 Uhr läuft der Ofen wieder.'),
     'tf.clock.alt': ("Horloge à l'heure de Kaysersberg", 'Clock showing Kaysersberg time', 'Uhr mit der Ortszeit von Kaysersberg'),
     'tf.list': ('Les {n} tartes', 'The {n} tartes', 'Die {n} Sorten'),
 
     # ---------------------------------------------------------------- carte
-    'carte.label': ('La carte', 'The menu', 'Die Karte'),
+    'carte.label': ('Carte 2026', '2026 menu', 'Karte 2026'),
     'carte.title': ('La carte, en entier', 'The full menu', 'Die ganze Karte'),
     'carte.sub': ('Prix et service compris.', 'Prices include service.', 'Preise inklusive Bedienung.'),
     'carte.tabs': ('Rubriques de la carte', 'Menu sections', 'Bereiche der Karte'),
@@ -186,6 +186,7 @@ S = {
     'ho.f3b': ('une carte pour les petits… et les grands', 'a menu for little ones… and grown-ups', 'eine Karte für Kleine… und Große'),
     'ho.hint': ('Faites glisser pour visiter', 'Drag to look around', 'Zum Umsehen ziehen'),
     'g1': ('La salle voûtée', 'The vaulted room', 'Der Gewölberaum'),
+    'ho.valt': ("La salle voûtée vue à travers l'arche en grès", 'The vaulted room seen through the sandstone arch', 'Der Gewölberaum, durch den Sandsteinbogen gesehen'),
     'g2': ('Les banquettes rouges', 'The red banquettes', 'Die roten Sitzbänke'),
     'g3': ('La terrasse, sous le store rouge', 'The terrace, under the red awning', 'Die Terrasse unter der roten Markise'),
     'g4': ("L'entrée et ses vins", 'The entrance and its wines', 'Der Eingang mit seinen Weinen'),
@@ -193,6 +194,7 @@ S = {
     'g6': ('Vue à travers le grès', 'A view through the sandstone', 'Blick durch den Sandstein'),
     'g7': ("L'horloge de la salle", 'The dining-room clock', 'Die Uhr im Gastraum'),
     'g8': ('Le mur des paniers', 'The wall of baskets', 'Die Korbwand'),
+    'g9': ("L'origine des viandes, à l'ardoise", 'Where the meat comes from, on the slate', 'Die Herkunft des Fleisches, auf der Tafel'),
 
     # ---------------------------------------------------------------- find us
     'fi.label': ('Nous trouver', 'Find us', 'So finden Sie uns'),
@@ -212,7 +214,7 @@ S = {
                   'Eine Elsässerin aus Schmiedeeisen, das Tablett in der Hand, direkt über der Terrasse. Da sind wir.'),
     'fi.sign.alt': ("L'enseigne en fer forgé « Restaurant Brasserie » avec la serveuse alsacienne", 'The wrought-iron "Restaurant Brasserie" sign with the Alsatian waitress', 'Das schmiedeeiserne Schild „Restaurant Brasserie“ mit der Elsässer Kellnerin'),
     'fi.mascot.alt': ("La mascotte du 119 : une serveuse alsacienne au grand nœud rouge", 'The Au 119 mascot: an Alsatian waitress with a big red bow', 'Das Maskottchen des 119: eine Elsässer Kellnerin mit großer roter Schleife'),
-    'fi.line': ('La rue du Général de Gaulle, de bas en haut', 'Rue du Général de Gaulle, from the bottom up', 'Die Rue du Général de Gaulle, von unten nach oben'),
+    'fi.line': ('La rue principale, de bas en haut', 'The main street, bottom to top', 'Die Hauptstraße hinauf'),
     'fi.p.p1': ('Parking P1 Vieille ville', 'Car park P1 Vieille ville', 'Parkplatz P1 Vieille ville'),
     'fi.p.ot': ('Office de tourisme', 'Tourist office', 'Tourismusbüro'),
     'fi.p.eg': ('Église Sainte-Croix', 'Sainte-Croix church', 'Kirche Sainte-Croix'),
@@ -225,6 +227,11 @@ S = {
     'fo.tag': ('Tartes flambées à toute heure, cuisine maison, vins du coin.', 'Tartes flambées all day, home cooking, local wines.', 'Flammkuchen durchgehend, hausgemachte Küche, Weine von nebenan.'),
     'fo.kind': ('Restaurant · Brasserie · Kaysersberg', 'Restaurant · Brasserie · Kaysersberg', 'Restaurant · Brasserie · Kaysersberg'),
     'fo.credit': ('Site réalisé par', 'Website by', 'Website von'),
+
+    # ---------------------------------------------------------------- page introuvable (404.html, une seule page pour les trois langues)
+    'nf.title': ('Page introuvable', 'Page not found', 'Seite nicht gefunden'),
+    'nf.h': ("Cette page n'est plus à la carte.", 'This page is off the menu.', 'Diese Seite steht nicht mehr auf der Karte.'),
+    'nf.home': ("Retour à l'accueil", 'Back to the home page', 'Zur Startseite'),
 }
 
 NUMBERS = {'fr': ['zéro', 'une', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 'onze', 'douze'],

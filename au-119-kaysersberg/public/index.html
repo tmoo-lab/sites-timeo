@@ -29,7 +29,7 @@
 <link rel="preload" href="assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/facade-1080.webp" imagesrcset="assets/img/facade-720.webp 720w, assets/img/facade-1080.webp 1080w" imagesizes="(min-width: 900px) 30vw, 84vw" fetchpriority="high">
 <script>document.documentElement.className="js"</script>
-<link rel="stylesheet" href="assets/css/styles.css?v=202611251300">
+<link rel="stylesheet" href="assets/css/styles.css?v=202611251543">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Restaurant", "name": "Au 119", "description": "Brasserie alsacienne à Kaysersberg, à deux pas du pont fortifié. Choucroute, baeckeoffe, tartes flambées servies à toute heure, vins d’Alsace et terrasse. Service continu de 10 h à 18 h.", "url": "https://kaysersberg-au119.restaurant/", "image": "https://kaysersberg-au119.restaurant/og.jpg", "telephone": "+33 3 89 27 56 13", "servesCuisine": ["Alsacienne", "Française"], "priceRange": "€€", "acceptsReservations": "True", "hasMenu": "https://kaysersberg-au119.restaurant/#carte", "address": {"@type": "PostalAddress", "streetAddress": "119 rue du Général de Gaulle", "postalCode": "68240", "addressLocality": "Kaysersberg Vignoble", "addressRegion": "Alsace", "addressCountry": "FR"}, "geo": {"@type": "GeoCoordinates", "latitude": 48.1403445, "longitude": 7.2597468}, "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "opens": "10:00", "closes": "18:00"}], "hasMap": "https://www.google.com/maps/search/?api=1&query=Au+119+Kaysersberg&query_place_id=ChIJ7xsnDfBgkUcRcOkTp5r7QMo"}</script>
 </head>
 <body data-lang="fr">
@@ -109,7 +109,7 @@
   </div>
   <div class="hero__right" data-fade>
     <dl class="hero__info">
-      <div><dt>Service continu</dt><dd><strong>10 h – 18 h</strong><span>Tous les jours en saison</span></dd></div>
+      <div><dt>Service continu</dt><dd><strong>10 h – 18 h</strong><span>Tous les jours en saison</span><a class="hero__map hero__map--m" href="#carte">Voir la carte <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></dd></div>
       <div><dt>Adresse</dt><dd><strong>119 rue du Général de Gaulle</strong><span>68240 Kaysersberg</span><a class="hero__map" href="#trouver">Voir sur le plan <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></dd></div>
     </dl>
   </div>
@@ -167,19 +167,21 @@
   <div class="sig__stage" data-fit=".sig__word span">
     <p class="eyebrow red" data-fade>Le plat signature</p>
     <div class="sig__word" aria-hidden="true" data-par="-0.05"><span>Royale</span></div>
-    <div class="sig__plate" data-par="0.04" data-rise><img class="sig__cut" src="assets/img/choucroute-cut-1600.webp" srcset="assets/img/choucroute-cut-900.webp 900w, assets/img/choucroute-cut-1600.webp 1600w" sizes="(min-width: 900px) 50vw, 100vw" width="1600" height="1567" alt="La choucroute royale : jarret braisé, saucisses et viandes fumées sur une assiette noire" loading="lazy" decoding="async"></div>
-  </div>
-  <div class="sig__grid">
-    <div class="sig__title">
-      <h2 data-lines><span class="line"><span class="line__i">Choucroute</span></span><span class="line"><span class="line__i">Royale</span></span><span class="line"><span class="line__i"><em>au jarret</em></span></span><span class="line"><span class="line__i"><em>braisé</em></span></span></h2>
-      <div class="badge" data-fade>
+    <div class="sig__plate" data-par="0.04" data-rise><img class="sig__cut" src="assets/img/choucroute-cut-1600.webp" srcset="assets/img/choucroute-cut-900.webp 900w, assets/img/choucroute-cut-1600.webp 1600w" sizes="(min-width: 900px) 50vw, 100vw" width="1600" height="1567" alt="La choucroute royale : jarret braisé, saucisses et viandes fumées sur une assiette noire" loading="lazy" decoding="async">
+      <div class="badge" data-pop>
         <svg viewBox="0 0 120 120" aria-hidden="true">
           <defs><path id="bdg" d="M60 60 m-47 0 a47 47 0 1 1 94 0 a47 47 0 1 1 -94 0"/></defs>
+          <circle class="badge__bg" cx="60" cy="60" r="59.4"/>
           <g class="badge__ring"><text data-ring="295.31" font-size="8.4" letter-spacing="1.52"><textPath href="#bdg">CHOUCROUTE ROYALE · PRIX ET SERVICE COMPRIS · </textPath></text></g>
           <circle cx="60" cy="60" r="34" fill="currentColor"/>
         </svg>
         <span class="badge__p">30 €</span>
       </div>
+    </div>
+  </div>
+  <div class="sig__grid">
+    <div class="sig__title">
+      <h2 data-lines data-fit-lines><span class="line"><span class="line__i"><span>Choucroute</span> <span>Royale</span></span></span><span class="line"><span class="line__i"><em><span>au jarret</span> <span>braisé</span></em></span></span></h2>
     </div>
     <div class="sig__text" data-fade>
       <p>Le jarret braisé posé sur la choucroute, les saucisses plantées au sommet, les viandes fumées et les pommes de terre autour. L’assiette que tout le monde photographie avant d’attaquer.</p>
@@ -212,37 +214,37 @@
   <div class="band" data-band="assiettes" tabindex="0" aria-label="Les assiettes de la maison">
     <ul class="band__track">
       <li class="plate">
-        <div class="plate__img arch"><div class="plate__in" data-bx><img src="assets/img/jarret-900.webp" srcset="assets/img/jarret-600.webp 600w, assets/img/jarret-900.webp 900w" sizes="(min-width: 900px) 24vw, 68vw" width="900" height="1125" alt="Jarret de porc braisé — Frites et salade" loading="lazy" decoding="async"></div></div>
+        <div class="plate__img arch"><div class="plate__in" data-bx><video muted loop playsinline preload="none" poster="assets/img/plat-jarret-600.webp" width="600" height="796" aria-label="Jarret de porc braisé — Frites et salade" data-video="quiet"><source src="assets/video/plat-jarret.mp4" type="video/mp4"></video></div></div>
         <h3 class="plate__n">Jarret de porc braisé</h3>
         <p class="plate__d">Frites et salade</p>
         <p class="plate__p">22 €</p>
       </li>
       <li class="plate">
-        <div class="plate__img arch"><div class="plate__in" data-bx><img src="assets/img/baeckeoffe-900.webp" srcset="assets/img/baeckeoffe-600.webp 600w, assets/img/baeckeoffe-900.webp 900w" sizes="(min-width: 900px) 24vw, 68vw" width="900" height="1125" alt="Baeckeoffe alsacien — Trois viandes cuites au vin" loading="lazy" decoding="async"></div></div>
+        <div class="plate__img arch"><div class="plate__in" data-bx><video muted loop playsinline preload="none" poster="assets/img/plat-baeckeoffe-600.webp" width="600" height="796" aria-label="Baeckeoffe alsacien — Trois viandes cuites au vin" data-video="quiet"><source src="assets/video/plat-baeckeoffe.mp4" type="video/mp4"></video></div></div>
         <h3 class="plate__n">Baeckeoffe alsacien</h3>
         <p class="plate__d">Trois viandes cuites au vin</p>
         <p class="plate__p">22 €</p>
       </li>
       <li class="plate">
-        <div class="plate__img arch"><div class="plate__in" data-bx><img src="assets/img/quiche-900.webp" srcset="assets/img/quiche-600.webp 600w, assets/img/quiche-900.webp 900w" sizes="(min-width: 900px) 24vw, 68vw" width="900" height="1125" alt="Quiche lorraine — Et sa salade verte" loading="lazy" decoding="async"></div></div>
+        <div class="plate__img arch"><div class="plate__in" data-bx><video muted loop playsinline preload="none" poster="assets/img/plat-quiche-600.webp" width="600" height="796" aria-label="Quiche lorraine — Et sa salade verte" data-video="quiet"><source src="assets/video/plat-quiche.mp4" type="video/mp4"></video></div></div>
         <h3 class="plate__n">Quiche lorraine</h3>
         <p class="plate__d">Et sa salade verte</p>
         <p class="plate__p">18 €</p>
       </li>
       <li class="plate">
-        <div class="plate__img arch"><div class="plate__in" data-bx><img src="assets/img/filet-900.webp" srcset="assets/img/filet-600.webp 600w, assets/img/filet-900.webp 900w" sizes="(min-width: 900px) 24vw, 68vw" width="900" height="1125" alt="Filet de bœuf, sauce au choix — 200 g, frites et légumes" loading="lazy" decoding="async"></div></div>
+        <div class="plate__img arch"><div class="plate__in" data-bx><video muted loop playsinline preload="none" poster="assets/img/plat-filet-600.webp" width="600" height="796" aria-label="Filet de bœuf, sauce au choix — 200 g, frites et légumes" data-video="quiet"><source src="assets/video/plat-filet.mp4" type="video/mp4"></video></div></div>
         <h3 class="plate__n">Filet de bœuf, sauce au choix</h3>
         <p class="plate__d">200 g, frites et légumes</p>
         <p class="plate__p">28 €</p>
       </li>
       <li class="plate">
-        <div class="plate__img arch"><div class="plate__in" data-bx><img src="assets/img/burger-900.webp" srcset="assets/img/burger-600.webp 600w, assets/img/burger-900.webp 900w" sizes="(min-width: 900px) 24vw, 68vw" width="900" height="1125" alt="Les burgers — Alsacien, comté ou chicken" loading="lazy" decoding="async"></div></div>
+        <div class="plate__img arch"><div class="plate__in" data-bx><video muted loop playsinline preload="none" poster="assets/img/plat-burger-600.webp" width="600" height="796" aria-label="Les burgers — Alsacien, comté ou chicken" data-video="quiet"><source src="assets/video/plat-burger.mp4" type="video/mp4"></video></div></div>
         <h3 class="plate__n">Les burgers</h3>
         <p class="plate__d">Alsacien, comté ou chicken</p>
         <p class="plate__p">13 €</p>
       </li>
       <li class="plate">
-        <div class="plate__img arch"><div class="plate__in" data-bx><img src="assets/img/gaufre-900.webp" srcset="assets/img/gaufre-600.webp 600w, assets/img/gaufre-900.webp 900w" sizes="(min-width: 900px) 24vw, 68vw" width="900" height="1125" alt="Gaufres et coupes glacées — Pour finir, ou pour le goûter" loading="lazy" decoding="async"></div></div>
+        <div class="plate__img arch"><div class="plate__in" data-bx><video muted loop playsinline preload="none" poster="assets/img/plat-gaufre-600.webp" width="600" height="796" aria-label="Gaufres et coupes glacées — Pour finir, ou pour le goûter" data-video="quiet"><source src="assets/video/plat-gaufre.mp4" type="video/mp4"></video></div></div>
         <h3 class="plate__n">Gaufres et coupes glacées</h3>
         <p class="plate__d">Pour finir, ou pour le goûter</p>
         <p class="plate__p"><span>dès</span> 3,50 €</p>
@@ -269,8 +271,8 @@
         <g class="clock__nums" font-size="12.500" text-anchor="middle">
           <text x="100" y="45">XII</text><text x="160" y="104.500">III</text><text x="100" y="164">VI</text><text x="40" y="104.500">IX</text>
         </g>
-        <line class="clock__h" x1="100" y1="100" x2="100" y2="66" data-clock-h/>
-        <line class="clock__m" x1="100" y1="100" x2="100" y2="48" data-clock-m/>
+        <line class="clock__h" x1="100" y1="100" x2="100" y2="69" data-clock-h/>
+        <line class="clock__m" x1="100" y1="100" x2="100" y2="55" data-clock-m/>
         <line class="clock__s" x1="100" y1="114" x2="100" y2="30" data-clock-s/>
         <circle class="clock__hub" cx="100" cy="100" r="3.600"/>
       </svg>
@@ -278,26 +280,24 @@
     </div>
     <figure class="tf__film">
       <div class="arch frame" data-img>
-        <video muted loop playsinline preload="none" poster="assets/img/tarte-film-720.webp" aria-label="Une tarte flambée garnie à la main en cuisine" data-video><source src="assets/video/tarte-flambee.mp4" type="video/mp4"></video>
+        <video muted loop playsinline preload="none" poster="assets/img/tarte-film-720.webp" aria-label="Deux tartes flambées à la sortie du four, puis une tarte garnie à la main en cuisine" data-video data-par-in="0.04"><source src="assets/video/tarte-flambee.mp4" type="video/mp4"></video>
       </div>
-      <figcaption>En cuisine : le fromage blanc, les lardons, l’emmental.</figcaption>
-    </figure>
-    <figure class="tf__photo">
-      <div class="frame frame--soft" data-img><img src="assets/img/tartes-900.webp" srcset="assets/img/tartes-600.webp 600w, assets/img/tartes-900.webp 900w" sizes="(min-width: 900px) 26vw, 70vw" width="900" height="1125" alt="Deux tartes flambées à la sortie du four, sur leurs planches" loading="lazy" decoding="async" data-par-in="0.05"></div>
+      <figcaption>En cuisine : le fromage blanc, les lardons, l’emmental, puis le four.</figcaption>
     </figure>
     <div class="tf__list" data-fade>
       <h3 class="eyebrow">Les neuf tartes</h3>
-      <ul class="dishes dishes--light">
-        <li class="dish"><span class="dish__n">Nature</span><span class="dish__p">10 €</span><span class="dish__d">Fromage blanc, oignons et lardons</span></li>
-        <li class="dish"><span class="dish__n">Gratinée</span><span class="dish__p">14 €</span><span class="dish__d">Fromage blanc, oignons, lardons et emmental</span></li>
-        <li class="dish"><span class="dish__n">Munster</span><span class="dish__p">14 €</span><span class="dish__d">Fromage blanc, oignons, lardons, emmental, Munster</span></li>
-        <li class="dish"><span class="dish__n">Chèvre</span><span class="dish__p">14 €</span><span class="dish__d">Fromage blanc, oignons, lardons, emmental, fromage de chèvre</span></li>
-        <li class="dish"><span class="dish__n">Forestière</span><span class="dish__p">14 €</span><span class="dish__d">Fromage blanc, oignons, champignons et emmental · lardons sur demande</span></li>
-        <li class="dish"><span class="dish__n">Saumon</span><span class="dish__p">14 €</span><span class="dish__d">Fromage blanc, oignons, saumon, câpres, aneth et emmental</span></li>
-        <li class="dish"><span class="dish__n">Escargots</span><span class="dish__p">14 €</span><span class="dish__d">Fromage blanc, oignons, escargots et emmental</span></li>
-        <li class="dish"><span class="dish__n">Italienne</span><span class="dish__p">14 €</span><span class="dish__d">Sauce tomate, oignons, olives, jambon, champignons et emmental</span></li>
-        <li class="dish"><span class="dish__n">Myrtilles</span><span class="dish__p">12 €</span><span class="dish__d">Fromage blanc, myrtilles et sucre</span></li>
+      <ul class="dishes dishes--light dishes--duo">
+        <li class="dish"><span class="dish__n">Nature</span><span class="dish__p">10 €</span></li>
+        <li class="dish"><span class="dish__n">Gratinée</span><span class="dish__p">14 €</span></li>
+        <li class="dish"><span class="dish__n">Munster</span><span class="dish__p">14 €</span></li>
+        <li class="dish"><span class="dish__n">Chèvre</span><span class="dish__p">14 €</span></li>
+        <li class="dish"><span class="dish__n">Forestière</span><span class="dish__p">14 €</span></li>
+        <li class="dish"><span class="dish__n">Saumon</span><span class="dish__p">14 €</span></li>
+        <li class="dish"><span class="dish__n">Escargots</span><span class="dish__p">14 €</span></li>
+        <li class="dish"><span class="dish__n">Italienne</span><span class="dish__p">14 €</span></li>
+        <li class="dish"><span class="dish__n">Myrtilles</span><span class="dish__p">12 €</span></li>
       </ul>
+      <p class="tf__more"><a class="under" href="#carte" data-tab-link="tartes">Toutes les garnitures, dans la carte</a></p>
     </div>
   </div>
 </section>
@@ -305,7 +305,7 @@
 
 <section class="carte" id="carte">
   <header class="head head--center">
-    <p class="eyebrow red" data-fade>La carte</p>
+    <p class="eyebrow red" data-fade>Carte 2026</p>
     <h2 class="h2" data-lines><span class="line"><span class="line__i">La carte, en entier</span></span></h2>
     <p class="carte__sub" data-fade>Prix et service compris.</p>
   </header>
@@ -321,16 +321,16 @@
     <div class="panel is-on" role="tabpanel" id="panel-plats" aria-labelledby="tab-plats"><section class="cat cat--brk" aria-labelledby="cat-specialites">
   <h3 class="cat__t" id="cat-specialites">Nos spécialités alsaciennes</h3>
   <ul class="dishes">
-    <li class="dish"><span class="dish__n">Choucroute Alsacienne</span><span class="dish__p">22 €</span><span class="dish__d">Choucroute, viandes et saucisses, pommes de terre</span></li>
-    <li class="dish"><span class="dish__n">Choucroute Royale</span><span class="dish__p">30 €</span><span class="dish__d">Choucroute alsacienne avec jarret braisé</span></li>
-    <li class="dish"><span class="dish__n">Baeckeoffe Alsacien, salade verte</span><span class="dish__p">22 €</span><span class="dish__d">3 viandes, pommes de terre, légumes, cuits dans du vin</span></li>
-    <li class="dish"><span class="dish__n">Poêlée Alsacienne et sa salade verte</span><span class="dish__p">18 €</span><span class="dish__d">Pommes de terre, oignons, lardons et Munster</span></li>
+    <li class="dish"><span class="dish__n">Choucroute alsacienne</span><span class="dish__p">22 €</span><span class="dish__d">Choucroute, viandes et saucisses, pommes de terre</span></li>
+    <li class="dish"><span class="dish__n">Choucroute royale</span><span class="dish__p">30 €</span><span class="dish__d">Choucroute alsacienne avec jarret braisé</span></li>
+    <li class="dish"><span class="dish__n">Baeckeoffe alsacien, salade verte</span><span class="dish__p">22 €</span><span class="dish__d">3 viandes, pommes de terre, légumes, cuits dans du vin</span></li>
+    <li class="dish"><span class="dish__n">Poêlée alsacienne et sa salade verte</span><span class="dish__p">18 €</span><span class="dish__d">Pommes de terre, oignons, lardons et Munster</span></li>
     <li class="dish"><span class="dish__n">Gratin de spaetzles au Munster et salade verte</span><span class="dish__p">18 €</span></li>
     <li class="dish"><span class="dish__n">Gratin de spaetzles au Munster avec Kassler, salade</span><span class="dish__p">25 €</span><span class="dish__d">Kassler : filet de porc fumé</span></li>
     <li class="dish"><span class="dish__n">Kassler, frites, salade</span><span class="dish__p">20 €</span><span class="dish__d">Filet de porc fumé · supplément Munster 4 €</span></li>
     <li class="dish"><span class="dish__n">Jarret de porc braisé, frites, salade</span><span class="dish__p">22 €</span><span class="dish__d">Supplément Munster 4 €</span></li>
     <li class="dish"><span class="dish__n">Jarret de porc braisé, choux et pommes de terre</span><span class="dish__p">25 €</span></li>
-    <li class="dish"><span class="dish__n">Quiche Lorraine, salade verte</span><span class="dish__p">18 €</span><span class="dish__d">Jambon, lardons et salade verte</span></li>
+    <li class="dish"><span class="dish__n">Quiche lorraine, salade verte</span><span class="dish__p">18 €</span><span class="dish__d">Jambon, lardons et salade verte</span></li>
   </ul>
 </section><section class="cat" aria-labelledby="cat-viandes">
   <h3 class="cat__t" id="cat-viandes">Côté viande</h3>
@@ -343,7 +343,7 @@
   <ul class="dishes">
     <li class="dish"><span class="dish__n">Alsacien</span><span class="dish__p">13 €</span><span class="dish__d">Steak, pommes de terre, Munster, oignons, salade, tomates, cornichons, pain</span></li>
     <li class="dish"><span class="dish__n">Comté</span><span class="dish__p">13 €</span><span class="dish__d">Steak, comté, bacon, oignons, tomates, salade, cornichons, pain</span></li>
-    <li class="dish"><span class="dish__n">Chicken Burger</span><span class="dish__p">13 €</span><span class="dish__d">Poulet tenders, comté, oignons, tomates, salade, sauce barbecue, cornichons, pain</span></li>
+    <li class="dish"><span class="dish__n">Chicken burger</span><span class="dish__p">13 €</span><span class="dish__d">Poulet tenders, comté, oignons, tomates, salade, sauce barbecue, cornichons, pain</span></li>
     <li class="dish"><span class="dish__n">Salade</span><span class="dish__p">4 €</span></li>
     <li class="dish"><span class="dish__n">Frites</span><span class="dish__p">4 €</span></li>
   </ul>
@@ -380,8 +380,8 @@
   <h3 class="cat__t" id="cat-crepes-salees">Crêpes salées</h3>
   <ul class="dishes">
     <li class="dish"><span class="dish__n">Crêpe jambon et fromage</span><span class="dish__p">6 €</span></li>
-    <li class="dish"><span class="dish__n">Crêpe Alsacienne</span><span class="dish__p">8 €</span><span class="dish__d">Jambon, emmental, Munster</span></li>
-    <li class="dish"><span class="dish__n">Crêpe Italienne</span><span class="dish__p">8 €</span><span class="dish__d">Sauce tomate, jambon, emmental</span></li>
+    <li class="dish"><span class="dish__n">Crêpe alsacienne</span><span class="dish__p">8 €</span><span class="dish__d">Jambon, emmental, Munster</span></li>
+    <li class="dish"><span class="dish__n">Crêpe italienne</span><span class="dish__p">8 €</span><span class="dish__d">Sauce tomate, jambon, emmental</span></li>
     <li class="dish"><span class="dish__n">Crêpe au saumon</span><span class="dish__p">9 €</span><span class="dish__d">Saumon, emmental, aneth</span></li>
   </ul>
 </section>
@@ -528,7 +528,7 @@
     <li class="dish"><span class="dish__n">Café con panna</span><span class="dish__p">4 €</span></li>
     <li class="dish"><span class="dish__n">Chocolat chaud</span><span class="dish__p">4 €</span></li>
     <li class="dish"><span class="dish__n">Eis-café</span><span class="dish__p">6,50 €</span></li>
-    <li class="dish"><span class="dish__n">Irish coffee · Café Alsacien</span><span class="dish__p">10 €</span></li>
+    <li class="dish"><span class="dish__n">Irish coffee · Café alsacien</span><span class="dish__p">10 €</span></li>
     <li class="dish"><span class="dish__n">Café gourmand</span><span class="dish__p">12 €</span></li>
   </ul>
 </section><section class="cat" aria-labelledby="cat-digestifs">
@@ -569,7 +569,9 @@
       </div>
     </article>
     <article class="drink drink--c">
-      <div class="arch frame" data-img><img src="assets/img/cocktails-900.webp" srcset="assets/img/cocktails-600.webp 600w, assets/img/cocktails-900.webp 900w" sizes="(min-width: 900px) 24vw, 92vw" width="900" height="1125" alt="Un plateau de quatre cocktails aux pailles rayées" loading="lazy" decoding="async" data-par-in="0.05"></div>
+      <div class="arch frame" data-img>
+        <video muted loop playsinline preload="none" poster="assets/img/cocktails-film-640.webp" aria-label="Un plateau de quatre cocktails aux pailles rayées" data-video><source src="assets/video/cocktails.mp4" type="video/mp4"></video>
+      </div>
       <div class="drink__t" data-fade>
         <h3>Les cocktails</h3>
         <p>Cocktail alsacien au crémant et au gewurztraminer, spritz, hugo, mojito. Et trois recettes sans alcool.</p>
@@ -586,7 +588,7 @@
     <h2 class="h1" data-lines><span class="line"><span class="line__i">Des colombages dehors,</span></span><span class="line"><span class="line__i"><em>des voûtes en grès dedans</em></span></span></h2></div>
   </header>
   <div class="house__grid">
-    <div class="house__big frame frame--arch-wide" data-img><img src="assets/img/arche-salle-1600.webp" srcset="assets/img/arche-salle-900.webp 900w, assets/img/arche-salle-1600.webp 1600w" sizes="(min-width: 900px) 58vw, 92vw" width="1600" height="900" alt="La salle voûtée" loading="lazy" decoding="async" data-par-in="0.05"></div>
+    <div class="house__big frame frame--arch-wide" data-img><video muted loop playsinline preload="none" poster="assets/img/maison-film-1280.webp" width="1280" height="848" aria-label="La salle voûtée vue à travers l’arche en grès" data-video data-par-in="0.05"><source src="assets/video/maison.mp4" type="video/mp4"></video></div>
     <div class="house__txt" data-fade>
       <p>Le 119 occupe une maison à colombages de la rue principale. On s’installe en terrasse, sur les pavés, ou à l’intérieur : banquettes rouges, mur végétal et, quelques marches plus bas, une salle sous les arches de grès.</p>
       <p>C’est une affaire de famille. On vous y accueille comme à la maison, et la carte se lit aussi en anglais et en allemand.</p>
@@ -611,7 +613,7 @@
       <li class="shot shot--a"><figure><div class="shot__img"><div class="shot__in" data-bx><img src="assets/img/ouverture-1000.webp" srcset="assets/img/ouverture-600.webp 600w, assets/img/ouverture-1000.webp 1000w" sizes="(min-width: 900px) 28vw, 72vw" width="1000" height="1250" alt="Vue à travers le grès" loading="lazy" decoding="async"></div></div><figcaption>Vue à travers le grès</figcaption></figure></li>
       <li class="shot shot--p"><figure><div class="shot__img"><div class="shot__in" data-bx><img src="assets/img/entree-1000.webp" srcset="assets/img/entree-600.webp 600w, assets/img/entree-1000.webp 1000w" sizes="(min-width: 900px) 28vw, 72vw" width="1000" height="1250" alt="L’entrée et ses vins" loading="lazy" decoding="async"></div></div><figcaption>L’entrée et ses vins</figcaption></figure></li>
       <li class="shot shot--p"><figure><div class="shot__img"><div class="shot__in" data-bx><img src="assets/img/salle-b-1000.webp" srcset="assets/img/salle-b-600.webp 600w, assets/img/salle-b-1000.webp 1000w" sizes="(min-width: 900px) 28vw, 72vw" width="1000" height="1250" alt="Le mur des paniers" loading="lazy" decoding="async"></div></div><figcaption>Le mur des paniers</figcaption></figure></li>
-      <li class="shot shot--p"><figure><div class="shot__img"><div class="shot__in" data-bx><img src="assets/img/arche-1000.webp" srcset="assets/img/arche-600.webp 600w, assets/img/arche-1000.webp 1000w" sizes="(min-width: 900px) 28vw, 72vw" width="1000" height="1250" alt="La salle voûtée" loading="lazy" decoding="async"></div></div><figcaption>La salle voûtée</figcaption></figure></li>
+      <li class="shot shot--p"><figure><div class="shot__img"><div class="shot__in" data-bx><img src="assets/img/ardoise-1000.webp" srcset="assets/img/ardoise-600.webp 600w, assets/img/ardoise-1000.webp 1000w" sizes="(min-width: 900px) 28vw, 72vw" width="1000" height="1250" alt="L’origine des viandes, à l’ardoise" loading="lazy" decoding="async"></div></div><figcaption>L’origine des viandes, à l’ardoise</figcaption></figure></li>
     </ul>
   </div>
   <div class="band__bar" aria-hidden="true"><i data-band-bar="maison"></i></div>
@@ -634,10 +636,10 @@
         <div class="arch frame" data-img><img src="assets/img/enseigne-900.webp" srcset="assets/img/enseigne-600.webp 600w, assets/img/enseigne-900.webp 900w" sizes="(min-width: 900px) 24vw, 70vw" width="900" height="1125" alt="L’enseigne en fer forgé « Restaurant Brasserie » avec la serveuse alsacienne" loading="lazy" decoding="async" data-par-in="0.05"></div>
         <img class="find__mascot" src="assets/img/mascotte-640.webp" srcset="assets/img/mascotte-360.webp 360w, assets/img/mascotte-640.webp 640w" sizes="(min-width: 900px) 12vw, 34vw" width="640" height="1165" alt="La mascotte du 119 : une serveuse alsacienne au grand nœud rouge" loading="lazy" decoding="async" data-sticker>
       </div>
-      <div class="find__signt" data-fade><h3>Repérez l’enseigne</h3><p>Une Alsacienne en fer forgé, le plateau à la main, juste au-dessus de la terrasse. C’est là.</p></div>
+      <div class="find__signt" data-fade><h3>Repérez l’enseigne</h3><p>Une Alsacienne en fer forgé, le plateau à la main, juste <span class="nb">au-dessus</span> de la terrasse. C’est là.</p></div>
     </div>
-    <div class="route" data-fade role="group" aria-label="La rue du Général de Gaulle, de bas en haut">
-      <p class="eyebrow">La rue du Général de Gaulle, de bas en haut</p>
+    <div class="route" data-fade role="group" aria-label="La rue principale, de bas en haut">
+      <p class="eyebrow">La rue principale, de bas en haut</p>
       <ol class="route__l">
         <li><span class="route__n">Parking P1 Vieille ville</span><span class="route__m">8 min</span></li>
         <li><span class="route__n">Office de tourisme</span><span class="route__m">5 min</span></li>
@@ -683,10 +685,10 @@
   </div>
   <div class="foot__art" aria-hidden="true">
     <img class="foot__house" src="assets/img/gravure-maison-800.webp" width="800" height="1226" alt="" loading="lazy" decoding="async">
-    <img class="stork" src="assets/img/cigogne.webp" width="600" height="398" alt="" loading="lazy" decoding="async">
+    <img class="stork" src="assets/img/cigogne.webp" width="600" height="371" alt="" loading="lazy" decoding="async">
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=202611251300" defer></script>
+<script src="assets/js/main.js?v=202611251543" defer></script>
 </body>
 </html>

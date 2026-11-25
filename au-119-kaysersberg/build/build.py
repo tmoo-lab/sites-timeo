@@ -5,6 +5,7 @@ Usage :  python3 build.py            -> aperçu (non indexé par Google)
          python3 build.py --live     -> version à mettre sur le vrai domaine (indexable)"""
 import json, os, re, shutil, sys, time
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from markupsafe import Markup, escape
 import menu as M
 import strings as ST
 
@@ -79,7 +80,7 @@ def context(lang):
     T = lambda o: deep(o, lambda x: typo(x, lang))
     t = ST.strings(lang)
     # prix repris de la carte (un seul endroit à modifier : menu.py)
-    px = dict(royale=M.find('specialites', 'Choucroute Royale'), classique=M.find('specialites', 'Choucroute Alsacienne'),
+    px = dict(royale=M.find('specialites', 'Choucroute royale'), classique=M.find('specialites', 'Choucroute alsacienne'),
               jarret=M.find('specialites', 'Jarret de porc braisé, frites'), baeckeoffe=M.find('specialites', 'Baeckeoffe'),
               quiche=M.find('specialites', 'Quiche'), filet=M.find('viandes', 'Filet de bœuf'), burger=M.find('burgers', 'Alsacien'),
               gaufre=min(i['price'] for c in M.FOOD if c['id'] == 'gaufres' for i in c['items']),
@@ -109,7 +110,7 @@ def context(lang):
         dict(img='ouverture', kind='a', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g6']),
         dict(img='entree', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g4']),
         dict(img='salle-b', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g8']),
-        dict(img='arche', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g1']),
+        dict(img='ardoise', kind='p', widths=[600, 1000], w=1000, h=1250, sizes=sp, cap=t['g9']),
     ]
     return dict(lang=lang, t=t, a=('' if lang == 'fr' else '../'), rel=rel_links(lang), langs=ST.LANGS,
                 lang_names=ST.LANG_NAMES, lang_path=ST.LANG_PATH, site_url=ST.SITE_URL, share_url=SHARE_URL, preview=not LIVE, ver=VER,
@@ -120,10 +121,55 @@ def context(lang):
                 digestifs=T(M.DIGESTIFS), shared=T(M.SHARED))
 
 
+def not_found():
+    """Page 404 : une seule page pour les trois langues, chemins absolus (elle est servie depuis n'importe quelle adresse)."""
+    T = {l: ST.strings(l) for l in ST.LANGS}
+    h = ''.join('<span lang="%s">%s</span>' % (l, typo(T[l]['nf.h'], l)) for l in ST.LANGS)
+    links = ''.join('<a class="%s" href="%s" hreflang="%s" lang="%s">%s</a>' % ('under', ST.LANG_PATH[l], l, l, typo(T[l]['nf.home'], l)) for l in ST.LANGS)
+    return f"""<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{T['fr']['nf.title']} — Au 119, Kaysersberg</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F0E6D2">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="stylesheet" href="/assets/css/styles.css?v={VER}">
+<style>
+.nf {{ min-height: 100vh; min-height: 100svh; display: grid; place-items: center; padding: calc(var(--bar-h) + 24px) var(--pad) 56px; text-align: center; }}
+.nf__n {{ font-family: var(--serif); font-weight: 800; font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 0; font-size: clamp(132px, 38vw, 380px); line-height: .8; letter-spacing: -.035em; color: var(--red); margin: .12em 0 .2em; }}
+.nf__n span {{ color: var(--ink); }}
+.nf__h {{ display: grid; gap: 6px; font-family: var(--serif); font-weight: 480; font-size: clamp(22px, 3vw, 34px); line-height: 1.2; letter-spacing: -.01em; font-variation-settings: "opsz" 60, "SOFT" 40; }}
+.nf__h span + span {{ font-style: italic; font-size: .72em; color: var(--ink-2); font-variation-settings: "opsz" 30, "SOFT" 100, "WONK" 1; }}
+.nf__l {{ display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 30px; margin-top: 34px; }}
+.nf__t {{ margin-top: 30px; font-size: 14px; color: var(--ink-2); }}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<header class="bar is-solid"><a class="bar__logo" href="/" aria-label="Au 119"><span>Au</span> <b>119</b></a></header>
+<main class="nf">
+  <div>
+    <p class="eyebrow red">404 · Brasserie · Kaysersberg</p>
+    <p class="nf__n" aria-hidden="true"><span>4</span>0<span>4</span></p>
+    <h1 class="nf__h">{h}</h1>
+    <p class="nf__l">{links}</p>
+    <p class="nf__t">119 rue du Général de Gaulle, 68240 Kaysersberg · <a class="tel" href="{ST.PHONE_HREF}">{ST.PHONE_DISPLAY.replace(' ', NB)}</a></p>
+  </div>
+</main>
+</body>
+</html>
+"""
+
+
 def main():
     env = Environment(loader=FileSystemLoader(HERE), autoescape=select_autoescape(['html', 'j2']), trim_blocks=False)
     env.filters['price'] = lambda v: price(v, 'fr')
     env.filters['price2'] = lambda v: price2(v, 'fr')
+    # mots composés (« au-dessus ») : jamais coupés au trait d'union en fin de ligne
+    env.filters['nb'] = lambda v: Markup(re.sub(r'(\w+-\w+)', r'<span class="nb">\1</span>', str(escape(v))))
     tpl = env.get_template('template.html.j2')
     for lang in ST.LANGS:
         env.filters['price'] = lambda v, l=lang: price(v, l)
@@ -138,6 +184,7 @@ def main():
         shutil.copyfile(os.path.join(HERE, name), os.path.join(PUB, 'assets', sub, name))
     open(os.path.join(PUB, 'robots.txt'), 'w').write(
         'User-agent: *\n' + ('Allow: /\nSitemap: %s/sitemap.xml\n' % ST.SITE_URL if LIVE else 'Disallow: /\n'))
+    open(os.path.join(PUB, '404.html'), 'w', encoding='utf-8').write(not_found())
     urls = ''.join('  <url><loc>%s%s</loc></url>\n' % (ST.SITE_URL, ST.LANG_PATH[l]) for l in ST.LANGS)
     open(os.path.join(PUB, 'sitemap.xml'), 'w').write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + '</urlset>\n')

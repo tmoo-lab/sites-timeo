@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """La carte du 119 — reprise de la carte 2026 du restaurant (fichier « 119 carte menu 2026.pdf » du 4 nov. 2026) :
-noms, descriptions et prix à l'identique, avec la traduction anglaise et allemande.
+noms, descriptions et prix à l'identique (seule la casse est harmonisée : « Choucroute alsacienne », « Quiche lorraine »,
+comme dans le reste du site), avec la traduction anglaise et allemande.
 Les desserts, gaufres et glaces ne figurent pas sur ce PDF : ils viennent de l'ancien site (à vérifier).
 Pour changer un prix ou un plat : modifier ici, puis relancer build.py.
 
@@ -11,8 +12,8 @@ NOT_ON_PAPER n'y figurent pas. Passer PAPER_ONLY à True pour n'afficher que ce 
 PAPER_ONLY = False
 NOT_ON_PAPER = {
     ('tartes', 'Chèvre'), ('tartes', 'Forestière'), ('tartes', 'Escargots'), ('tartes', 'Italienne'),
-    ('baguettes', 'Chèvre'), ('crepes-salees', 'Crêpe Italienne'),
-    ('specialites', 'Quiche Lorraine, salade verte'), ('petits', 'Jambon blanc, frites et salade verte'),
+    ('baguettes', 'Chèvre'), ('crepes-salees', 'Crêpe italienne'),
+    ('specialites', 'Quiche lorraine, salade verte'), ('petits', 'Jambon blanc, frites et salade verte'),
 }
 
 
@@ -32,16 +33,16 @@ FOOD = [
         'id': 'specialites', 'tab': 'plats', 'brk': True,
         'title': L('Nos spécialités alsaciennes', 'Our Alsatian specialities', 'Unsere Elsässer Spezialitäten'),
         'items': [
-            I('Choucroute Alsacienne', 22, L('Choucroute, viandes et saucisses, pommes de terre', 'Sauerkraut with meats and sausages, potatoes', 'Sauerkraut mit Fleisch und Würsten, Kartoffeln')),
-            I('Choucroute Royale', 30, L('Choucroute alsacienne avec jarret braisé', 'Alsatian sauerkraut topped with a braised pork knuckle', 'Elsässer Sauerkraut mit geschmorter Schweinshaxe')),
-            I('Baeckeoffe Alsacien, salade verte', 22, L('3 viandes, pommes de terre, légumes, cuits dans du vin', 'Three meats, potatoes and vegetables cooked in wine, green salad', 'Drei Fleischsorten, Kartoffeln und Gemüse, in Wein gegart, grüner Salat')),
-            I('Poêlée Alsacienne et sa salade verte', 18, L('Pommes de terre, oignons, lardons et Munster', 'Pan-fried potatoes, onions, bacon and Munster cheese, green salad', 'Kartoffelpfanne mit Zwiebeln, Speck und Munsterkäse, grüner Salat')),
+            I('Choucroute alsacienne', 22, L('Choucroute, viandes et saucisses, pommes de terre', 'Sauerkraut with meats and sausages, potatoes', 'Sauerkraut mit Fleisch und Würsten, Kartoffeln')),
+            I('Choucroute royale', 30, L('Choucroute alsacienne avec jarret braisé', 'Alsatian sauerkraut topped with a braised pork knuckle', 'Elsässer Sauerkraut mit geschmorter Schweinshaxe')),
+            I('Baeckeoffe alsacien, salade verte', 22, L('3 viandes, pommes de terre, légumes, cuits dans du vin', 'Three meats, potatoes and vegetables cooked in wine, green salad', 'Drei Fleischsorten, Kartoffeln und Gemüse, in Wein gegart, grüner Salat')),
+            I('Poêlée alsacienne et sa salade verte', 18, L('Pommes de terre, oignons, lardons et Munster', 'Pan-fried potatoes, onions, bacon and Munster cheese, green salad', 'Kartoffelpfanne mit Zwiebeln, Speck und Munsterkäse, grüner Salat')),
             I('Gratin de spaetzles au Munster et salade verte', 18, L(None, 'Spaetzle baked with Munster cheese, green salad', 'Spätzle mit Munsterkäse überbacken, grüner Salat')),
             I('Gratin de spaetzles au Munster avec Kassler, salade', 25, L('Kassler : filet de porc fumé', 'With Kassler (smoked pork loin), salad', 'Mit Kassler (geräuchertes Schweinefilet), Salat')),
             I('Kassler, frites, salade', 20, L('Filet de porc fumé · supplément Munster 4 €', 'Smoked pork loin, fries, salad · add Munster cheese €4', 'Geräuchertes Schweinefilet, Pommes frites, Salat · mit Munster +4 €')),
             I('Jarret de porc braisé, frites, salade', 22, L('Supplément Munster 4 €', 'Braised pork knuckle, fries, salad · add Munster cheese €4', 'Geschmorte Schweinshaxe, Pommes frites, Salat · mit Munster +4 €')),
             I('Jarret de porc braisé, choux et pommes de terre', 25, L(None, 'Braised pork knuckle with cabbage and potatoes', 'Geschmorte Schweinshaxe mit Kraut und Kartoffeln')),
-            I('Quiche Lorraine, salade verte', 18, L('Jambon, lardons et salade verte', 'Ham and bacon quiche, green salad', 'Quiche mit Schinken und Speck, grüner Salat')),
+            I('Quiche lorraine, salade verte', 18, L('Jambon, lardons et salade verte', 'Ham and bacon quiche, green salad', 'Quiche mit Schinken und Speck, grüner Salat')),
         ],
     },
     {
@@ -85,8 +86,8 @@ FOOD = [
         'title': L('Crêpes salées', 'Savoury crêpes', 'Herzhafte Crêpes'),
         'items': [
             I(L('Crêpe jambon et fromage', 'Ham and cheese crêpe', 'Crêpe mit Schinken und Käse'), 6),
-            I('Crêpe Alsacienne', 8, L('Jambon, emmental, Munster', 'Ham, Emmental, Munster', 'Schinken, Emmentaler, Munster')),
-            I('Crêpe Italienne', 8, L('Sauce tomate, jambon, emmental', 'Tomato sauce, ham, Emmental', 'Tomatensauce, Schinken, Emmentaler')),
+            I('Crêpe alsacienne', 8, L('Jambon, emmental, Munster', 'Ham, Emmental, Munster', 'Schinken, Emmentaler, Munster')),
+            I('Crêpe italienne', 8, L('Sauce tomate, jambon, emmental', 'Tomato sauce, ham, Emmental', 'Tomatensauce, Schinken, Emmentaler')),
             I('Crêpe au saumon', 9, L('Saumon, emmental, aneth', 'Salmon, Emmental, dill', 'Lachs, Emmentaler, Dill')),
         ],
     },
@@ -96,7 +97,7 @@ FOOD = [
         'items': [
             I('Alsacien', 13, L('Steak, pommes de terre, Munster, oignons, salade, tomates, cornichons, pain', 'Beef patty, potatoes, Munster, onions, lettuce, tomatoes, gherkins, bun', 'Rindfleisch, Kartoffeln, Munster, Zwiebeln, Salat, Tomaten, Gewürzgurken, Brötchen')),
             I('Comté', 13, L('Steak, comté, bacon, oignons, tomates, salade, cornichons, pain', 'Beef patty, Comté cheese, bacon, onions, tomatoes, lettuce, gherkins, bun', 'Rindfleisch, Comté, Bacon, Zwiebeln, Tomaten, Salat, Gewürzgurken, Brötchen')),
-            I('Chicken Burger', 13, L('Poulet tenders, comté, oignons, tomates, salade, sauce barbecue, cornichons, pain', 'Chicken tenders, Comté cheese, onions, tomatoes, lettuce, barbecue sauce, gherkins, bun', 'Hähnchen-Tenders, Comté, Zwiebeln, Tomaten, Salat, Barbecuesauce, Gewürzgurken, Brötchen')),
+            I('Chicken burger', 13, L('Poulet tenders, comté, oignons, tomates, salade, sauce barbecue, cornichons, pain', 'Chicken tenders, Comté cheese, onions, tomatoes, lettuce, barbecue sauce, gherkins, bun', 'Hähnchen-Tenders, Comté, Zwiebeln, Tomaten, Salat, Barbecuesauce, Gewürzgurken, Brötchen')),
             I(L('Salade', 'Salad', 'Salat'), 4),
             I(L('Frites', 'Fries', 'Pommes frites'), 4),
         ],
@@ -294,7 +295,7 @@ HOT = {
         I('Café con panna', 4),
         I(L('Chocolat chaud', 'Hot chocolate', 'Heiße Schokolade'), 4),
         I('Eis-café', 6.5),
-        I(L('Irish coffee · Café Alsacien', 'Irish coffee · Alsatian coffee', 'Irish Coffee · Elsässer Kaffee'), 10),
+        I(L('Irish coffee · Café alsacien', 'Irish coffee · Alsatian coffee', 'Irish Coffee · Elsässer Kaffee'), 10),
         I('Café gourmand', 12, L(None, 'Coffee with mini desserts', 'Kaffee mit kleinen Desserts')),
     ],
 }

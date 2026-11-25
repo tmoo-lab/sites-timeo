@@ -338,17 +338,31 @@
     });
   })();
 
-  /* ------------------------------------------------------------ vidéos : lecture seulement à l'écran */
+  /* ------------------------------------------------------------ films : chargés à l'approche, lus seulement à l'écran, libérés quand ils sont loin */
   (function () {
     var vids = $$('[data-video]');
-    if (reduce || !('IntersectionObserver' in window)) { vids.forEach(function (v) { v.controls = true; }); return; }
+    // sans script, la balise <source> laisse le film lisible à la main ; avec script, c'est nous qui chargeons et libérons
+    vids.forEach(function (v) { var so = $('source', v); if (so) { v.setAttribute('data-src', so.getAttribute('src')); v.removeChild(so); } });
+    function load(v) { if (!v.getAttribute('src')) v.src = v.getAttribute('data-src'); }
+    if (reduce || saveData || !('IntersectionObserver' in window)) {
+      // moins de mouvement ou économie de données : rien ne démarre tout seul ; les grands films gardent un bouton de lecture, les assiettes restent des photos
+      vids.forEach(function (v) { if (v.getAttribute('data-video') !== 'quiet') { load(v); v.controls = true; } });
+      return;
+    }
     var vo = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         var v = e.target;
-        if (e.isIntersecting) { v.setAttribute('data-on', '1'); play(v); } else { v.removeAttribute('data-on'); v.pause(); }
+        if (e.isIntersecting) { v.setAttribute('data-on', '1'); load(v); play(v); } else { v.removeAttribute('data-on'); v.pause(); }
       });
     }, { threshold: 0.25 });
-    vids.forEach(function (v) { vo.observe(v); });
+    // loin de l'écran, le film rend son décodeur (un téléphone n'en a que quelques-uns) : l'affiche, identique à la première image, reste en place
+    var far = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var v = e.target;
+        if (!e.isIntersecting && v.getAttribute('src')) { v.pause(); v.removeAttribute('src'); try { v.load(); } catch (err) {} }
+      });
+    }, { rootMargin: '150% 0px 150% 0px' });
+    vids.forEach(function (v) { vo.observe(v); far.observe(v); });
     var unlock = function () {
       var q = gestureQueue.splice(0, gestureQueue.length);
       q.forEach(function (v) { if (v === heroVid ? (heroVisible && !heroAway) : v.hasAttribute('data-on')) play(v); });
