@@ -183,8 +183,9 @@ ul, ol { padding: 0; list-style: none; }
 .hero__media, .hero__live { position: absolute; inset: 0; }
 .hero__media { transform-origin: 50% 62%; }
 .hero__arch img, .hero__arch video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.hero__video { opacity: 0; transition: opacity .7s ease; }
+.hero__video { opacity: 0; transition: opacity .6s ease; }
 .hero__video.is-playing { opacity: 1; }
+.hero__video.is-playing.is-away { opacity: 0; transition-duration: .4s; }
 /* étiquette « ouvert / fermé » posée sur la photo : deux lignes, elle ne dispute jamais la place au bouton rond */
 .hero__status { position: absolute; z-index: 3; left: 12px; bottom: 12px; display: grid; grid-template-columns: auto auto; column-gap: 7px; row-gap: 1px; padding: 8px 15px 9px 12px; border-radius: 19px; background: var(--paper); font-size: 10.5px; line-height: 1.25; box-shadow: 0 8px 18px -8px rgba(47, 27, 28, .55); }
 .hero__status[hidden] { display: none; }

@@ -139,6 +139,7 @@
 
   /* ------------------------------------------------------------ hero : la gravure, puis la photo, puis le film */
   var hero = $('.hero'), heroLive = $('[data-hero-live]'), heroMedia = $('[data-hero-media]'), heroW = $('.hero__w'), heroVid = $('[data-hero-video]');
+  var heroStarted = false, heroVisible = true, heroAway = false;
   var gestureQueue = [];                                 // vidéos refusées par le navigateur (mode économie d'énergie) : relancées au premier geste
   function play(v) {
     var p; try { p = v.play(); } catch (e) { return; }
@@ -153,20 +154,19 @@
     fontsReady.then(function () { okFont = true; check(); });
     setTimeout(go, 1700);
     if (!heroVid || reduce || saveData) return;
-    var started = false, visible = true;
     function start() {
-      if (started) return; started = true;
+      if (heroStarted) return; heroStarted = true;
       heroVid.addEventListener('playing', function () { heroVid.classList.add('is-playing'); });
       heroVid.src = heroVid.getAttribute('data-src');
       heroVid.load();
-      if (visible) play(heroVid);
+      if (heroVisible && !heroAway) play(heroVid);
     }
     if (d.readyState === 'complete') setTimeout(start, 900); else window.addEventListener('load', function () { setTimeout(start, 900); });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) {
-        visible = es[0].isIntersecting;
-        if (!started) return;
-        if (visible) play(heroVid); else heroVid.pause();
+        heroVisible = es[0].isIntersecting;
+        if (!heroStarted) return;
+        if (heroVisible && !heroAway) play(heroVid); else heroVid.pause();
       }, { threshold: 0.05 }).observe(hero);
     }
   })();
@@ -210,6 +210,12 @@
     if (reduce) return;
     if (heroLive && sy < vh * 1.4) {
       var hp = clamp(sy / (vh * 0.85), 0, 1);
+      // dès qu'on descend, le film s'efface vers la photo fixe : c'est elle, calée au pixel sur la gravure, qui se fond ensuite dans le dessin
+      var away = hp > (heroAway ? 0.07 : 0.13);
+      if (heroVid && away !== heroAway) {
+        heroAway = away; heroVid.classList.toggle('is-away', away);
+        if (heroStarted) { if (away) heroVid.pause(); else if (heroVisible) play(heroVid); }
+      }
       heroLive.style.opacity = (1 - smooth(hp, 0.3, 0.98)).toFixed(3);
       if (heroMedia) heroMedia.style.scale = (1 + hp * 0.07).toFixed(4);
       if (heroW) heroW.style.translate = '0 ' + (-hp * 12).toFixed(2) + '%';
@@ -345,7 +351,7 @@
     vids.forEach(function (v) { vo.observe(v); });
     var unlock = function () {
       var q = gestureQueue.splice(0, gestureQueue.length);
-      q.forEach(function (v) { if (v === heroVid || v.hasAttribute('data-on')) play(v); });
+      q.forEach(function (v) { if (v === heroVid ? (heroVisible && !heroAway) : v.hasAttribute('data-on')) play(v); });
     };
     ['pointerdown', 'touchend', 'keydown'].forEach(function (ev) { window.addEventListener(ev, unlock, { passive: true }); });
   })();
