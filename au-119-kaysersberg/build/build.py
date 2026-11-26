@@ -91,28 +91,22 @@ def context(lang):
     for k in ('tf.p', 'tf.list'): t[k] = t[k].replace('{n}', n)
     t = T(t)
     plates = [
-        dict(img='jarret', big=900, name=t['c2.n'], desc=t['c2.d'], price=px['jarret'], fr=False),
         dict(img='baeckeoffe', big=900, name=t['c4.n'], desc=t['c4.d'], price=px['baeckeoffe'], fr=False),
-        dict(img='quiche', big=900, name=t['c5.n'], desc=t['c5.d'], price=px['quiche'], fr=False),
         dict(img='filet', big=900, name=t['c6.n'], desc=t['c6.d'], price=px['filet'], fr=False),
-        dict(img='burger', big=900, name=t['c7.n'], desc=t['c7.d'], price=px['burger'], fr=False),
         dict(img='gaufre', big=900, name=t['c8.n'], desc=t['c8.d'], price=px['gaufre'], fr=True),
     ]
     plates = [p for p in plates if p['price'] is not None]          # un plat retiré de la carte disparaît aussi de la bande
     for p in plates: p['alt'] = p['name'] + ' — ' + p['desc']
-    marquee = [dict(img=k, name=t['mq.' + k]) for k in ('choucroute', 'tarte', 'jarret', 'baeckeoffe', 'gaufre', 'bieres', 'vins')]
+    marquee = [dict(img=k, name=t['mq.' + k]) for k in ('choucroute', 'tarte', 'baeckeoffe', 'gaufre', 'vins')]
     # galerie : photos redéveloppées depuis les rushs (scripts/r4_stills.py) ; les deux vues en largeur ont un cadrage vertical pour le téléphone
     sp, sl = '(min-width: 700px) 30vw, 46vw', '(min-width: 700px) 56vw, 92vw'
     P = dict(kind='p', widths=[480, 720], w=720, h=900, sizes=sp, mob='')
     gallery = [
         dict(img='g-rouge', kind='l', widths=[640, 960], w=960, h=600, sizes=sl, mob='', cap=t['g5']),
         dict(P, img='g-banquettes', cap=t['g2']),
-        dict(P, img='g-gres', kind='a', cap=t['g6']),
-        dict(img='g-horloge', kind='l', widths=[640, 960], w=960, h=600, sizes=sl, mob='', cap=t['g7']),
-        dict(P, img='g-entree', cap=t['g4']),
         dict(P, img='terrasse', widths=[600, 1000], w=1000, h=1250, cap=t['g3']),
-        dict(P, img='g-paniers', cap=t['g8']),
-        dict(P, img='g-ardoise', cap=t['g9']),
+        dict(P, img='g-gres', cap=t['g6']),
+        dict(P, img='g-entree', cap=t['g4']),
     ]
     lqip = open(os.path.join(HERE, 'hero_lqip.txt')).read().strip()
     return dict(lang=lang, t=t, a=('' if lang == 'fr' else '../'), rel=rel_links(lang), langs=ST.LANGS,

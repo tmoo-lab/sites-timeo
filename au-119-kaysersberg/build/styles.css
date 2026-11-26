@@ -18,7 +18,7 @@
   --line: rgba(47, 27, 28, .18);
   --red: #A31F34;
   --red-2: #7F1627;
-  --ember: #F2A541;
+  --ember: #EBC676;
   --dark: #24120F;
   --serif: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -112,7 +112,7 @@ ul, ol { padding: 0; list-style: none; }
 /* une fois dévoilée et tant qu'elle est à l'écran, la photo vit : un très lent rapproché. Les cadres à film le font seulement si le film ne joue pas. */
 .js .m.in.is-on:not(.m--film) .m__img, .js .m.in.is-on.is-still .m__img { animation: m-drift 22s ease-in-out 1.8s infinite alternate; }
 @keyframes m-drift { from { transform: scale(1); } to { transform: scale(1.06); } }
-.tf .m__cover { background: var(--ember); }
+.tf .m__cover { background: #F7EEDC; }
 .arch { border-radius: 999px 999px 4px 4px; }
 .pillimg { -webkit-mask-image: -webkit-radial-gradient(white, black); }
 
@@ -136,7 +136,7 @@ ul, ol { padding: 0; list-style: none; }
 /* la barre a toujours un fond : en haut de page c'est le papier de la page (invisible), donc rien ne passe jamais sous le logo */
 .bar { position: fixed; top: 0; left: 0; right: 0; z-index: 80; height: var(--bar-h); display: flex; align-items: center; gap: 24px; padding: 0 var(--pad); color: var(--ink); background: var(--paper); border-bottom: 1px solid transparent; transition: background-color .35s, border-color .35s, color .35s; }
 .bar.is-solid { border-bottom-color: var(--line); }
-.bar.is-dark { --ink: #F4E9D4; --ink-2: rgba(244, 233, 212, .78); --line: rgba(244, 233, 212, .22); --red: var(--ember); --paper-3: transparent; background: var(--dark); border-bottom-color: var(--line); }
+.bar.is-dark { --ink: #F7EEDC; --ink-2: rgba(247, 238, 220, .8); --line: rgba(247, 238, 220, .24); --red: var(--ember); --paper-3: transparent; background: #8E1B2D; border-bottom-color: var(--line); }
 .bar.is-clear { background: transparent; border-bottom-color: transparent; }
 .menu-open .bar { --ink: #2F1B1C; --ink-2: rgba(47, 27, 28, .76); --line: rgba(47, 27, 28, .18); --red: #A31F34; --paper-3: #F7F0E2; background: transparent; border-bottom-color: transparent; }
 .bar__logo { font-family: var(--serif); font-size: 23px; line-height: 1; letter-spacing: -.01em; font-variation-settings: "opsz" 40, "SOFT" 60; white-space: nowrap; }
@@ -335,13 +335,15 @@ figcaption { text-wrap: balance; margin-top: 10px; font-size: 11px; font-weight:
 .plate__p span { font-family: var(--sans); font-style: normal; font-size: 10.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
 .plate--end { display: grid; place-items: center; width: clamp(230px, 24vw, 340px); padding-bottom: 80px; }
 
-/* ------------------------------------------------------------------ TARTES FLAMBÉES (section sombre, fondu progressif) */
-/* un seul fond peint d'une traite, du papier à la braise puis au papier : aucun raccord entre blocs, donc aucun filet parasite */
-.tf { --g: clamp(170px, 30vh, 320px); --ink: #F4E9D4; --ink-2: rgba(244, 233, 212, .78); --ink-3: rgba(244, 233, 212, .6); --line: rgba(244, 233, 212, .22); --red: var(--ember); --paper-2: #3A1D17; position: relative; color: var(--ink);
-  background: linear-gradient(to bottom,
-    #F0E6D2 0, #EBCFA4 calc(var(--g) * .14), #D98A4E calc(var(--g) * .34), #9A3A28 calc(var(--g) * .56), #4A1A16 calc(var(--g) * .8), var(--dark) var(--g),
-    var(--dark) calc(100% - var(--g)), #4A1A16 calc(100% - var(--g) * .8), #9A3A28 calc(100% - var(--g) * .56), #D98A4E calc(100% - var(--g) * .34), #EBCFA4 calc(100% - var(--g) * .14), #F0E6D2 100%); }
-.tf::before, .tf::after { content: ""; display: block; height: var(--g); }
+/* ------------------------------------------------------------------ TARTES FLAMBÉES : le rouge du store, bordé de ses festons */
+.tf { --awn: #8E1B2D; --ink: #F7EEDC; --ink-2: rgba(247, 238, 220, .84); --ink-3: rgba(247, 238, 220, .66); --line: rgba(247, 238, 220, .24); --red: var(--ember); --paper-2: #6E1422;
+  position: relative; z-index: 2; color: var(--ink); background: var(--awn); margin: 26px 0; }
+/* festons du store en haut et en bas (demi-cercles de la couleur de la section) */
+.tf::before, .tf::after { content: ""; position: absolute; left: 0; right: 0; height: 22px; pointer-events: none;
+  background-repeat: repeat-x; background-size: 44px 22px; background-position: center; }
+.tf::before { bottom: 100%; background-image: radial-gradient(circle at 50% 100%, var(--awn) 21.5px, transparent 22px); }
+.tf::after { top: 100%; background-image: radial-gradient(circle at 50% 0, var(--awn) 21.5px, transparent 22px); }
+.tf > .tf__in { padding-top: clamp(64px, 10vh, 120px); padding-bottom: clamp(64px, 10vh, 120px); }
 .tf__in { display: grid; gap: 46px; padding: clamp(20px, 4vh, 50px) var(--pad) clamp(30px, 6vh, 70px); max-width: 1440px; margin: 0 auto; }
 .tf .eyebrow { color: var(--ember); margin-bottom: 16px; }
 .tf__p { margin-top: 24px; max-width: 52ch; font-size: 16px; color: var(--ink-2); }
@@ -398,6 +400,26 @@ html:not(.js) [data-tabs] { display: none; }
 .ptable thead th { font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); padding-top: 22px; }
 .ptable thead:first-child th { padding-top: 6px; }
 .ptable thead th:first-child { color: var(--ink); }
+
+/* ------------------------------------------------------------------ LA CARTE, façon carte de brasserie posée sur la table */
+.carte .panels { max-width: 980px; }
+.carte .panel { position: relative; background: #F8F1E3; border-radius: 6px; padding: clamp(30px, 5vw, 64px) clamp(20px, 5vw, 64px); box-shadow: 0 1px 0 rgba(47, 27, 28, .05), 0 22px 50px -28px rgba(47, 27, 28, .35); }
+.carte .panel::before { content: ""; position: absolute; inset: 10px; border: 1px solid rgba(163, 31, 52, .32); border-radius: 3px; pointer-events: none; }
+.carte .panel::after { content: ""; position: absolute; inset: 14px; border: .5px solid rgba(163, 31, 52, .18); border-radius: 2px; pointer-events: none; }
+.carte .cat { text-align: center; margin-bottom: 40px; }
+.carte .cat:last-child { margin-bottom: 0; }
+.carte .cat__t { display: inline-flex; align-items: center; gap: 14px; font-size: clamp(22px, 2.3vw, 30px); color: var(--red); }
+.carte .cat__t::before, .carte .cat__t::after { content: ""; width: 22px; height: 7px; background: radial-gradient(circle, currentColor 2.2px, transparent 2.6px) center / 7px 7px no-repeat, linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat; opacity: .55; }
+.carte .cat__note, .carte .cat__foot { text-align: center; }
+.carte .dishes { margin-top: 18px; border-top: 0; text-align: left; }
+.carte .dish { display: flex; flex-wrap: wrap; align-items: baseline; padding: 9px 0; border-bottom: 0; }
+.carte .dish__n { flex: 1 1 0; min-width: 0; display: flex; align-items: baseline; font-family: var(--serif); font-weight: 500; font-size: 18px; line-height: 1.3; font-variation-settings: "opsz" 30, "SOFT" 30; }
+.carte .dish__n::after { content: ""; flex: 1 1 24px; min-width: 24px; margin: 0 10px; border-bottom: 1.5px dotted rgba(47, 27, 28, .35); transform: translateY(-4px); }
+.carte .dish__p { font-size: 18px; }
+.carte .dish__d { flex-basis: 100%; margin-top: 2px; font-family: var(--serif); font-style: italic; font-size: 14.5px; color: var(--ink-2); font-variation-settings: "opsz" 20, "SOFT" 100, "WONK" 1; }
+.carte .panel__note { border-top: 0; text-align: center; margin-top: 8px; }
+.carte .ptable th, .carte .ptable td { border-color: rgba(47, 27, 28, .12); }
+@media (min-width: 900px) { .carte .cat--compact .dishes { column-gap: 46px; } }
 .carte__legal { margin-top: 26px; padding: 0 var(--pad); text-align: center; font-size: 12px; line-height: 1.7; color: var(--ink-3); }
 
 /* ------------------------------------------------------------------ À BOIRE */
@@ -504,12 +526,10 @@ html:not(.js) [data-tabs] { display: none; }
 /* téléphone : la galerie devient une mosaïque éditoriale (tout se voit, rien n'est coupé par le bord de l'écran) */
 @media (max-width: 699px) {
   .band--gallery { overflow: visible; scroll-snap-type: none; margin-top: 34px; }
-  .band--gallery .band__track { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 14px; width: auto; align-items: start; transform: none !important; }
+  .band--gallery .band__track { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 12px; width: auto; align-items: start; transform: none !important; }
   .band--gallery .shot__img { width: 100%; height: auto; aspect-ratio: 4 / 5; }
   .band--gallery .shot--l { grid-column: 1 / -1; }
   .band--gallery .shot--l .shot__img { aspect-ratio: 16 / 10; }
-  .band--gallery .shot--a .shot__img { border-radius: 999px 999px 4px 4px; }
-  .band--gallery .shot:nth-child(3), .band--gallery .shot:nth-child(6), .band--gallery .shot:nth-child(8) { margin-top: 42px; }
   .band--gallery figcaption { margin-top: 10px; font-size: 9.5px; letter-spacing: .16em; line-height: 1.5; }
   .band--gallery + .band__bar { display: none; }
 }
