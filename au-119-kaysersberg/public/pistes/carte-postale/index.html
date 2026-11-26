@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1d1210">
+<title>Au 119 — Piste A · Carte postale</title>
+<link rel="icon" href="data:,">
+<link rel="preload" as="image" href="../assets/a-back-1440.webp">
+<link rel="preload" as="image" href="../assets/a-front-1440.webp">
+<link rel="preload" as="font" type="font/woff2" href="../fonts/playfair-display-latin-500-normal.woff2" crossorigin>
+<style>
+@font-face{font-family:"Playfair";src:url(../fonts/playfair-display-latin-500-normal.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Playfair";src:url(../fonts/playfair-display-latin-500-italic.woff2) format("woff2");font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:"Inter";src:url(../fonts/inter-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url(../fonts/inter-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Inter";src:url(../fonts/inter-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Inter";src:url(../fonts/inter-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
+
+:root{--ink:#1d1311;--paper:#fdf1e1;--red:#a31f34;--shadow:rgba(16,8,6,.42);--night:#1d1210;
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--paper);background:var(--night)}
+*{box-sizing:border-box}
+html{background:var(--night);-webkit-text-size-adjust:100%}
+body{margin:0;overflow-x:clip;background:var(--night)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;border:0;background:none;color:inherit;cursor:pointer;padding:0}
+
+/* ---------- en-tête fin, toujours là ---------- */
+.site-header{position:fixed;z-index:50;top:0;left:0;right:0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;
+  padding:calc(env(safe-area-inset-top) + 22px) 28px 14px;color:rgba(253,241,225,.92);pointer-events:none;transition:background .5s,backdrop-filter .5s}
+.site-header>*{pointer-events:auto}
+.site-header.solid{background:rgba(29,18,16,.62);-webkit-backdrop-filter:blur(16px) saturate(130%);backdrop-filter:blur(16px) saturate(130%)}
+.logo{justify-self:start;font-family:Playfair;font-size:24px;line-height:1;white-space:nowrap;text-shadow:0 2px 16px rgba(0,0,0,.25)}
+.logo i{font-style:italic}
+.site-nav{display:flex;gap:clamp(22px,2.2vw,40px);font-size:17px;text-shadow:0 2px 16px rgba(0,0,0,.25)}
+.site-nav a{position:relative;padding:4px 0}
+.site-nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.site-nav a:hover::after,.site-nav a.on::after{transform:scaleX(1);transform-origin:left}
+.lang{justify-self:end;display:inline-flex;gap:5px;align-items:center;font-size:15px;font-weight:700;text-shadow:0 2px 16px rgba(0,0,0,.25)}
+
+/* ---------- la scène ---------- */
+.cinema{position:relative;height:calc(100svh + 3000px)}
+.stage{--title-y:0px;--title-s:1;--title-o:1;--intro-y:0px;--intro-o:1;--fac-s:1;--back-b:1;--back-blur:0px;--front-y:0px;--split:0;--front-s:1;
+  --salle-o:0;--salle-s:1;--ck:1;--st:50%;--salle-b:1;--salle-blur:0px;--plat-o:0;--plat-s:1.08;--plat-b:1;--plat-blur:0px;--shade:0;
+  --p2-o:0;--p2-y:58px;--p3-o:0;--p3-y:58px;--sx:420vw;--sv:hidden;--ctl-o:0;--mx:0;--my:0;
+  position:sticky;top:0;height:100svh;min-height:600px;overflow:hidden;isolation:isolate;background:#2a1a16}
+.world{position:absolute;inset:0;overflow:hidden}
+.backdrop{position:absolute;inset:-40px;background:url(../assets/a-full-1440.webp) center/cover;filter:blur(28px) brightness(.55) saturate(1.1);transform:scale(1.1);display:none}
+.facade{position:absolute;left:50%;bottom:0;height:max(100%,calc(100vw * 1.5334));aspect-ratio:2160/3312;
+  transform:translate3d(calc(-50% + var(--mx) * -10px),calc(var(--my) * -4px),0) scale(var(--fac-s));transform-origin:50% 62%;container-type:inline-size;will-change:transform}
+.facade>img,.facade>video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.back{z-index:1;filter:brightness(var(--back-b)) blur(var(--back-blur));animation:breathe 22s ease-in-out infinite alternate}
+@keyframes breathe{to{transform:scale(1.025) translate3d(-.4%,-.3%,0)}}
+.salle{position:absolute;inset:0;z-index:2;opacity:var(--salle-o);background:#24130f;
+  clip-path:polygon(0 calc(var(--ck) * 51.3%),50% calc(var(--ck) * 56.2%),100% calc(var(--ck) * 63.4%),100% 100%,0 100%)}
+.salle img{position:absolute;left:0;right:0;bottom:0;top:var(--st);width:100%;height:calc(100% - var(--st));object-fit:cover;object-position:50% 42%;
+  transform:scale(var(--salle-s));transform-origin:50% 60%;filter:brightness(var(--salle-b)) blur(var(--salle-blur))}
+.plat{z-index:2;opacity:var(--plat-o);transform:scale(calc(var(--plat-s) / var(--fac-s)));transform-origin:50% 60%;filter:brightness(var(--plat-b)) blur(var(--plat-blur))}
+.hero-title{position:absolute;z-index:3;left:50%;bottom:44.6%;margin:0;font-family:Playfair;font-weight:500;font-size:23cqw;line-height:.8;letter-spacing:-.025em;
+  color:var(--paper);white-space:nowrap;text-shadow:0 14px 44px rgba(20,10,8,.38);
+  transform:translate3d(calc(-50% + var(--mx) * 14px),var(--title-y),0) skewY(var(--skew,0deg)) scale(var(--title-s));transform-origin:50% 100%;opacity:var(--title-o);will-change:transform,opacity}
+.hero-title i{font-style:italic;letter-spacing:-.04em;margin-right:.06em}
+.front{z-index:4;transform:translate3d(calc(var(--dir) * var(--split) * 58% + var(--mx) * 18px),var(--front-y),0) scale(var(--front-s));will-change:transform}
+.front-l{--dir:-1;clip-path:inset(0 50% 0 0);transform-origin:50% 100%}
+.front-r{--dir:1;clip-path:inset(0 0 0 50%);transform-origin:50% 100%}
+.edge{position:absolute;z-index:4;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:linear-gradient(transparent 56%,rgba(0,0,0,.35) 60%,rgba(0,0,0,.35));opacity:calc(var(--split) * 8);display:none}
+.topshade{position:absolute;z-index:5;left:0;right:0;top:0;height:170px;background:linear-gradient(rgba(22,12,10,.42),rgba(22,12,10,0));pointer-events:none}
+.ground{position:absolute;z-index:5;left:0;right:0;bottom:0;height:54%;background:linear-gradient(to top,rgba(22,12,10,.86) 0%,rgba(22,12,10,.55) 45%,rgba(22,12,10,0) 100%);opacity:var(--intro-o);pointer-events:none}
+.shade{position:absolute;z-index:6;inset:0;pointer-events:none;opacity:var(--shade);
+  background:linear-gradient(180deg,rgba(29,14,12,.62) 0%,rgba(29,14,12,.34) 46%,rgba(29,14,12,.78) 100%)}
+
+.intro-copy{position:absolute;z-index:9;left:50%;bottom:clamp(40px,9svh,120px);width:min(560px,calc(100vw - 40px));text-align:center;
+  transform:translate3d(-50%,var(--intro-y),0);opacity:var(--intro-o);will-change:transform,opacity}
+.intro-copy p{margin:0 auto;max-width:520px;font-size:1.12rem;font-weight:500;line-height:1.22;text-shadow:0 2px 18px rgba(0,0,0,.45)}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:24px}
+.hero-tags a{min-height:42px;display:inline-flex;align-items:center;padding:0 22px;border-radius:999px;background:var(--paper);color:var(--ink);font-size:.95rem;font-weight:500;box-shadow:0 12px 30px rgba(0,0,0,.2);transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.hero-tags a:active{transform:scale(.96)}
+
+.story-panel{position:absolute;z-index:10;left:50%;width:min(760px,calc(100vw - 42px));text-align:center;pointer-events:none;will-change:transform,opacity}
+.story-panel h2{margin:0;font-family:Playfair;font-weight:500;font-size:4.4rem;line-height:.95;letter-spacing:-.015em;text-shadow:0 16px 38px var(--shadow)}
+.story-panel h2 i{font-style:italic}
+.story-panel p{width:min(520px,100%);margin:24px auto 0;font-size:1.1rem;font-weight:500;line-height:1.24;text-shadow:0 2px 18px rgba(0,0,0,.45)}
+.p2{top:58%;opacity:var(--p2-o);transform:translate3d(-50%,calc(-50% + var(--p2-y)),0)}
+.p3{top:30%;opacity:var(--p3-o);transform:translate3d(-50%,calc(-50% + var(--p3-y)),0)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px;width:min(520px,100%);margin:56px auto 0;text-align:center}
+.facts dt{font-family:Playfair;font-weight:500;font-size:3.6rem;line-height:.9;white-space:nowrap;text-shadow:0 14px 34px var(--shadow)}
+.facts dd{margin:16px 0 0;font-size:1rem;font-weight:500;line-height:1.16;text-shadow:0 2px 18px rgba(0,0,0,.45)}
+.note-button{min-height:50px;margin-top:28px;display:inline-flex;align-items:center;gap:12px;padding:0 10px 0 26px;border-radius:999px;color:var(--ink);background:var(--paper);
+  box-shadow:0 16px 34px rgba(0,0,0,.22);pointer-events:auto;font-weight:500;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.note-button span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--red);color:var(--paper);font-size:17px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.note-button:hover span{transform:translateX(3px)}
+.note-button.ghost{background:transparent;color:var(--paper);box-shadow:inset 0 0 0 1px rgba(253,241,225,.45);padding:0 26px}
+
+/* ---------- les incontournables (slider infini) ---------- */
+.sights{position:absolute;z-index:11;left:0;right:0;top:clamp(128px,21svh,220px);visibility:var(--sv);transform:translate3d(var(--sx),0,0);will-change:transform}
+.sights-head{padding:0 48px 18px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,241,225,.86)}
+.sights-head b{display:block;margin-top:8px;font-family:Playfair;font-weight:500;font-size:2.4rem;letter-spacing:-.01em;text-transform:none;line-height:1;color:var(--paper)}
+.sights-track{display:flex;gap:16px;align-items:stretch;padding-left:48px;transform:translate3d(calc(var(--shift,0px) + var(--drag,0px)),0,0);transition:transform 640ms cubic-bezier(.22,1,.36,1);will-change:transform;touch-action:pan-y}
+.sights-track.is-jumping,.sights-track.dragging{transition:none}
+.card{position:relative;flex:0 0 clamp(330px,22vw,400px);height:230px;padding:24px;overflow:hidden;border:1px solid rgba(253,241,225,.42);border-radius:24px;color:#000;background:var(--paper);
+  box-shadow:0 18px 52px rgba(10,4,2,.25);cursor:pointer;user-select:none;-webkit-user-select:none}
+.card .kick{display:block;margin-bottom:56px;font-size:12px;font-weight:500;line-height:1.05;text-transform:uppercase;letter-spacing:.04em}
+.card img{position:absolute;top:20px;right:20px;width:66px;height:66px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px var(--paper),0 0 0 4px rgba(0,0,0,.12)}
+.card h3{position:absolute;left:24px;right:24px;bottom:calc(24px + 37px + 12px);margin:0;font-size:24px;font-weight:800;line-height:.95;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card p{position:absolute;left:24px;right:24px;bottom:24px;margin:0;font-size:16px;line-height:1.16;max-height:2.32em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.card .price{color:var(--red);font-weight:700}
+.sights-controls{position:absolute;z-index:12;left:48px;top:calc(clamp(128px,21svh,220px) + 300px);display:flex;gap:14px;opacity:var(--ctl-o);pointer-events:none}
+.sights-controls.ready{pointer-events:auto}
+.sight-nav{width:54px;height:54px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink);background:rgba(253,241,225,.94);box-shadow:0 18px 36px rgba(0,0,0,.25);font-size:20px;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.sight-nav:active{transform:scale(.92)}
+
+/* ---------- après la scène ---------- */
+.venir{position:relative;z-index:2;margin-top:-140px;padding:220px 24px 90px;text-align:center;background:linear-gradient(rgba(29,18,16,0),var(--night) 140px)}
+.venir .kick{margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,241,225,.7)}
+.venir h2{margin:18px auto 0;max-width:760px;font-family:Playfair;font-weight:500;font-size:clamp(2.6rem,6vw,4.6rem);line-height:.95;letter-spacing:-.015em}
+.venir .sub{margin:20px auto 0;max-width:520px;font-size:1.06rem;line-height:1.3;color:rgba(253,241,225,.82)}
+.venir .facts{margin-top:54px}
+.venir .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:40px}
+.venir .cta .note-button{margin-top:0}
+.grav{width:min(420px,78vw);aspect-ratio:900/1380;margin:70px auto 0;background:#e8d9c2;opacity:.9;
+  -webkit-mask:url(../../assets/img/facade-gravure-900.webp) center/contain no-repeat;mask:url(../../assets/img/facade-gravure-900.webp) center/contain no-repeat}
+.foot{padding:28px 24px calc(env(safe-area-inset-bottom) + 28px);border-top:1px solid rgba(253,241,225,.12);display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;font-size:13px;color:rgba(253,241,225,.6)}
+.foot a{border-bottom:1px solid rgba(253,241,225,.3)}
+
+@media (max-width:640px){
+  .site-header{grid-template-columns:1fr auto;gap:12px 18px;padding:calc(env(safe-area-inset-top) + 18px) 22px 12px}
+  .site-nav{grid-column:1/-1;grid-row:2;gap:20px;font-size:15px}
+  .hero-title{font-size:23cqw}
+  .intro-copy{bottom:calc(env(safe-area-inset-bottom) + 34px)}
+  .intro-copy p{font-size:1.02rem}
+  .hero-tags{gap:8px;margin-top:20px}
+  .hero-tags a{min-height:38px;padding:0 16px;font-size:.88rem}
+  .story-panel h2{font-size:2.6rem}
+  .story-panel p{font-size:1rem}
+  .p2{top:56%}.p3{top:34%}
+  .facts{gap:18px;margin-top:34px}
+  .facts dt{font-size:2.15rem}
+  .facts dd{font-size:.92rem}
+  .sights{top:clamp(118px,17svh,170px)}
+  .sights-head{padding:0 24px 16px}
+  .sights-head b{font-size:2rem}
+  .sights-track{gap:12px;padding-left:24px}
+  .card{flex-basis:min(80vw,330px);height:220px}
+  .card img{width:58px;height:58px}
+  .sights-controls{left:24px;top:calc(clamp(118px,17svh,170px) + 290px)}
+}
+/* écran large : la façade devient une carte postale posée sur un fond flouté */
+@media (min-aspect-ratio:4/5){
+  .backdrop{display:block}
+  .facade{height:88svh;bottom:5svh;border-radius:28px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.45);transform-origin:50% 60%}
+  .intro-copy{bottom:9svh}
+}
+@media (prefers-reduced-motion:reduce){.back{animation:none}.sights-track{transition:none}}
+</style>
+</head>
+<body>
+<header class="site-header" id="hdr">
+  <a class="logo" href="#cinema"><i>Au</i> 119</a>
+  <nav class="site-nav" aria-label="Menu principal">
+    <a href="#maison" data-go="1200">La maison</a><a href="#carte" data-go="2140">La carte</a><a href="#venir">Venir</a>
+  </nav>
+  <button class="lang" type="button" aria-label="Changer de langue"><span>FR</span><span aria-hidden="true">⌄</span></button>
+</header>
+
+<main>
+<section class="cinema" id="cinema" aria-label="Au 119, la façade puis la salle">
+  <div class="stage" id="stage">
+    <div class="world">
+      <div class="backdrop" aria-hidden="true"></div>
+      <div class="facade" id="facade">
+        <img class="back" src="../assets/a-back-1440.webp" alt="" fetchpriority="high">
+        <div class="salle" aria-hidden="true"><img src="../assets/a-maison-1920.webp" alt="" decoding="async"></div>
+        <video class="plat" muted loop playsinline webkit-playsinline preload="none" poster="../../assets/img/choucroute-film-720.webp" data-src="../../assets/video/choucroute.mp4" aria-hidden="true"></video>
+        <h1 class="hero-title"><i>Au</i>119</h1>
+        <img class="front front-l" src="../assets/a-front-1440.webp" alt="">
+        <img class="front front-r" src="../assets/a-front-1440.webp" alt="La façade du 119 : maison à colombages, store rouge et terrasse sur les pavés">
+      </div>
+      <div class="topshade" aria-hidden="true"></div>
+      <div class="ground" aria-hidden="true"></div>
+      <div class="shade" aria-hidden="true"></div>
+    </div>
+
+    <section class="intro-copy" aria-label="Présentation">
+      <p>La brasserie alsacienne de Kaysersberg, à deux pas du pont fortifié. Cuisine maison, servie toute la journée.</p>
+      <div class="hero-tags"><a href="#carte" data-go="2140">Choucroute royale</a><a href="#carte" data-go="2140">Tartes flambées</a><a href="#carte" data-go="2140">Vins d'Alsace</a></div>
+    </section>
+
+    <section class="story-panel p2" id="maison" aria-label="La maison">
+      <h2>Une maison<br><i>de famille</i></h2>
+      <p>Des banquettes rouges, une arche de grès, une terrasse sur les pavés. On vous reçoit comme à la maison.</p>
+      <dl class="facts">
+        <div><dt>10 h – 18 h</dt><dd>Service continu, tous les jours en saison</dd></div>
+        <div><dt>FR · EN · DE</dt><dd>On vous accueille en trois langues</dd></div>
+      </dl>
+    </section>
+
+    <section class="story-panel p3" id="carte" aria-label="La carte">
+      <h2>La carte<br><i>d'Alsace</i></h2>
+      <p>Choucroute, baeckeoffe, jarret braisé, et neuf tartes flambées qui sortent du four à la commande.</p>
+      <a class="note-button" href="../../#carte">Voir la carte <span>→</span></a>
+    </section>
+
+    <section class="sights" aria-label="Les incontournables">
+      <div class="sights-head">Les incontournables <b>À goûter au 119</b></div>
+      <div class="sights-track" id="track">
+        <article class="card" tabindex="0" role="button"><span class="kick">Plat signature</span><img src="../../assets/img/pill-choucroute-360.webp" alt=""><h3>Choucroute royale</h3><p>Choucroute alsacienne et jarret braisé · <span class="price">30 €</span></p></article>
+        <article class="card" tabindex="0" role="button"><span class="kick">Au four</span><img src="../../assets/img/pill-tarte-360.webp" alt=""><h3>Tarte flambée gratinée</h3><p>Fromage blanc, oignons, lardons, emmental · <span class="price">14 €</span></p></article>
+        <article class="card" tabindex="0" role="button"><span class="kick">Mijoté</span><img src="../../assets/img/pill-baeckeoffe-360.webp" alt=""><h3>Baeckeoffe</h3><p>Trois viandes et légumes cuits dans le vin · <span class="price">22 €</span></p></article>
+        <article class="card" tabindex="0" role="button"><span class="kick">Braisé</span><img src="../../assets/img/med-jarret-240.webp" alt=""><h3>Jarret de porc</h3><p>Choux et pommes de terre · <span class="price">25 €</span></p></article>
+        <article class="card" tabindex="0" role="button"><span class="kick">Au verre</span><img src="../../assets/img/med-vins-240.webp" alt=""><h3>Vins de Kaysersberg</h3><p>Pinot gris, muscat… et vins à emporter</p></article>
+        <article class="card" tabindex="0" role="button"><span class="kick">Pression</span><img src="../../assets/img/med-bieres-240.webp" alt=""><h3>Kaysers'bier</h3><p>La bière du village · dès <span class="price">3,50 €</span></p></article>
+      </div>
+    </section>
+    <div class="sights-controls" id="ctl" aria-label="Défiler les plats">
+      <button class="sight-nav" id="prev" type="button" aria-label="Plat précédent">←</button>
+      <button class="sight-nav" id="next" type="button" aria-label="Plat suivant">→</button>
+    </div>
+  </div>
+</section>
+
+<section class="venir" id="venir" aria-label="Nous trouver">
+  <p class="kick">Nous trouver</p>
+  <h2>119 rue du Général <i style="font-style:italic">de Gaulle</i></h2>
+  <p class="sub">68240 Kaysersberg, sur la rue principale, à deux pas du pont fortifié.</p>
+  <dl class="facts">
+    <div><dt>10 h – 18 h</dt><dd>Tous les jours en saison</dd></div>
+    <div><dt style="font-size:clamp(1.7rem,7vw,3rem)">03 89 27 56 13</dt><dd>Un coup de fil pour réserver</dd></div>
+  </dl>
+  <div class="cta">
+    <a class="note-button" href="https://maps.google.com/?q=Au+119+Kaysersberg">Itinéraire <span>→</span></a>
+    <a class="note-button ghost" href="tel:+33389275613">Appeler</a>
+  </div>
+  <div class="grav" role="img" aria-label="Gravure de la façade du 119"></div>
+</section>
+<footer class="foot">
+  <span>Au 119 · Brasserie alsacienne · Kaysersberg</span>
+  <span>Maquette · piste A (base MotionSites « Mostar ») · <a href="../">les 3 pistes</a></span>
+</footer>
+</main>
+
+<script>
+(() => {
+  const sec = document.getElementById('cinema'), st = document.getElementById('stage'), hdr = document.getElementById('hdr');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ss = (e0, e1, v) => { const x = clamp((v - e0) / (e1 - e0)); return x * x * (3 - 2 * x); };
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const seg = (s, a, b, c, d) => { const en = ss(a, b, s), ex = ss(c, d, s); return { en, ex, ac: en * (1 - ex) }; };
+  const dist = () => clamp(-sec.getBoundingClientRect().top, 0, sec.offsetHeight - innerHeight);
+  let target = 0, smooth = 0, init = false, raf = 0, mX = 0, mY = 0, tX = 0, tY = 0;
+  const vid = st.querySelector('.plat');
+  const set = (k, v) => st.style.setProperty(k, v);
+  // inclinaison du titre = pente du store (calée sur la photo), pour qu'il s'y glisse en perspective
+  set('--skew', '0deg');
+  function update() {
+    raf = 0;
+    target = dist();
+    if (!init || reduce.matches) { smooth = target; init = true; } else smooth = lerp(smooth, target, 0.16);
+    if (Math.abs(smooth - target) < 0.1) smooth = target;
+    mX = lerp(mX, tX, 0.1); mY = lerp(mY, tY, 0.1);
+    const s = smooth;
+    const intro = ss(40, 480, s);
+    const prog = clamp(s / 2400);
+    const doors = Math.pow(ss(380, 780, s), 1.25);         // le store et la terrasse s'écartent comme deux battants
+    const grow = ss(620, 1080, s);                          // la salle, vue par l'arche, s'agrandit jusqu'au plein écran
+    const fS = 1 + prog * 0.03 + grow * 0.22;
+    const p2 = seg(s, 980, 1180, 1400, 1580);
+    const f3 = seg(s, 1500, 1840, 2240, 2420);
+    const sIn = Math.pow(ss(2420, 2880, s), 1.55);
+    const ctl = ss(2780, 2980, s);
+    set('--mx', (reduce.matches ? 0 : mX).toFixed(4)); set('--my', (reduce.matches ? 0 : mY).toFixed(4));
+    set('--title-y', (intro * -54).toFixed(1) + 'px'); set('--title-s', (1 - intro * 0.04).toFixed(4)); set('--title-o', (1 - ss(120, 440, s)).toFixed(3));
+    set('--intro-y', (intro * 80).toFixed(1) + 'px'); set('--intro-o', (1 - intro).toFixed(3));
+    set('--fac-s', fS.toFixed(4));
+    set('--back-b', (1 - grow * 0.45).toFixed(3)); set('--back-blur', (grow * 4).toFixed(2) + 'px');
+    set('--front-y', '0px'); set('--split', doors.toFixed(4)); set('--front-s', (1 + intro * 0.38 + doors * 0.12).toFixed(4));
+    set('--salle-o', (1 - f3.en).toFixed(3)); set('--ck', (1 - ss(700, 1060, s)).toFixed(4)); set('--st', (52 * (1 - grow)).toFixed(3) + '%');
+    set('--salle-s', (1 + grow * 0.06 + p2.ex * 0.05).toFixed(4));
+    set('--salle-b', (1 - p2.en * 0.12 - p2.ex * 0.18).toFixed(3)); set('--salle-blur', (p2.en * 3 + p2.ex * 4).toFixed(2) + 'px');
+    set('--plat-o', f3.en.toFixed(3)); set('--plat-s', (1.1 - f3.en * 0.08).toFixed(4));
+    set('--plat-b', (1 - f3.ex * 0.32).toFixed(3)); set('--plat-blur', (f3.ex * 7).toFixed(2) + 'px');
+    set('--shade', clamp(p2.en * 0.8 + f3.en * 0.2).toFixed(3));
+    set('--p2-o', (p2.ac * (1 - p2.ex)).toFixed(3)); set('--p2-y', (-p2.ex * 86 + (1 - p2.en) * 58).toFixed(1) + 'px');
+    set('--p3-o', (f3.ac * (1 - f3.ex)).toFixed(3)); set('--p3-y', (-f3.ex * 86 + (1 - f3.en) * 58).toFixed(1) + 'px');
+    set('--sx', ((1 - sIn) * 420).toFixed(2) + 'vw'); set('--sv', sIn > 0.01 ? 'visible' : 'hidden');
+    set('--ctl-o', ctl.toFixed(3)); ctlBox.classList.toggle('ready', ctl > 0.98);
+    hdr.classList.toggle('solid', target > sec.offsetHeight - innerHeight - 40);
+    // le film de la choucroute ne tourne que lorsqu'il est à l'écran
+    const want = s > 1300;
+    if (want && !vid.src) { vid.src = vid.dataset.src; }
+    if (want && vid.paused) { const p = vid.play(); if (p && p.catch) p.catch(() => {}); }
+    if (!want && !vid.paused) vid.pause();
+    if (Math.abs(smooth - target) > 0.1 || Math.abs(mX - tX) > 0.001 || Math.abs(mY - tY) > 0.001) req();
+  }
+  function req() { if (!raf) raf = requestAnimationFrame(update); }
+  addEventListener('scroll', req, { passive: true });
+  addEventListener('resize', () => { layout(); req(); });
+  addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; tX = e.clientX / innerWidth - 0.5; tY = e.clientY / innerHeight - 0.5; req(); }, { passive: true });
+  // liens du menu : on descend à l'endroit de l'histoire
+  document.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault(); scrollTo({ top: sec.offsetTop + Number(a.dataset.go), behavior: 'smooth' });
+  }));
+
+  // slider infini (3 jeux de cartes, saut invisible au retour au jeu du milieu) + glisser au doigt
+  const track = document.getElementById('track'), ctlBox = document.getElementById('ctl');
+  const orig = [...track.children], n = orig.length;
+  track.replaceChildren();
+  for (let k = 0; k < 3; k++) orig.forEach((c, i) => { const x = c.cloneNode(true); x.dataset.i = k * n + i; if (k !== 1) x.setAttribute('aria-hidden', 'true'); track.appendChild(x); });
+  const cards = [...track.children]; let active = n;
+  function layout() {
+    const w = cards[0].offsetWidth, gap = parseFloat(getComputedStyle(track).columnGap || '0');
+    track.style.setProperty('--shift', (-(w + gap) * active) + 'px');
+    cards.forEach((c, i) => c.classList.toggle('is-active', i === active));
+  }
+  const move = d => { active += d; layout(); };
+  function jump(i) { track.classList.add('is-jumping'); active = i; layout(); requestAnimationFrame(() => requestAnimationFrame(() => track.classList.remove('is-jumping'))); }
+  track.addEventListener('transitionend', e => { if (e.target !== track) return; if (active >= n * 2) jump(active - n); else if (active < n) jump(active + n); });
+  document.getElementById('prev').onclick = () => move(-1);
+  document.getElementById('next').onclick = () => move(1);
+  cards.forEach(c => { c.addEventListener('click', () => { if (moved) return; active = Number(c.dataset.i); layout(); });
+    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); active = Number(c.dataset.i); layout(); } }); });
+  let x0 = null, y0 = 0, dx = 0, moved = false, horiz = null;
+  track.addEventListener('pointerdown', e => { x0 = e.clientX; y0 = e.clientY; dx = 0; moved = false; horiz = null; });
+  addEventListener('pointermove', e => {
+    if (x0 === null) return;
+    const ddx = e.clientX - x0, ddy = e.clientY - y0;
+    if (horiz === null && Math.hypot(ddx, ddy) > 8) horiz = Math.abs(ddx) > Math.abs(ddy);
+    if (!horiz) return;
+    dx = ddx; moved = Math.abs(dx) > 6; track.classList.add('dragging'); track.style.setProperty('--drag', dx + 'px');
+  }, { passive: true });
+  const end = () => {
+    if (x0 === null) return;
+    track.classList.remove('dragging'); track.style.setProperty('--drag', '0px');
+    if (horiz && Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
+    x0 = null; setTimeout(() => { moved = false; }, 0);
+  };
+  addEventListener('pointerup', end); addEventListener('pointercancel', end);
+  layout(); req();
+})();
+</script>
+</body>
+</html>

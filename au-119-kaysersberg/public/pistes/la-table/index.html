@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#120c0a">
+<title>Au 119 — Piste B · La table</title>
+<link rel="icon" href="data:,">
+<link rel="preload" as="image" href="../../assets/img/choucroute-film-720.webp">
+<link rel="preload" as="font" type="font/woff2" href="../fonts/instrument-serif-latin-400-normal.woff2" crossorigin>
+<style>
+@font-face{font-family:"Instrument Serif";src:url(../fonts/instrument-serif-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Instrument Serif";src:url(../fonts/instrument-serif-latin-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Luxurious Script";src:url(../fonts/luxurious-script-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Manrope";src:url(../fonts/manrope-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Open Sans";src:url(../fonts/open-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Open Sans";src:url(../fonts/open-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}
+:root{--bg:#120c0a;--bg2:#1b1210;--cream:#f6efe4;--red:#a31f34;--red2:#c22d45;--mute:rgba(246,239,228,.62);--line:rgba(246,239,228,.14);--e:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+html,body{overflow-x:clip}
+body{font-family:"Open Sans",system-ui,sans-serif;background:var(--bg);color:var(--cream);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}ul{list-style:none}button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.acc{font-family:"Instrument Serif",serif;font-weight:400}.man{font-family:Manrope,sans-serif;font-weight:500}.lux{font-family:"Luxurious Script",cursive;font-weight:400}
+
+/* ---------- barre du haut : transparente, puis noire floutée ---------- */
+nav.top{position:fixed;z-index:20;top:0;left:0;right:0;display:flex;align-items:center;gap:28px;padding:calc(env(safe-area-inset-top) + 14px) 18px 12px;transition:background .35s,padding .35s,box-shadow .35s}
+nav.top.s{background:rgba(10,6,5,.88);-webkit-backdrop-filter:blur(40px);backdrop-filter:blur(40px);box-shadow:0 4px 18px rgba(0,0,0,.25);padding-top:calc(env(safe-area-inset-top) + 8px);padding-bottom:8px}
+.brand{font-size:42px;line-height:1;transition:font-size .35s;white-space:nowrap}
+nav.top.s .brand{font-size:34px}
+.links{display:flex;gap:30px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.links a{position:relative;padding:6px 0}
+.links a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--red2);transform:scaleX(0);transform-origin:right;transition:transform .45s var(--e)}
+.links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-r{margin-left:auto;display:flex;align-items:center;gap:10px}
+.lang{display:flex;font-size:10px;font-weight:600}.lang span{padding:5px 8px;background:rgba(0,0,0,.35)}.lang span.on{background:var(--red);color:#fff}
+.round{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(10,6,5,.42);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:inset 0 0 0 1px rgba(246,239,228,.22);transition:background .3s}
+.round:hover{background:var(--red)}
+.round svg{width:17px;height:17px}
+.burger i{display:block;width:16px;height:1.5px;background:currentColor;margin:3px 0}
+
+/* ---------- héros : trois films révélés par une ellipse au défilement ---------- */
+.hero-wrap{position:relative;height:calc(100svh + 150svh);background:var(--bg)}
+.hero{position:sticky;top:0;height:100svh;overflow:hidden}
+.slide{position:absolute;inset:0;overflow:hidden;background:#24140f}
+.slide video,.slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slide[data-i="0"]{z-index:1}.slide[data-i="1"]{z-index:2}.slide[data-i="2"]{z-index:3}
+.slide[data-i="1"],.slide[data-i="2"]{clip-path:ellipse(0% 0% at 50% 50%)}
+.veil{position:absolute;inset:0;z-index:4;pointer-events:none;background:linear-gradient(180deg,rgba(12,7,6,.62) 0%,rgba(12,7,6,0) 30%,rgba(12,7,6,0) 52%,rgba(12,7,6,.82) 100%)}
+.sub{position:absolute;z-index:5;left:0;right:0;top:0;padding-top:calc(env(safe-area-inset-top) + 92px);text-align:center;font-size:clamp(84px,24vw,150px);line-height:1;pointer-events:none;text-shadow:0 6px 40px rgba(0,0,0,.35)}
+.h1w{position:absolute;z-index:5;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 44px);padding:0 16px;overflow:hidden;pointer-events:none}
+.hero h1{font-size:40px;line-height:1.06;letter-spacing:-.01em;text-align:center;text-transform:uppercase}
+.cap{position:absolute;z-index:5;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 190px);display:grid;justify-items:center;pointer-events:none}
+.cap span{grid-area:1/1;font-size:11px;letter-spacing:.22em;text-transform:uppercase;display:flex;align-items:center;gap:12px;opacity:0;transform:translateY(8px);transition:opacity .6s var(--e),transform .6s var(--e)}
+.cap span::before,.cap span::after{content:"";width:22px;height:1px;background:rgba(246,239,228,.6)}
+.cap span.on{opacity:1;transform:none}
+.cap b{font-weight:500;color:#fff}
+/* entrée du titre : d'un seul bloc, qui monte et se précise */
+.js .hero h1,.js .sub{opacity:0;transform:translateY(42px);filter:blur(10px)}
+.ready .hero h1,.ready .sub{opacity:1;transform:none;filter:none;transition:opacity 1.2s var(--e),transform 1.2s var(--e),filter 1.2s var(--e)}
+.ready .sub{transition-delay:.35s}
+
+/* ---------- la carte en images (grille 3:4) ---------- */
+.gal{padding:84px 0 40px;display:flex;flex-direction:column;align-items:center;background:var(--bg)}
+.gal-head{text-align:center;margin-bottom:38px;padding:0 20px}
+.gal-head .lux{font-size:44px;line-height:1;color:var(--red2)}
+.gal-head h2{font-size:34px;line-height:1.05;text-transform:uppercase;margin-top:6px}
+.grid{width:90%;display:grid;grid-template-columns:repeat(2,1fr);column-gap:8px;row-gap:30px}
+.it{padding:4px}
+.it.w{grid-column:span 2}
+.ph{position:relative;overflow:hidden;aspect-ratio:3/4;background:#24140f;clip-path:ellipse(0% 0% at 50% 55%);transition:clip-path 1.3s var(--e)}
+.it.w .ph{aspect-ratio:3/2}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.32);transition:transform 2.2s var(--e)}
+.it.in .ph{clip-path:ellipse(150% 150% at 50% 55%)}
+.it.in .ph img{transform:scale(1);animation:drift 14s ease-in-out 2.2s infinite alternate}
+@keyframes drift{to{transform:scale(1.07) translate3d(-1%,-1%,0)}}
+@media (hover:hover){.it:hover .ph img{transform:scale(1.2);transition:transform 6s cubic-bezier(.22,.61,.36,1);animation:none}}
+.it p{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:13.5px;line-height:1.3;opacity:0;transform:translateY(10px);transition:opacity .9s var(--e) .35s,transform .9s var(--e) .35s}
+.it.in p{opacity:1;transform:none}
+.it p em{font-style:normal;color:var(--mute);white-space:nowrap}
+
+/* ---------- la maison ---------- */
+.about{padding:80px 24px 72px;display:flex;flex-direction:column;align-items:center;background:var(--bg)}
+.about h3{font-size:46px;line-height:1;color:var(--red2);margin-bottom:22px}
+.about .bt{max-width:980px;text-transform:uppercase;font-size:25px;line-height:36px;text-align:center;transform-origin:0 50%;
+  transform:rotate(calc(var(--rv,1) * 3deg));opacity:calc(1 - var(--rv,1) * .78);filter:blur(calc(var(--rv,1) * 4px))}
+.pill{display:inline-flex;align-items:center;gap:14px;margin-top:38px;padding:7px 7px 7px 24px;border-radius:999px;background:var(--cream);color:#140c0a;font-size:14px;letter-spacing:.02em;transition:background .3s,color .3s}
+.pill span{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--red);color:#fff;transition:transform .45s var(--e)}
+.pill:hover span{transform:translateX(3px) rotate(-45deg)}
+.pill.ghost{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1px rgba(246,239,228,.4)}
+.logos{margin-top:64px;width:100%;overflow:hidden;position:relative}
+.logos::before,.logos::after{content:"";position:absolute;top:0;bottom:0;width:80px;z-index:2}
+.logos::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}.logos::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.track{display:flex;width:max-content;animation:marquee 60s linear infinite}
+.track span{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,239,228,.42);white-space:nowrap;margin-right:44px}
+.track span::before{content:"✦";margin-right:44px;color:var(--red2);opacity:.8}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ---------- venir ---------- */
+.part{position:relative;display:flex;flex-direction:column;align-items:center;gap:40px;padding:110px 0 96px;overflow:hidden;isolation:isolate}
+.part .bgimg{position:absolute;inset:-8% 0;z-index:-2;width:100%;height:116%;object-fit:cover;transform:translate3d(0,var(--py,0px),0) scale(1.06)}
+.part::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--bg) 0%,rgba(18,12,10,.55) 22%,rgba(18,12,10,.62) 70%,var(--bg) 100%)}
+.part h2{font-size:30px;line-height:1.3;text-transform:uppercase;text-align:center;padding:0 16px}
+.part h2 i{font-style:italic;text-transform:none;font-size:1.15em}
+.cards{width:90%;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.card{background:rgba(8,5,4,.9);padding:24px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;transform:translateY(80px);opacity:.001;transition:transform .8s var(--e),opacity .8s var(--e)}
+.card.in{transform:none;opacity:1}
+.card svg{width:40px;height:40px}
+.card p{font-size:12.5px;letter-spacing:.02em;line-height:1.4}
+.card b{display:block;font-family:"Instrument Serif",serif;font-weight:400;font-size:21px;letter-spacing:0;margin-bottom:2px}
+.spin{transform-origin:24px 24px;animation:sp 8s linear infinite}.spin.fast{animation-duration:1.4s}
+@keyframes sp{to{transform:rotate(360deg)}}
+.pul{transform-origin:24px 24px;animation:pu 2.4s ease-in-out infinite}
+@keyframes pu{50%{transform:scale(.86)}}
+.sway{transform-origin:24px 40px;animation:sw 3.2s ease-in-out infinite alternate}
+@keyframes sw{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+.addr{text-align:center;font-size:14px;line-height:1.55;color:var(--mute)}
+.addr strong{display:block;color:var(--cream);font-family:"Instrument Serif",serif;font-weight:400;font-size:24px;letter-spacing:.01em}
+.ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.ctas .pill{margin-top:0}
+
+/* ---------- pied de page ---------- */
+footer{background:var(--bg2);color:var(--cream)}
+.ft{padding:56px 24px 36px;display:flex;flex-direction:column;gap:36px}
+.ft .ph1{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
+.ft .em{display:block;margin-top:8px;font-family:"Instrument Serif",serif;font-size:30px}
+.cols{display:flex;gap:56px}.cols h4{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin-bottom:12px;font-weight:600}
+.cols a{display:block;font-size:15px;margin-bottom:8px}.cols a:hover{color:var(--red2)}
+.bot{background:#0a0605;padding:16px 24px calc(env(safe-area-inset-bottom) + 16px);display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(246,239,228,.42)}
+.bot a{text-decoration:underline;text-underline-offset:3px}
+
+@media (min-width:768px){
+  nav.top{padding:calc(env(safe-area-inset-top) + 18px) 40px 16px}
+  .hero h1{font-size:7.4vw;line-height:1;white-space:nowrap;letter-spacing:-.035em}
+  .h1w{bottom:-1.1vw;padding:0}
+  .sub{font-size:6vw;padding-top:120px}
+  .cap{bottom:calc(7.4vw + 40px)}
+  .grid{width:70%;grid-template-columns:repeat(4,1fr);row-gap:40px}
+  .about{padding:130px 18%}
+  .about .bt{font-size:40px;line-height:56px}
+  .part h2{font-size:44px}
+  .cards{width:64%;grid-template-columns:repeat(4,1fr)}
+  .ft{flex-direction:row;justify-content:space-between;padding:72px 64px 56px}
+  .bot{flex-direction:row;justify-content:space-between;padding:16px 64px}
+}
+@media (max-width:767px){.links,.lang{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
+</style>
+<script>document.documentElement.className = "js";</script>
+</head>
+<body>
+<nav class="top" id="nav">
+  <a class="brand lux" href="#top">Au 119</a>
+  <div class="links"><a href="#carte">La carte</a><a href="#maison">La maison</a><a href="#venir">Venir</a></div>
+  <div class="nav-r">
+    <div class="lang"><span class="on">FR</span><span>EN</span><span>DE</span></div>
+    <a class="round" href="tel:+33389275613" aria-label="Appeler le 03 89 27 56 13"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg></a>
+    <button class="round burger" type="button" aria-label="Menu"><span><i></i><i></i></span></button>
+  </div>
+</nav>
+
+<div class="hero-wrap" id="top">
+  <section class="hero" id="hero" aria-label="Au 119">
+    <div class="slide" data-i="2"><video muted loop playsinline webkit-playsinline preload="none" poster="../assets/b-cocktails-poster.webp" data-src="../assets/b-cocktails.mp4" aria-hidden="true"></video></div>
+    <div class="slide" data-i="1"><video muted loop playsinline webkit-playsinline preload="none" poster="../../assets/img/tarte-film-720.webp" data-src="../../assets/video/tarte-flambee.mp4" aria-hidden="true"></video></div>
+    <div class="slide" data-i="0"><video muted loop playsinline webkit-playsinline autoplay preload="auto" poster="../../assets/img/choucroute-film-720.webp" src="../../assets/video/choucroute.mp4" aria-hidden="true"></video></div>
+    <div class="veil"></div>
+    <div class="sub lux">Au 119</div>
+    <div class="cap man" aria-hidden="true">
+      <span class="on" data-c="0"><b>Choucroute royale</b>&nbsp;· 30 €</span>
+      <span data-c="1"><b>Tartes flambées</b>&nbsp;· au four</span>
+      <span data-c="2"><b>Cocktails</b>&nbsp;· & vins d'Alsace</span>
+    </div>
+    <div class="h1w"><h1 class="acc">Brasserie alsacienne à Kaysersberg</h1></div>
+  </section>
+</div>
+
+<section class="gal" id="carte" aria-label="La carte en images">
+  <div class="gal-head"><div class="lux">à la carte</div><h2 class="acc">Les classiques du 119</h2></div>
+  <div class="grid" id="grid">
+    <div class="it"><div class="ph"><img src="../../assets/img/choucroute-film-720.webp" alt="Choucroute royale au jarret braisé" loading="lazy" decoding="async"></div><p class="man">Choucroute royale <em>30 €</em></p></div>
+    <div class="it"><div class="ph"><img src="../../assets/img/tarte-film-720.webp" alt="Tarte flambée sortie du four" loading="lazy" decoding="async"></div><p class="man">Tarte flambée gratinée <em>14 €</em></p></div>
+    <div class="it"><div class="ph"><img src="../../assets/img/plat-baeckeoffe-720.webp" alt="Baeckeoffe et sa salade" loading="lazy" decoding="async"></div><p class="man">Baeckeoffe <em>22 €</em></p></div>
+    <div class="it"><div class="ph"><img src="../../assets/img/plat-filet-720.webp" alt="Filet de bœuf, frites et légumes" loading="lazy" decoding="async"></div><p class="man">Filet de bœuf <em>28 €</em></p></div>
+    <div class="it w"><div class="ph"><img src="../../assets/img/g-rouge-960.webp" alt="La salle rouge et son arche de grès" loading="lazy" decoding="async"></div><p class="man">La salle rouge, sous l'arche de grès <em>Kaysersberg</em></p></div>
+    <div class="it"><div class="ph"><img src="../../assets/img/plat-gaufre-720.webp" alt="Gaufre et coupe glacée" loading="lazy" decoding="async"></div><p class="man">Gaufres <em>dès 3,50 €</em></p></div>
+    <div class="it"><div class="ph"><img src="../../assets/img/verre-vins-720.webp" alt="Vins d'Alsace à emporter" loading="lazy" decoding="async"></div><p class="man">Vins d'Alsace <em>à emporter</em></p></div>
+  </div>
+</section>
+
+<section class="about" id="maison" aria-label="La maison">
+  <h3 class="lux">Notre maison</h3>
+  <p class="bt acc" id="bt">Une brasserie de famille sur la rue principale de Kaysersberg, à deux pas du pont fortifié. On y sert la cuisine d'Alsace toute la journée, et des tartes flambées qui sortent du four à la commande.</p>
+  <a class="pill man" href="../../#carte">Voir toute la carte <span>→</span></a>
+  <div class="logos"><div class="track" id="track"></div></div>
+</section>
+
+<section class="part" id="venir" aria-label="Venir au 119">
+  <img class="bgimg" id="pimg" src="../../assets/img/g-rouge-960.webp" alt="" loading="lazy" decoding="async">
+  <h2 class="acc">Venir au 119<br><i>à deux pas du pont fortifié</i></h2>
+  <div class="cards">
+    <div class="card"><svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><circle cx="24" cy="24" r="17"/><g class="spin"><path d="M24 24V12"/></g><g class="spin fast"><path d="M24 24l7 4"/></g></svg><p><b>10 h – 18 h</b>Service continu</p></div>
+    <div class="card"><svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g class="sway"><path d="M8 22a16 16 0 0 1 32 0z"/><path d="M24 6v34"/></g><path d="M14 42h20"/></svg><p><b>Terrasse</b>Sur les pavés</p></div>
+    <div class="card"><svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g class="pul"><path d="M21 5h6v8c4 3 5 6 5 10v19H16V23c0-4 1-7 5-10z"/><path d="M16 27h16"/></g></svg><p><b>Vins à emporter</b>Les vins d'ici</p></div>
+    <div class="card"><svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><path class="pul" d="M42 22a16 13 0 0 1-23 12L9 38l3-8a13 13 0 0 1-4-8c0-7 7-13 17-13s17 6 17 13z"/></svg><p><b>FR · EN · DE</b>On parle votre langue</p></div>
+  </div>
+  <div class="addr"><strong>119 rue du Général de Gaulle</strong>68240 Kaysersberg · tous les jours en saison</div>
+  <div class="ctas"><a class="pill man" href="https://maps.google.com/?q=Au+119+Kaysersberg">Itinéraire <span>→</span></a><a class="pill ghost man" href="tel:+33389275613">03 89 27 56 13</a></div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div><div class="ph1 man">Réservations</div><a class="em" href="tel:+33389275613">03 89 27 56 13</a></div>
+    <div class="cols"><div><h4>Naviguer</h4><a href="#carte">La carte</a><a href="#maison">La maison</a><a href="#venir">Venir</a></div><div><h4>Adresse</h4><a href="https://maps.google.com/?q=Au+119+Kaysersberg">119 rue du Général<br>de Gaulle, Kaysersberg</a></div></div>
+  </div>
+  <div class="bot"><span>© 2026 Au 119 · Brasserie alsacienne</span><span>Maquette · piste B (base MotionSites « Cinematic Landing ») · <a href="../">les 3 pistes</a></span></div>
+</footer>
+
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nav = $('#nav');
+  /* héros : chaque film suivant s'ouvre en ellipse depuis le centre (courbe cubique d'entrée-sortie) */
+  var hw = $('#top'), slides = {}, vids = [];
+  document.querySelectorAll('.slide').forEach(function (s) { slides[s.dataset.i] = s; vids[s.dataset.i] = s.querySelector('video'); });
+  var caps = document.querySelectorAll('.cap span');
+  function ease(p) { return p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; }
+  var cur = -1;
+  function play(v, on) {
+    if (on) { if (!v.src) v.src = v.dataset.src; if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } }
+    else if (!v.paused) v.pause();
+  }
+  var raf = 0;
+  function frame() {
+    raf = 0;
+    nav.classList.toggle('s', scrollY > 50);
+    var vh = innerHeight, y = Math.max(0, scrollY - hw.offsetTop), per = 0.75 * vh, top = 0;
+    for (var i = 1; i < 3; i++) {
+      var lp = Math.min(1, Math.max(0, (y - (i - 1) * per) / per)), e = ease(lp);
+      slides[i].style.clipPath = lp <= 0 ? 'ellipse(0% 0% at 50% 50%)' : 'ellipse(' + (5 + e * 150) + '% ' + (8 + e * 150) + '% at 50% 50%)';
+      if (lp > 0.35) top = i;
+    }
+    if (top !== cur) { cur = top; caps.forEach(function (c) { c.classList.toggle('on', Number(c.dataset.c) === top); }); }
+    var inHero = y < 2.6 * vh;
+    play(vids[0], inHero && y < 1.55 * per); play(vids[1], inHero && y > 0.05 * per && y < 2 * per); play(vids[2], inHero && y > 1.05 * per);
+    /* texte de la maison : le bloc se redresse et se précise d'un seul tenant */
+    var bt = $('#bt'), r = bt.getBoundingClientRect();
+    var k = Math.min(1, Math.max(0, (vh * 0.98 - r.top) / (vh * 0.55)));
+    bt.style.setProperty('--rv', (1 - k).toFixed(3));
+    /* fond de « Venir » : léger parallaxe */
+    var pi = $('#pimg'), pr = pi.parentNode.getBoundingClientRect();
+    if (pr.top < vh && pr.bottom > 0) pi.style.setProperty('--py', ((pr.top + pr.height / 2 - vh / 2) * -0.12).toFixed(1) + 'px');
+  }
+  function req() { if (!raf) raf = requestAnimationFrame(frame); }
+  addEventListener('scroll', req, { passive: true }); addEventListener('resize', req); frame();
+  /* galerie et cartes : révélation à l'entrée dans l'écran */
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -12% 0px' });
+  document.querySelectorAll('.it').forEach(function (el, i) { el.style.transitionDelay = (i % 2) * 0.08 + 's'; el.querySelector('.ph').style.transitionDelay = (i % 2) * 0.08 + 's'; io.observe(el); });
+  document.querySelectorAll('.card').forEach(function (el, i) { el.style.transitionDelay = (i * 0.12) + 's'; io.observe(el); });
+  /* bandeau des spécialités */
+  var P = ['Choucroute', 'Baeckeoffe', 'Jarret braisé', 'Spätzle au Munster', 'Tartes flambées', "Kaysers'bier", 'Pinot gris', 'Muscat', 'Gewurztraminer', 'Kougelhopf glacé'];
+  var h = P.map(function (p) { return '<span>' + p + '</span>'; }).join(''); $('#track').innerHTML = h + h;
+  requestAnimationFrame(function () { var t = $('#track'); t.style.animationDuration = (t.scrollWidth / 2 / 60) + 's'; });
+  /* entrée du héros */
+  var first = vids[0];
+  var go = function () { document.documentElement.classList.add('ready'); };
+  if (reduce) go(); else { setTimeout(go, 120); }
+  if (first) { var p = first.play(); if (p && p.catch) p.catch(function () {}); }
+})();
+</script>
+</body>
+</html>
