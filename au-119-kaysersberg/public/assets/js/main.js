@@ -133,6 +133,7 @@
      Textes : d'un bloc. Photos : un rideau se lève, mais seulement sur une image réellement chargée. */
   var revealSel = '[data-fade], [data-lines], [data-rise], [data-sticker], .band';
   var medias = $$('[data-m]');
+  function slider(m) { var b = m.closest('.band'); return !!b && getComputedStyle(b).overflowX !== 'visible'; }
   function eager(scope) { $$('img[loading="lazy"]', scope).forEach(function (im) { im.loading = 'eager'; }); }
   // chaque cadre sait quand sa photo est arrivée : une image en retard (réseau lent) entre en fondu au lieu de surgir
   medias.forEach(function (m) {
@@ -159,7 +160,7 @@
       return;
     }
     el.classList.add('in');
-    if (el.classList.contains('band')) $$('[data-m]', el).forEach(reveal);   // toute la bande s'ouvre d'un coup, cartes hors champ comprises
+    if (el.classList.contains('band')) $$('[data-m]', el).forEach(function (m) { if (slider(m)) reveal(m); });   // toute la bande s'ouvre d'un coup, cartes hors champ comprises
   }
   if (hasIO && !reduce) {
     var io = new IntersectionObserver(function (es) {
@@ -170,12 +171,12 @@
       es.forEach(function (e) { if (e.isIntersecting) { ioM.unobserve(e.target); reveal(e.target); } });
     }, { threshold: 0, rootMargin: '0px 0px 6% 0px' });
     $$(revealSel).forEach(function (el) { (el.classList.contains('band') ? ioM : io).observe(el); });
-    medias.forEach(function (m) { if (!m.closest('.band')) ioM.observe(m); });
+    medias.forEach(function (m) { if (!slider(m)) ioM.observe(m); });
     // un écran d'avance : les photos commencent à se charger avant d'arriver
     var pre = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { pre.unobserve(e.target); eager(e.target); } });
     }, { rootMargin: '110% 0px 110% 0px' });
-    medias.forEach(function (m) { if (!m.closest('.band')) pre.observe(m); });
+    medias.forEach(function (m) { if (!slider(m)) pre.observe(m); });
     $$('.band').forEach(function (b) { pre.observe(b); });
     // à l'écran, la photo vit (très lent rapproché, voir la feuille de style) ; hors champ, elle se repose
     var onScreen = new IntersectionObserver(function (es) {

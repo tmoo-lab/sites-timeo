@@ -102,15 +102,15 @@ def context(lang):
     for p in plates: p['alt'] = p['name'] + ' — ' + p['desc']
     marquee = [dict(img=k, name=t['mq.' + k]) for k in ('choucroute', 'tarte', 'jarret', 'baeckeoffe', 'gaufre', 'bieres', 'vins')]
     # galerie : photos redéveloppées depuis les rushs (scripts/r4_stills.py) ; les deux vues en largeur ont un cadrage vertical pour le téléphone
-    sp, sl = '(min-width: 700px) 30vw, 66vw', '(min-width: 700px) 56vw, 66vw'
+    sp, sl = '(min-width: 700px) 30vw, 46vw', '(min-width: 700px) 56vw, 92vw'
     P = dict(kind='p', widths=[480, 720], w=720, h=900, sizes=sp, mob='')
     gallery = [
+        dict(img='g-rouge', kind='l', widths=[640, 960], w=960, h=600, sizes=sl, mob='', cap=t['g5']),
         dict(P, img='g-banquettes', cap=t['g2']),
-        dict(img='g-rouge', kind='l', widths=[640, 960], w=960, h=600, sizes=sl, mob='g-rouge-p', cap=t['g5']),
-        dict(P, img='terrasse', widths=[600, 1000], w=1000, h=1250, cap=t['g3']),
         dict(P, img='g-gres', kind='a', cap=t['g6']),
-        dict(img='g-horloge', kind='l', widths=[640, 960], w=960, h=600, sizes=sl, mob='g-horloge-p', cap=t['g7']),
+        dict(img='g-horloge', kind='l', widths=[640, 960], w=960, h=600, sizes=sl, mob='', cap=t['g7']),
         dict(P, img='g-entree', cap=t['g4']),
+        dict(P, img='terrasse', widths=[600, 1000], w=1000, h=1250, cap=t['g3']),
         dict(P, img='g-paniers', cap=t['g8']),
         dict(P, img='g-ardoise', cap=t['g9']),
     ]
