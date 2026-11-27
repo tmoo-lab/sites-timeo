@@ -55,12 +55,13 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer;paddin
 .castle{transform:translate3d(calc(var(--mx,0) * -8px),0,0) scale(var(--c-s,1));transform-origin:58% 38%;filter:brightness(var(--c-b,1))}
 .sun{background:radial-gradient(70% 38% at 12% 26%,rgba(255,190,110,.5),rgba(255,170,90,0) 70%);mix-blend-mode:screen;opacity:var(--sun-o,1);animation:sun 7s ease-in-out infinite alternate}
 @keyframes sun{to{transform:translate3d(3%,1.5%,0) scale(1.06);opacity:.75}}
-.title{position:absolute;left:46.5%;bottom:45.6%;margin:0;font-size:17.5cqw;line-height:.8;letter-spacing:-.02em;white-space:nowrap;color:var(--paper);
-  text-shadow:0 10px 40px rgba(30,14,8,.35);transform:translate3d(calc(-50% + var(--mx,0) * 12px),var(--ti-y,0),0) scale(var(--ti-s,1));transform-origin:50% 100%;opacity:var(--ti-o,1);will-change:transform,opacity}
+.title{position:absolute;left:50%;bottom:45.2%;margin:0;font-size:20cqw;line-height:.8;letter-spacing:-.02em;white-space:nowrap;color:var(--paper);
+  text-shadow:0 2px 6px rgba(30,14,8,.35),0 12px 44px rgba(30,14,8,.55);transform:translate3d(calc(-50% + var(--mx,0) * 12px),var(--ti-y,0),0) scale(var(--ti-s,1));transform-origin:50% 100%;opacity:var(--ti-o,1);will-change:transform,opacity}
 .title i{font-style:italic;letter-spacing:-.03em;margin-right:.08em}
 .town{transform:translate3d(calc(var(--mx,0) * 6px),var(--t-y,0%),0) scale(var(--t-s,1));transform-origin:50% 86%;will-change:transform}
-.town.up{clip-path:inset(0 0 48.6% 0)}
-.town.down{clip-path:inset(51.4% 0 0 0)}
+.town.up{clip-path:polygon(0 0,100% 0,100% 51.4%,83.5% 51.4%,83.5% 56.8%,69.5% 56.8%,69.5% 51.4%,0 51.4%)}
+.town.down{clip-path:polygon(0 51.4%,69.5% 51.4%,69.5% 56.8%,83.5% 56.8%,83.5% 51.4%,100% 51.4%,100% 100%,0 100%)}
+.halo{background:radial-gradient(46% 9% at 50% 51%,rgba(26,12,8,.5),rgba(26,12,8,0) 100%);opacity:var(--ti-o,1)}
 .vine{transform:translate3d(calc(var(--dir) * var(--vx,6%) + var(--mx,0) * 22px),var(--v-y,0%),0) scale(var(--vs,1));will-change:transform}
 .vine.l{--dir:-1;clip-path:inset(0 50% 0 0);transform-origin:0% 70%}
 .vine.r{--dir:1;clip-path:inset(0 0 0 50%);transform-origin:100% 70%}
@@ -187,6 +188,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer;paddin
         <img class="castle" src="../assets/v-castle.webp" alt="Kaysersberg au soleil couchant : le donjon du château au-dessus des vignes" fetchpriority="high">
         <div class="sun lay" aria-hidden="true"></div>
         <img class="town up" src="../assets/v-town.webp" alt="" aria-hidden="true">
+        <div class="halo lay" aria-hidden="true"></div>
         <h1 class="title serif"><i>Au</i>119</h1>
         <img class="town down" src="../assets/v-town.webp" alt="" aria-hidden="true">
         <img class="vine l" src="../assets/v-vines.webp" alt="" aria-hidden="true">
@@ -288,7 +290,7 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer;paddin
     set('--c-s', (1 + iL * 0.14 + dive * 0.12).toFixed(4)); set('--c-b', (1 - vOut * 0.25).toFixed(3));
     set('--ti-y', ((iL * 0.55 + intro * -0.5) * 100).toFixed(2) + '%'); set('--ti-s', (1 - intro * 0.05).toFixed(4)); set('--ti-o', (L * (1 - ss(60, 380, s))).toFixed(3));
     set('--t-y', (iL * 9 - dive * 4).toFixed(2) + '%'); set('--t-s', (1 + dive * 1.55).toFixed(4));
-    set('--vx', (6 + iL * 16 + vp * 52).toFixed(2) + '%'); set('--vs', (1 + iL * 0.12 + vp * 0.4).toFixed(4)); set('--v-y', (iL * 4).toFixed(2) + '%');
+    set('--vx', (14 + iL * 14 + vp * 46).toFixed(2) + '%'); set('--vs', (1 + iL * 0.12 + vp * 0.4).toFixed(4)); set('--v-y', (iL * 4).toFixed(2) + '%');
     set('--v-o', (1 - vOut).toFixed(3)); set('--sun-o', (1 - dive * 0.6).toFixed(3));
     set('--bloom', (Math.sin(Math.PI * vOut) * 0.8).toFixed(3));
     set('--in-o', (L * (1 - intro)).toFixed(3)); set('--in-y', (iL * 26 + intro * 80).toFixed(1) + 'px');
