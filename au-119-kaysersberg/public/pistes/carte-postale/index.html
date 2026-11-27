@@ -4,238 +4,250 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#1d1210">
-<title>Au 119 — Piste A · Carte postale</title>
+<meta name="theme-color" content="#1a100e">
+<title>Au 119 — Kaysersberg · Piste A</title>
 <link rel="icon" href="data:,">
-<link rel="preload" as="image" href="../assets/a-back-1440.webp">
-<link rel="preload" as="image" href="../assets/a-front-1440.webp">
-<link rel="preload" as="font" type="font/woff2" href="../fonts/playfair-display-latin-500-normal.woff2" crossorigin>
+<link rel="preload" as="image" href="../assets/v-castle.webp" fetchpriority="high">
+<link rel="preload" as="image" href="../assets/v-town.webp">
+<link rel="preload" as="image" href="../assets/v-vines.webp">
+<link rel="preload" as="font" type="font/woff2" href="../fonts/bodoni-moda-latin-500-italic.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../fonts/bodoni-moda-latin-500-normal.woff2" crossorigin>
 <style>
-@font-face{font-family:"Playfair";src:url(../fonts/playfair-display-latin-500-normal.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
-@font-face{font-family:"Playfair";src:url(../fonts/playfair-display-latin-500-italic.woff2) format("woff2");font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:"Bodoni";src:url(../fonts/bodoni-moda-latin-500-normal.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Bodoni";src:url(../fonts/bodoni-moda-latin-500-italic.woff2) format("woff2");font-weight:500;font-style:italic;font-display:swap}
 @font-face{font-family:"Inter";src:url(../fonts/inter-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"Inter";src:url(../fonts/inter-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
 @font-face{font-family:"Inter";src:url(../fonts/inter-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"Inter";src:url(../fonts/inter-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
 
-:root{--ink:#1d1311;--paper:#fdf1e1;--red:#a31f34;--shadow:rgba(16,8,6,.42);--night:#1d1210;
+:root{--ink:#1d1311;--paper:#fdf1e1;--red:#a31f34;--night:#1a100e;--shadow:rgba(16,8,6,.45);--e:cubic-bezier(.22,1,.36,1);
   font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--paper);background:var(--night)}
 *{box-sizing:border-box}
 html{background:var(--night);-webkit-text-size-adjust:100%}
 body{margin:0;overflow-x:clip;background:var(--night)}
 a{color:inherit;text-decoration:none}
 button{font:inherit;border:0;background:none;color:inherit;cursor:pointer;padding:0}
+.serif{font-family:Bodoni,"Bodoni 72",Didot,serif;font-weight:500}
 
-/* ---------- en-tête fin, toujours là ---------- */
-.site-header{position:fixed;z-index:50;top:0;left:0;right:0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;
-  padding:calc(env(safe-area-inset-top) + 22px) 28px 14px;color:rgba(253,241,225,.92);pointer-events:none;transition:background .5s,backdrop-filter .5s}
-.site-header>*{pointer-events:auto}
-.site-header.solid{background:rgba(29,18,16,.62);-webkit-backdrop-filter:blur(16px) saturate(130%);backdrop-filter:blur(16px) saturate(130%)}
-.logo{justify-self:start;font-family:Playfair;font-size:24px;line-height:1;white-space:nowrap;text-shadow:0 2px 16px rgba(0,0,0,.25)}
+/* ---------- en-tête fin, toujours présent ---------- */
+.hdr{position:fixed;z-index:60;top:0;left:0;right:0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;
+  padding:calc(env(safe-area-inset-top) + 20px) 28px 14px;pointer-events:none;transition:background .6s var(--e),-webkit-backdrop-filter .6s,backdrop-filter .6s}
+.hdr>*{pointer-events:auto}
+.hdr.solid{background:rgba(26,16,14,.58);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%)}
+.logo{justify-self:start;font-size:25px;line-height:1;white-space:nowrap;text-shadow:0 2px 18px rgba(0,0,0,.3)}
 .logo i{font-style:italic}
-.site-nav{display:flex;gap:clamp(22px,2.2vw,40px);font-size:17px;text-shadow:0 2px 16px rgba(0,0,0,.25)}
-.site-nav a{position:relative;padding:4px 0}
-.site-nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.22,1,.36,1)}
-.site-nav a:hover::after,.site-nav a.on::after{transform:scaleX(1);transform-origin:left}
-.lang{justify-self:end;display:inline-flex;gap:5px;align-items:center;font-size:15px;font-weight:700;text-shadow:0 2px 16px rgba(0,0,0,.25)}
+.nav{display:flex;gap:clamp(20px,2.2vw,38px);font-size:15px;text-shadow:0 2px 16px rgba(0,0,0,.35)}
+.nav a{position:relative;padding:4px 0}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--e)}
+.nav a:hover::after,.nav a.on::after{transform:scaleX(1);transform-origin:left}
+.call{justify-self:end;display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:500;text-shadow:0 2px 16px rgba(0,0,0,.35)}
+.call span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(253,241,225,.16);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:inset 0 0 0 1px rgba(253,241,225,.35)}
+.call svg{width:15px;height:15px}
 
 /* ---------- la scène ---------- */
-.cinema{position:relative;height:calc(100svh + 3000px)}
-.stage{--title-y:0px;--title-s:1;--title-o:1;--intro-y:0px;--intro-o:1;--fac-s:1;--back-b:1;--back-blur:0px;--front-y:0px;--split:0;--front-s:1;
-  --salle-o:0;--salle-s:1;--ck:1;--st:50%;--salle-b:1;--salle-blur:0px;--plat-o:0;--plat-s:1.08;--plat-b:1;--plat-blur:0px;--shade:0;
-  --p2-o:0;--p2-y:58px;--p3-o:0;--p3-y:58px;--sx:420vw;--sv:hidden;--ctl-o:0;--mx:0;--my:0;
-  position:sticky;top:0;height:100svh;min-height:600px;overflow:hidden;isolation:isolate;background:#2a1a16}
-.world{position:absolute;inset:0;overflow:hidden}
-.backdrop{position:absolute;inset:-40px;background:url(../assets/a-full-1440.webp) center/cover;filter:blur(28px) brightness(.55) saturate(1.1);transform:scale(1.1);display:none}
-.facade{position:absolute;left:50%;bottom:0;height:max(100%,calc(100vw * 1.5334));aspect-ratio:2160/3312;
-  transform:translate3d(calc(-50% + var(--mx) * -10px),calc(var(--my) * -4px),0) scale(var(--fac-s));transform-origin:50% 62%;container-type:inline-size;will-change:transform}
-.facade>img,.facade>video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;user-select:none;-webkit-user-drag:none;pointer-events:none}
-.back{z-index:1;filter:brightness(var(--back-b)) blur(var(--back-blur));animation:breathe 22s ease-in-out infinite alternate}
-@keyframes breathe{to{transform:scale(1.025) translate3d(-.4%,-.3%,0)}}
-.salle{position:absolute;inset:0;z-index:2;opacity:var(--salle-o);background:#24130f;
-  clip-path:polygon(0 calc(var(--ck) * 51.3%),50% calc(var(--ck) * 56.2%),100% calc(var(--ck) * 63.4%),100% 100%,0 100%)}
-.salle img{position:absolute;left:0;right:0;bottom:0;top:var(--st);width:100%;height:calc(100% - var(--st));object-fit:cover;object-position:50% 42%;
-  transform:scale(var(--salle-s));transform-origin:50% 60%;filter:brightness(var(--salle-b)) blur(var(--salle-blur))}
-.plat{z-index:2;opacity:var(--plat-o);transform:scale(calc(var(--plat-s) / var(--fac-s)));transform-origin:50% 60%;filter:brightness(var(--plat-b)) blur(var(--plat-blur))}
-.hero-title{position:absolute;z-index:3;left:50%;bottom:44.6%;margin:0;font-family:Playfair;font-weight:500;font-size:23cqw;line-height:.8;letter-spacing:-.025em;
-  color:var(--paper);white-space:nowrap;text-shadow:0 14px 44px rgba(20,10,8,.38);
-  transform:translate3d(calc(-50% + var(--mx) * 14px),var(--title-y),0) skewY(var(--skew,0deg)) scale(var(--title-s));transform-origin:50% 100%;opacity:var(--title-o);will-change:transform,opacity}
-.hero-title i{font-style:italic;letter-spacing:-.04em;margin-right:.06em}
-.front{z-index:4;transform:translate3d(calc(var(--dir) * var(--split) * 58% + var(--mx) * 18px),var(--front-y),0) scale(var(--front-s));will-change:transform}
-.front-l{--dir:-1;clip-path:inset(0 50% 0 0);transform-origin:50% 100%}
-.front-r{--dir:1;clip-path:inset(0 0 0 50%);transform-origin:50% 100%}
-.edge{position:absolute;z-index:4;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:linear-gradient(transparent 56%,rgba(0,0,0,.35) 60%,rgba(0,0,0,.35));opacity:calc(var(--split) * 8);display:none}
-.topshade{position:absolute;z-index:5;left:0;right:0;top:0;height:170px;background:linear-gradient(rgba(22,12,10,.42),rgba(22,12,10,0));pointer-events:none}
-.ground{position:absolute;z-index:5;left:0;right:0;bottom:0;height:54%;background:linear-gradient(to top,rgba(22,12,10,.86) 0%,rgba(22,12,10,.55) 45%,rgba(22,12,10,0) 100%);opacity:var(--intro-o);pointer-events:none}
-.shade{position:absolute;z-index:6;inset:0;pointer-events:none;opacity:var(--shade);
-  background:linear-gradient(180deg,rgba(29,14,12,.62) 0%,rgba(29,14,12,.34) 46%,rgba(29,14,12,.78) 100%)}
+.cinema{position:relative;height:calc(100svh + 3400px)}
+.stage{position:sticky;top:0;height:100svh;min-height:600px;overflow:hidden;isolation:isolate;background:#2b1a14}
+.backdrop{position:absolute;inset:-60px;background:url(../assets/v-castle.webp) center 40%/cover;filter:blur(30px) brightness(.5) saturate(1.15);display:none}
+.frame{position:absolute;inset:0;overflow:hidden;container-type:size}
+.scene{position:absolute;left:50%;bottom:0;height:max(100cqh,calc(100cqw * var(--ar)));container-type:inline-size;will-change:transform}
+.scene>img,.scene>.lay{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;pointer-events:none;user-select:none;-webkit-user-drag:none}
+/* le village : château, nom, toits, vignes */
+.village{--ar:1.7684;aspect-ratio:1520/2688;z-index:2;transform:translate3d(-50%,0,0);opacity:var(--v-o,1)}
+.castle{transform:translate3d(calc(var(--mx,0) * -8px),0,0) scale(var(--c-s,1));transform-origin:58% 38%;filter:brightness(var(--c-b,1))}
+.sun{background:radial-gradient(70% 38% at 12% 26%,rgba(255,190,110,.5),rgba(255,170,90,0) 70%);mix-blend-mode:screen;opacity:var(--sun-o,1);animation:sun 7s ease-in-out infinite alternate}
+@keyframes sun{to{transform:translate3d(3%,1.5%,0) scale(1.06);opacity:.75}}
+.title{position:absolute;left:50%;bottom:43%;margin:0;font-size:24cqw;line-height:.8;letter-spacing:-.02em;white-space:nowrap;color:var(--paper);
+  text-shadow:0 10px 40px rgba(30,14,8,.35);transform:translate3d(calc(-50% + var(--mx,0) * 12px),var(--ti-y,0),0) scale(var(--ti-s,1));transform-origin:50% 100%;opacity:var(--ti-o,1);will-change:transform,opacity}
+.title i{font-style:italic;letter-spacing:-.03em;margin-right:.08em}
+.town{transform:translate3d(calc(var(--mx,0) * 6px),var(--t-y,0%),0) scale(var(--t-s,1));transform-origin:50% 86%;will-change:transform}
+.vine{transform:translate3d(calc(var(--dir) * var(--vx,6%) + var(--mx,0) * 22px),var(--v-y,0%),0) scale(var(--vs,1));will-change:transform}
+.vine.l{--dir:-1;clip-path:inset(0 50% 0 0);transform-origin:0% 70%}
+.vine.r{--dir:1;clip-path:inset(0 0 0 50%);transform-origin:100% 70%}
+/* la rue : la façade du 119, ses battants, la salle, le plat */
+.rue{--ar:1.5334;aspect-ratio:2160/3312;z-index:1;transform:translate3d(-50%,0,0) scale(var(--r-s,1.3));transform-origin:50% 62%}
+.back{filter:brightness(var(--back-b,1)) blur(var(--back-blur,0px))}
+.salle{position:absolute;inset:0;z-index:2;opacity:var(--salle-o,1);background:#24130f;
+  clip-path:polygon(0 calc(var(--ck,1) * 51.3%),50% calc(var(--ck,1) * 56.2%),100% calc(var(--ck,1) * 63.4%),100% 100%,0 100%)}
+.salle img{position:absolute;left:0;right:0;bottom:0;top:var(--st,52%);width:100%;height:calc(100% - var(--st,52%));object-fit:cover;object-position:50% 42%;
+  transform:scale(var(--salle-s,1));transform-origin:50% 60%;filter:brightness(var(--salle-b,1))}
+.plat{z-index:3;opacity:var(--plat-o,0);transform:scale(calc(var(--plat-s,1.1) / var(--r-s,1)));transform-origin:50% 62%;filter:brightness(var(--plat-b,1))}
+.front{z-index:4;transform:translate3d(calc(var(--dir) * var(--split,0) * 58%),0,0) scale(var(--front-s,1));transform-origin:50% 100%;will-change:transform}
+.front-l{--dir:-1;clip-path:inset(0 50% 0 0)}
+.front-r{--dir:1;clip-path:inset(0 0 0 50%)}
 
-.intro-copy{position:absolute;z-index:9;left:50%;bottom:clamp(40px,9svh,120px);width:min(560px,calc(100vw - 40px));text-align:center;
-  transform:translate3d(-50%,var(--intro-y),0);opacity:var(--intro-o);will-change:transform,opacity}
-.intro-copy p{margin:0 auto;max-width:520px;font-size:1.12rem;font-weight:500;line-height:1.22;text-shadow:0 2px 18px rgba(0,0,0,.45)}
-.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:24px}
-.hero-tags a{min-height:42px;display:inline-flex;align-items:center;padding:0 22px;border-radius:999px;background:var(--paper);color:var(--ink);font-size:.95rem;font-weight:500;box-shadow:0 12px 30px rgba(0,0,0,.2);transition:transform .5s cubic-bezier(.22,1,.36,1)}
-.hero-tags a:active{transform:scale(.96)}
+.bloom{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:var(--bloom,0);background:radial-gradient(80% 60% at 50% 55%,rgba(255,214,160,.95),rgba(255,190,120,.4) 45%,rgba(255,170,90,0) 75%);mix-blend-mode:screen}
+.topshade{position:absolute;z-index:6;left:0;right:0;top:0;height:180px;background:linear-gradient(rgba(26,12,8,.45),rgba(26,12,8,0));pointer-events:none}
+.ground{position:absolute;z-index:6;left:0;right:0;bottom:0;height:46%;background:linear-gradient(to top,rgba(26,12,8,.82),rgba(26,12,8,.42) 48%,rgba(26,12,8,0));opacity:var(--in-o,1);pointer-events:none}
+.shade{position:absolute;z-index:7;inset:0;pointer-events:none;opacity:var(--shade,0);background:linear-gradient(180deg,rgba(28,12,9,.66) 0%,rgba(28,12,9,.3) 46%,rgba(28,12,9,.8) 100%)}
 
-.story-panel{position:absolute;z-index:10;left:50%;width:min(760px,calc(100vw - 42px));text-align:center;pointer-events:none;will-change:transform,opacity}
-.story-panel h2{margin:0;font-family:Playfair;font-weight:500;font-size:4.4rem;line-height:.95;letter-spacing:-.015em;text-shadow:0 16px 38px var(--shadow)}
-.story-panel h2 i{font-style:italic}
-.story-panel p{width:min(520px,100%);margin:24px auto 0;font-size:1.1rem;font-weight:500;line-height:1.24;text-shadow:0 2px 18px rgba(0,0,0,.45)}
-.p2{top:58%;opacity:var(--p2-o);transform:translate3d(-50%,calc(-50% + var(--p2-y)),0)}
-.p3{top:30%;opacity:var(--p3-o);transform:translate3d(-50%,calc(-50% + var(--p3-y)),0)}
-.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px;width:min(520px,100%);margin:56px auto 0;text-align:center}
-.facts dt{font-family:Playfair;font-weight:500;font-size:3.6rem;line-height:.9;white-space:nowrap;text-shadow:0 14px 34px var(--shadow)}
-.facts dd{margin:16px 0 0;font-size:1rem;font-weight:500;line-height:1.16;text-shadow:0 2px 18px rgba(0,0,0,.45)}
-.note-button{min-height:50px;margin-top:28px;display:inline-flex;align-items:center;gap:12px;padding:0 10px 0 26px;border-radius:999px;color:var(--ink);background:var(--paper);
-  box-shadow:0 16px 34px rgba(0,0,0,.22);pointer-events:auto;font-weight:500;transition:transform .5s cubic-bezier(.22,1,.36,1)}
-.note-button span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--red);color:var(--paper);font-size:17px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
-.note-button:hover span{transform:translateX(3px)}
-.note-button.ghost{background:transparent;color:var(--paper);box-shadow:inset 0 0 0 1px rgba(253,241,225,.45);padding:0 26px}
+/* ---------- textes posés sur la scène ---------- */
+.intro{position:absolute;z-index:9;left:50%;bottom:calc(env(safe-area-inset-bottom) + clamp(34px,7svh,110px));width:min(560px,calc(100vw - 40px));text-align:center;
+  transform:translate3d(-50%,var(--in-y,0px),0);opacity:var(--in-o,1);will-change:transform,opacity}
+.intro p{margin:0 auto;max-width:500px;font-size:1.06rem;font-weight:500;line-height:1.28;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:22px}
+.pill{min-height:44px;display:inline-flex;align-items:center;gap:10px;padding:0 8px 0 20px;border-radius:999px;background:var(--paper);color:var(--ink);font-size:.93rem;font-weight:500;
+  box-shadow:0 14px 34px rgba(0,0,0,.22);transition:transform .5s var(--e)}
+.pill i{font-style:normal;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--red);color:var(--paper);font-size:15px;transition:transform .5s var(--e)}
+.pill:hover i{transform:translateX(3px)}
+.pill:active{transform:scale(.96)}
+.pill.ghost{background:rgba(253,241,225,.14);color:var(--paper);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 0 0 0 1px rgba(253,241,225,.45);padding:0 20px}
 
-/* ---------- les incontournables (slider infini) ---------- */
-.sights{position:absolute;z-index:11;left:0;right:0;top:clamp(128px,21svh,220px);visibility:var(--sv);transform:translate3d(var(--sx),0,0);will-change:transform}
-.sights-head{padding:0 48px 18px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,241,225,.86)}
-.sights-head b{display:block;margin-top:8px;font-family:Playfair;font-weight:500;font-size:2.4rem;letter-spacing:-.01em;text-transform:none;line-height:1;color:var(--paper)}
-.sights-track{display:flex;gap:16px;align-items:stretch;padding-left:48px;transform:translate3d(calc(var(--shift,0px) + var(--drag,0px)),0,0);transition:transform 640ms cubic-bezier(.22,1,.36,1);will-change:transform;touch-action:pan-y}
-.sights-track.is-jumping,.sights-track.dragging{transition:none}
-.card{position:relative;flex:0 0 clamp(330px,22vw,400px);height:230px;padding:24px;overflow:hidden;border:1px solid rgba(253,241,225,.42);border-radius:24px;color:#000;background:var(--paper);
-  box-shadow:0 18px 52px rgba(10,4,2,.25);cursor:pointer;user-select:none;-webkit-user-select:none}
-.card .kick{display:block;margin-bottom:56px;font-size:12px;font-weight:500;line-height:1.05;text-transform:uppercase;letter-spacing:.04em}
-.card img{position:absolute;top:20px;right:20px;width:66px;height:66px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px var(--paper),0 0 0 4px rgba(0,0,0,.12)}
-.card h3{position:absolute;left:24px;right:24px;bottom:calc(24px + 37px + 12px);margin:0;font-size:24px;font-weight:800;line-height:.95;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.card p{position:absolute;left:24px;right:24px;bottom:24px;margin:0;font-size:16px;line-height:1.16;max-height:2.32em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.card .price{color:var(--red);font-weight:700}
-.sights-controls{position:absolute;z-index:12;left:48px;top:calc(clamp(128px,21svh,220px) + 300px);display:flex;gap:14px;opacity:var(--ctl-o);pointer-events:none}
-.sights-controls.ready{pointer-events:auto}
-.sight-nav{width:54px;height:54px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink);background:rgba(253,241,225,.94);box-shadow:0 18px 36px rgba(0,0,0,.25);font-size:20px;transition:transform .4s cubic-bezier(.22,1,.36,1)}
-.sight-nav:active{transform:scale(.92)}
+.panel{position:absolute;z-index:10;left:50%;width:min(760px,calc(100vw - 40px));text-align:center;pointer-events:none;will-change:transform,opacity}
+.panel .kick{display:block;margin-bottom:16px;font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(253,241,225,.8)}
+.panel h2{margin:0;font-size:4.6rem;line-height:.92;letter-spacing:-.015em;text-shadow:0 16px 40px var(--shadow)}
+.panel h2 i{font-style:italic}
+.panel p{width:min(500px,100%);margin:22px auto 0;font-size:1.06rem;font-weight:500;line-height:1.3;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+.panel .pill{pointer-events:auto;margin-top:26px}
+.p2{top:52%;opacity:var(--p2-o,0);transform:translate3d(-50%,calc(-50% + var(--p2-y,58px)),0)}
+.p3{top:30%;opacity:var(--p3-o,0);transform:translate3d(-50%,calc(-50% + var(--p3-y,58px)),0)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;width:min(520px,100%);margin:44px auto 0}
+.facts dt{font-size:3.3rem;line-height:.9;white-space:nowrap;text-shadow:0 14px 34px var(--shadow)}
+.facts dd{margin:14px 0 0;font-size:.95rem;font-weight:500;line-height:1.2;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+
+/* ---------- les incontournables : cartes-photos, défilé infini au doigt ---------- */
+.sights{position:absolute;z-index:11;left:0;right:0;top:clamp(108px,14svh,170px);visibility:var(--sv,hidden);transform:translate3d(var(--sx,420vw),0,0);will-change:transform}
+.s-head{padding:0 48px 18px}
+.s-head span{display:block;font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(253,241,225,.82)}
+.s-head h2{margin:8px 0 0;font-size:2.7rem;line-height:1;letter-spacing:-.01em}
+.s-head h2 i{font-style:italic}
+.track{display:flex;gap:14px;padding-left:48px;transform:translate3d(calc(var(--shift,0px) + var(--drag,0px)),0,0);transition:transform 700ms cubic-bezier(.22,1,.36,1);will-change:transform;touch-action:pan-y}
+.track.jump,.track.drag{transition:none}
+.card{position:relative;flex:0 0 clamp(250px,22vw,340px);aspect-ratio:3/4;border-radius:22px;overflow:hidden;background:#2a1712;cursor:grab;user-select:none;-webkit-user-select:none;
+  box-shadow:0 30px 60px -24px rgba(0,0,0,.6),0 0 0 1px rgba(253,241,225,.12);transform:translateZ(0)}
+.card img{position:absolute;inset:-2% -14%;width:128%;height:104%;object-fit:cover;transform:translate3d(calc(var(--px,0) * -9%),0,0) scale(1.02);will-change:transform;pointer-events:none}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,9,6,0) 42%,rgba(20,9,6,.78) 100%)}
+.cap{position:absolute;z-index:2;left:20px;right:20px;bottom:18px}
+.cap .k{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,241,225,.78)}
+.cap h3{margin:8px 0 0;font-family:Bodoni,serif;font-weight:500;font-size:28px;line-height:1;letter-spacing:-.01em}
+.cap p{margin:8px 0 0;font-size:13.5px;line-height:1.3;color:rgba(253,241,225,.88)}
+.cap b{color:#f4c986;font-weight:700}
+.ctl{position:absolute;z-index:12;left:48px;display:flex;align-items:center;gap:12px;opacity:var(--ctl-o,0);pointer-events:none}
+.ctl.ready{pointer-events:auto}
+.ctl button{width:54px;height:54px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink);background:rgba(253,241,225,.94);box-shadow:0 18px 36px rgba(0,0,0,.28);font-size:20px;transition:transform .4s var(--e)}
+.ctl button:active{transform:scale(.92)}
+.ctl .count{margin-left:8px;font-size:13px;font-weight:500;letter-spacing:.08em;color:rgba(253,241,225,.82)}
 
 /* ---------- après la scène ---------- */
-.venir{position:relative;z-index:2;margin-top:-140px;padding:220px 24px 90px;text-align:center;background:linear-gradient(rgba(29,18,16,0),var(--night) 140px)}
-.venir .kick{margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,241,225,.7)}
-.venir h2{margin:18px auto 0;max-width:760px;font-family:Playfair;font-weight:500;font-size:clamp(2.6rem,6vw,4.6rem);line-height:.95;letter-spacing:-.015em}
-.venir .sub{margin:20px auto 0;max-width:520px;font-size:1.06rem;line-height:1.3;color:rgba(253,241,225,.82)}
-.venir .facts{margin-top:54px}
-.venir .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:40px}
-.venir .cta .note-button{margin-top:0}
-.grav{width:min(420px,78vw);aspect-ratio:900/1380;margin:70px auto 0;background:#e8d9c2;opacity:.9;
+.venir{position:relative;z-index:2;margin-top:-160px;padding:240px 24px 90px;text-align:center;background:linear-gradient(rgba(26,16,14,0),var(--night) 160px)}
+.venir .kick{margin:0;font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(253,241,225,.7)}
+.venir h2{margin:18px auto 0;max-width:760px;font-size:clamp(2.7rem,7vw,4.8rem);line-height:.95;letter-spacing:-.015em}
+.venir h2 i{font-style:italic}
+.venir .sub{margin:20px auto 0;max-width:520px;font-size:1.04rem;line-height:1.35;color:rgba(253,241,225,.82)}
+.venir .facts{margin-top:50px}
+.venir .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:38px}
+.grav{width:min(420px,78vw);aspect-ratio:900/1380;margin:64px auto 0;background:#e8d9c2;opacity:.9;
   -webkit-mask:url(../../assets/img/facade-gravure-900.webp) center/contain no-repeat;mask:url(../../assets/img/facade-gravure-900.webp) center/contain no-repeat}
-.foot{padding:28px 24px calc(env(safe-area-inset-bottom) + 28px);border-top:1px solid rgba(253,241,225,.12);display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;font-size:13px;color:rgba(253,241,225,.6)}
+.foot{padding:28px 24px calc(env(safe-area-inset-bottom) + 28px);border-top:1px solid rgba(253,241,225,.12);display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;font-size:12.5px;line-height:1.5;color:rgba(253,241,225,.58)}
 .foot a{border-bottom:1px solid rgba(253,241,225,.3)}
 
 @media (max-width:640px){
-  .site-header{grid-template-columns:1fr auto;gap:12px 18px;padding:calc(env(safe-area-inset-top) + 18px) 22px 12px}
-  .site-nav{grid-column:1/-1;grid-row:2;gap:20px;font-size:15px}
-  .hero-title{font-size:23cqw}
-  .intro-copy{bottom:calc(env(safe-area-inset-bottom) + 34px)}
-  .intro-copy p{font-size:1.02rem}
-  .hero-tags{gap:8px;margin-top:20px}
-  .hero-tags a{min-height:38px;padding:0 16px;font-size:.88rem}
-  .story-panel h2{font-size:2.6rem}
-  .story-panel p{font-size:1rem}
-  .p2{top:56%}.p3{top:34%}
-  .facts{gap:18px;margin-top:34px}
-  .facts dt{font-size:2.15rem}
-  .facts dd{font-size:.92rem}
-  .sights{top:clamp(118px,17svh,170px)}
-  .sights-head{padding:0 24px 16px}
-  .sights-head b{font-size:2rem}
-  .sights-track{gap:12px;padding-left:24px}
-  .card{flex-basis:min(80vw,330px);height:220px}
-  .card img{width:58px;height:58px}
-  .sights-controls{left:24px;top:calc(clamp(118px,17svh,170px) + 290px)}
+  .hdr{grid-template-columns:1fr auto;gap:12px 18px;padding:calc(env(safe-area-inset-top) + 16px) 20px 10px}
+  .nav{grid-column:1/-1;grid-row:2;gap:18px;font-size:14.5px}
+  .call b{display:none}
+  .panel h2{font-size:2.9rem}
+  .panel p{font-size:.98rem}
+  .facts{gap:16px;margin-top:32px}
+  .facts dt{font-size:2.1rem}
+  .facts dd{font-size:.88rem}
+  .s-head{padding:0 22px 16px}
+  .s-head h2{font-size:2.15rem}
+  .track{gap:12px;padding-left:22px}
+  .card{flex-basis:min(70vw,300px)}
+  .ctl{left:22px}
 }
-/* écran large : la façade devient une carte postale posée sur un fond flouté */
 @media (min-aspect-ratio:4/5){
   .backdrop{display:block}
-  .facade{height:88svh;bottom:5svh;border-radius:28px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.45);transform-origin:50% 60%}
-  .intro-copy{bottom:9svh}
+  .frame{inset:auto;left:50%;top:50%;height:90svh;aspect-ratio:3/5;transform:translate(-50%,-50%);border-radius:30px;box-shadow:0 50px 110px rgba(0,0,0,.55)}
+  .intro{bottom:9svh}
 }
-@media (prefers-reduced-motion:reduce){.back{animation:none}.sights-track{transition:none}}
+@media (prefers-reduced-motion:reduce){.sun{animation:none}.track{transition:none}}
 </style>
 </head>
 <body>
-<header class="site-header" id="hdr">
-  <a class="logo" href="#cinema"><i>Au</i> 119</a>
-  <nav class="site-nav" aria-label="Menu principal">
-    <a href="#maison" data-go="1200">La maison</a><a href="#carte" data-go="2140">La carte</a><a href="#venir">Venir</a>
-  </nav>
-  <button class="lang" type="button" aria-label="Changer de langue"><span>FR</span><span aria-hidden="true">⌄</span></button>
+<header class="hdr" id="hdr">
+  <a class="logo serif" href="#top"><i>Au</i> 119</a>
+  <nav class="nav" aria-label="Menu principal"><a href="#maison" data-go="1780">La maison</a><a href="#carte" data-go="2400">La carte</a><a href="#venir">Venir</a></nav>
+  <a class="call" href="tel:+33389275613" aria-label="Appeler le 03 89 27 56 13"><b>03 89 27 56 13</b><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg></span></a>
 </header>
 
-<main>
-<section class="cinema" id="cinema" aria-label="Au 119, la façade puis la salle">
+<main id="top">
+<section class="cinema" id="cinema" aria-label="Kaysersberg, puis le 119">
   <div class="stage" id="stage">
-    <div class="world">
-      <div class="backdrop" aria-hidden="true"></div>
-      <div class="facade" id="facade">
-        <img class="back" src="../assets/a-back-1440.webp" alt="" fetchpriority="high">
-        <div class="salle" aria-hidden="true"><img src="../assets/a-maison-1920.webp" alt="" decoding="async"></div>
-        <video class="plat" muted loop playsinline webkit-playsinline preload="none" poster="../../assets/img/choucroute-film-720.webp" data-src="../../assets/video/choucroute.mp4" aria-hidden="true"></video>
-        <h1 class="hero-title"><i>Au</i>119</h1>
-        <img class="front front-l" src="../assets/a-front-1440.webp" alt="">
-        <img class="front front-r" src="../assets/a-front-1440.webp" alt="La façade du 119 : maison à colombages, store rouge et terrasse sur les pavés">
+    <div class="backdrop" aria-hidden="true"></div>
+    <div class="frame">
+      <div class="scene rue" aria-hidden="true">
+        <img class="back" src="../assets/a-back-1440.webp" alt="" decoding="async">
+        <div class="salle lay"><img src="../assets/a-maison-1920.webp" alt="" decoding="async" loading="lazy"></div>
+        <img class="plat" src="../assets/v-chou.webp" alt="" decoding="async" loading="lazy">
+        <img class="front front-l" src="../assets/a-front-1440.webp" alt="" decoding="async">
+        <img class="front front-r" src="../assets/a-front-1440.webp" alt="" decoding="async">
       </div>
-      <div class="topshade" aria-hidden="true"></div>
-      <div class="ground" aria-hidden="true"></div>
-      <div class="shade" aria-hidden="true"></div>
+      <div class="scene village">
+        <img class="castle" src="../assets/v-castle.webp" alt="Kaysersberg au soleil couchant : le donjon du château au-dessus des vignes" fetchpriority="high">
+        <div class="sun lay" aria-hidden="true"></div>
+        <h1 class="title serif"><i>Au</i>119</h1>
+        <img class="town" src="../assets/v-town.webp" alt="" aria-hidden="true">
+        <img class="vine l" src="../assets/v-vines.webp" alt="" aria-hidden="true">
+        <img class="vine r" src="../assets/v-vines.webp" alt="" aria-hidden="true">
+      </div>
     </div>
+    <div class="bloom" aria-hidden="true"></div>
+    <div class="topshade" aria-hidden="true"></div>
+    <div class="ground" aria-hidden="true"></div>
+    <div class="shade" aria-hidden="true"></div>
 
-    <section class="intro-copy" aria-label="Présentation">
-      <p>La brasserie alsacienne de Kaysersberg, à deux pas du pont fortifié. Cuisine maison, servie toute la journée.</p>
-      <div class="hero-tags"><a href="#carte" data-go="2140">Choucroute royale</a><a href="#carte" data-go="2140">Tartes flambées</a><a href="#carte" data-go="2140">Vins d'Alsace</a></div>
+    <section class="intro" aria-label="Présentation">
+      <p>La brasserie alsacienne du cœur de Kaysersberg, à deux pas du pont fortifié. Cuisine maison, servie toute la journée.</p>
+      <div class="tags"><a class="pill" href="#carte" data-go="2400">Voir la carte <i>→</i></a><a class="pill ghost" href="tel:+33389275613">Réserver</a></div>
     </section>
 
-    <section class="story-panel p2" id="maison" aria-label="La maison">
-      <h2>Une maison<br><i>de famille</i></h2>
-      <p>Des banquettes rouges, une arche de grès, une terrasse sur les pavés. On vous reçoit comme à la maison.</p>
+    <section class="panel p2" id="maison" aria-label="La maison">
+      <span class="kick">119 rue du Général de Gaulle</span>
+      <h2 class="serif">Une maison<br><i>de famille</i></h2>
+      <p>Une arche de grès, des banquettes rouges, une terrasse sur les pavés. On vous reçoit comme à la maison.</p>
       <dl class="facts">
-        <div><dt>10 h – 18 h</dt><dd>Service continu, tous les jours en saison</dd></div>
-        <div><dt>FR · EN · DE</dt><dd>On vous accueille en trois langues</dd></div>
+        <div><dt class="serif">10 h – 18 h</dt><dd>Service continu, tous les jours en saison</dd></div>
+        <div><dt class="serif">FR · EN · DE</dt><dd>On vous accueille en trois langues</dd></div>
       </dl>
     </section>
 
-    <section class="story-panel p3" id="carte" aria-label="La carte">
-      <h2>La carte<br><i>d'Alsace</i></h2>
-      <p>Choucroute, baeckeoffe, jarret braisé, et neuf tartes flambées qui sortent du four à la commande.</p>
-      <a class="note-button" href="../../#carte">Voir la carte <span>→</span></a>
+    <section class="panel p3" id="carte" aria-label="La carte">
+      <span class="kick">La carte</span>
+      <h2 class="serif">La table<br><i>d'Alsace</i></h2>
+      <p>Choucroute royale, baeckeoffe, jarret braisé, et neuf tartes flambées qui sortent du four à la commande.</p>
+      <a class="pill" href="../../#carte">Voir toute la carte <i>→</i></a>
     </section>
 
     <section class="sights" aria-label="Les incontournables">
-      <div class="sights-head">Les incontournables <b>À goûter au 119</b></div>
-      <div class="sights-track" id="track">
-        <article class="card" tabindex="0" role="button"><span class="kick">Plat signature</span><img src="../../assets/img/pill-choucroute-360.webp" alt=""><h3>Choucroute royale</h3><p>Choucroute alsacienne et jarret braisé · <span class="price">30 €</span></p></article>
-        <article class="card" tabindex="0" role="button"><span class="kick">Au four</span><img src="../../assets/img/pill-tarte-360.webp" alt=""><h3>Tarte flambée gratinée</h3><p>Fromage blanc, oignons, lardons, emmental · <span class="price">14 €</span></p></article>
-        <article class="card" tabindex="0" role="button"><span class="kick">Mijoté</span><img src="../../assets/img/pill-baeckeoffe-360.webp" alt=""><h3>Baeckeoffe</h3><p>Trois viandes et légumes cuits dans le vin · <span class="price">22 €</span></p></article>
-        <article class="card" tabindex="0" role="button"><span class="kick">Braisé</span><img src="../../assets/img/med-jarret-240.webp" alt=""><h3>Jarret de porc</h3><p>Choux et pommes de terre · <span class="price">25 €</span></p></article>
-        <article class="card" tabindex="0" role="button"><span class="kick">Au verre</span><img src="../../assets/img/med-vins-240.webp" alt=""><h3>Vins de Kaysersberg</h3><p>Pinot gris, muscat… et vins à emporter</p></article>
-        <article class="card" tabindex="0" role="button"><span class="kick">Pression</span><img src="../../assets/img/med-bieres-240.webp" alt=""><h3>Kaysers'bier</h3><p>La bière du village · dès <span class="price">3,50 €</span></p></article>
+      <div class="s-head"><span>Les incontournables</span><h2 class="serif">À goûter <i>au 119</i></h2></div>
+      <div class="track" id="track">
+        <article class="card" tabindex="0"><img src="../assets/c-chou.webp" alt="Choucroute royale au jarret braisé" loading="lazy" decoding="async"><div class="cap"><span class="k">Plat signature</span><h3>Choucroute royale</h3><p>Jarret braisé, saucisses, jambon fumé · <b>30 €</b></p></div></article>
+        <article class="card" tabindex="0"><img src="../assets/c-tarte.webp" alt="Tarte flambée gratinée" loading="lazy" decoding="async"><div class="cap"><span class="k">Sortie du four</span><h3>Tarte flambée</h3><p>Gratinée : fromage blanc, oignons, lardons, emmental · <b>14 €</b></p></div></article>
+        <article class="card" tabindex="0"><img src="../assets/c-baeckeoffe.webp" alt="Baeckeoffe" loading="lazy" decoding="async"><div class="cap"><span class="k">Mijoté au vin</span><h3>Baeckeoffe</h3><p>Trois viandes et légumes, salade verte · <b>22 €</b></p></div></article>
+        <article class="card" tabindex="0"><img src="../assets/c-filet.webp" alt="Filet de bœuf" loading="lazy" decoding="async"><div class="cap"><span class="k">À la braise</span><h3>Filet de bœuf</h3><p>200 g, frites et légumes · <b>28 €</b></p></div></article>
+        <article class="card" tabindex="0"><img src="../assets/c-vin.webp" alt="Verre de vin blanc d'Alsace" loading="lazy" decoding="async"><div class="cap"><span class="k">Au verre</span><h3>Vins de Kaysersberg</h3><p>Pinot gris, muscat… et vins à emporter</p></div></article>
+        <article class="card" tabindex="0"><img src="../assets/c-gaufre.webp" alt="Gaufre et coupe glacée" loading="lazy" decoding="async"><div class="cap"><span class="k">Pour finir</span><h3>Gaufres</h3><p>Sucre, myrtilles, caramel beurre salé · dès <b>3,50 €</b></p></div></article>
       </div>
     </section>
-    <div class="sights-controls" id="ctl" aria-label="Défiler les plats">
-      <button class="sight-nav" id="prev" type="button" aria-label="Plat précédent">←</button>
-      <button class="sight-nav" id="next" type="button" aria-label="Plat suivant">→</button>
+    <div class="ctl" id="ctl" aria-label="Défiler les plats">
+      <button type="button" id="prev" aria-label="Plat précédent">←</button><button type="button" id="next" aria-label="Plat suivant">→</button><span class="count" id="count">01 / 06</span>
     </div>
   </div>
 </section>
 
 <section class="venir" id="venir" aria-label="Nous trouver">
   <p class="kick">Nous trouver</p>
-  <h2>119 rue du Général <i style="font-style:italic">de Gaulle</i></h2>
+  <h2 class="serif">119 rue du Général <i>de Gaulle</i></h2>
   <p class="sub">68240 Kaysersberg, sur la rue principale, à deux pas du pont fortifié.</p>
   <dl class="facts">
-    <div><dt>10 h – 18 h</dt><dd>Tous les jours en saison</dd></div>
-    <div><dt style="font-size:clamp(1.7rem,7vw,3rem)">03 89 27 56 13</dt><dd>Un coup de fil pour réserver</dd></div>
+    <div><dt class="serif">10 h – 18 h</dt><dd>Tous les jours en saison</dd></div>
+    <div><dt class="serif" style="font-size:clamp(1.6rem,6.6vw,2.9rem)">03 89 27 56 13</dt><dd>Un coup de fil pour réserver</dd></div>
   </dl>
-  <div class="cta">
-    <a class="note-button" href="https://maps.google.com/?q=Au+119+Kaysersberg">Itinéraire <span>→</span></a>
-    <a class="note-button ghost" href="tel:+33389275613">Appeler</a>
-  </div>
+  <div class="cta"><a class="pill" href="https://maps.google.com/?q=Au+119+Kaysersberg">Itinéraire <i>→</i></a><a class="pill ghost" href="tel:+33389275613">Appeler</a></div>
   <div class="grav" role="img" aria-label="Gravure de la façade du 119"></div>
 </section>
 <footer class="foot">
   <span>Au 119 · Brasserie alsacienne · Kaysersberg</span>
-  <span>Maquette · piste A (base MotionSites « Mostar ») · <a href="../">les 3 pistes</a></span>
+  <span>Maquette · piste A poussée (base MotionSites « Mostar ») · visuels du village et des plats générés, à valider · <a href="../">les pistes</a></span>
 </footer>
 </main>
 
@@ -247,95 +259,99 @@ button{font:inherit;border:0;background:none;color:inherit;cursor:pointer;paddin
   const ss = (e0, e1, v) => { const x = clamp((v - e0) / (e1 - e0)); return x * x * (3 - 2 * x); };
   const lerp = (a, b, t) => a + (b - a) * t;
   const seg = (s, a, b, c, d) => { const en = ss(a, b, s), ex = ss(c, d, s); return { en, ex, ac: en * (1 - ex) }; };
+  const outExpo = t => t >= 1 ? 1 : 1 - Math.pow(2, -10 * t);
   const dist = () => clamp(-sec.getBoundingClientRect().top, 0, sec.offsetHeight - innerHeight);
-  let target = 0, smooth = 0, init = false, raf = 0, mX = 0, mY = 0, tX = 0, tY = 0;
-  const vid = st.querySelector('.plat');
   const set = (k, v) => st.style.setProperty(k, v);
-  // inclinaison du titre = pente du store (calée sur la photo), pour qu'il s'y glisse en perspective
-  set('--skew', '0deg');
-  function update() {
+  let target = 0, smooth = 0, init = false, raf = 0, mX = 0, tX = 0, t0 = 0, load = 0;
+  const track = document.getElementById('track'), ctlBox = document.getElementById('ctl'), count = document.getElementById('count');
+  // entrée : toute la carte postale se compose d'un seul mouvement (château, toits, vignes, nom)
+  const imgs = [...st.querySelectorAll('.village img')];
+  Promise.all(imgs.map(i => i.decode ? i.decode().catch(() => {}) : 0)).then(() => { if (!t0) { t0 = performance.now(); req(); } });
+  setTimeout(() => { if (!t0) { t0 = performance.now(); req(); } }, 2500);
+  function update(now) {
     raf = 0;
+    if (t0) load = reduce.matches ? 1 : outExpo(clamp((now - t0) / 1900));
     target = dist();
-    if (!init || reduce.matches) { smooth = target; init = true; } else smooth = lerp(smooth, target, 0.16);
+    if (!init || reduce.matches) { smooth = target; init = true; } else smooth = lerp(smooth, target, 0.15);
     if (Math.abs(smooth - target) < 0.1) smooth = target;
-    mX = lerp(mX, tX, 0.1); mY = lerp(mY, tY, 0.1);
-    const s = smooth;
-    const intro = ss(40, 480, s);
-    const prog = clamp(s / 2400);
-    const doors = Math.pow(ss(380, 780, s), 1.25);         // le store et la terrasse s'écartent comme deux battants
-    const grow = ss(620, 1080, s);                          // la salle, vue par l'arche, s'agrandit jusqu'au plein écran
-    const fS = 1 + prog * 0.03 + grow * 0.22;
-    const p2 = seg(s, 980, 1180, 1400, 1580);
-    const f3 = seg(s, 1500, 1840, 2240, 2420);
-    const sIn = Math.pow(ss(2420, 2880, s), 1.55);
-    const ctl = ss(2780, 2980, s);
-    set('--mx', (reduce.matches ? 0 : mX).toFixed(4)); set('--my', (reduce.matches ? 0 : mY).toFixed(4));
-    set('--title-y', (intro * -54).toFixed(1) + 'px'); set('--title-s', (1 - intro * 0.04).toFixed(4)); set('--title-o', (1 - ss(120, 440, s)).toFixed(3));
-    set('--intro-y', (intro * 80).toFixed(1) + 'px'); set('--intro-o', (1 - intro).toFixed(3));
-    set('--fac-s', fS.toFixed(4));
+    mX = lerp(mX, tX, 0.08);
+    const s = smooth, L = load, iL = 1 - L;
+    const intro = ss(30, 420, s), vp = ss(0, 640, s), dive = ss(120, 900, s), vOut = ss(640, 960, s);
+    const arrive = ss(620, 1080, s), doors = Math.pow(ss(1040, 1400, s), 1.25), grow = ss(1180, 1560, s);
+    const p2 = seg(s, 1500, 1680, 1880, 2040), f3 = seg(s, 1980, 2240, 2560, 2700);
+    const sIn = Math.pow(ss(2660, 3060, s), 1.55), ctl = ss(2980, 3160, s);
+    set('--mx', (reduce.matches ? 0 : mX).toFixed(4));
+    // le village
+    set('--c-s', (1 + iL * 0.14 + dive * 0.12).toFixed(4)); set('--c-b', (1 - vOut * 0.25).toFixed(3));
+    set('--ti-y', ((iL * 0.55 + intro * -0.5) * 100).toFixed(2) + '%'); set('--ti-s', (1 - intro * 0.05).toFixed(4)); set('--ti-o', (L * (1 - ss(60, 380, s))).toFixed(3));
+    set('--t-y', (iL * 9 - dive * 4).toFixed(2) + '%'); set('--t-s', (1 + dive * 1.55).toFixed(4));
+    set('--vx', (6 + iL * 16 + vp * 52).toFixed(2) + '%'); set('--vs', (1 + iL * 0.12 + vp * 0.4).toFixed(4)); set('--v-y', (iL * 4).toFixed(2) + '%');
+    set('--v-o', (1 - vOut).toFixed(3)); set('--sun-o', (1 - dive * 0.6).toFixed(3));
+    set('--bloom', (Math.sin(Math.PI * vOut) * 0.55).toFixed(3));
+    set('--in-o', (L * (1 - intro)).toFixed(3)); set('--in-y', (iL * 26 + intro * 80).toFixed(1) + 'px');
+    // la rue, les battants, la salle
+    set('--r-s', (1.32 - arrive * 0.32).toFixed(4));
+    set('--split', doors.toFixed(4)); set('--front-s', (1 + doors * 0.12).toFixed(4));
     set('--back-b', (1 - grow * 0.45).toFixed(3)); set('--back-blur', (grow * 4).toFixed(2) + 'px');
-    set('--front-y', '0px'); set('--split', doors.toFixed(4)); set('--front-s', (1 + intro * 0.38 + doors * 0.12).toFixed(4));
-    set('--salle-o', (1 - f3.en).toFixed(3)); set('--ck', (1 - ss(700, 1060, s)).toFixed(4)); set('--st', (52 * (1 - grow)).toFixed(3) + '%');
-    set('--salle-s', (1 + grow * 0.06 + p2.ex * 0.05).toFixed(4));
-    set('--salle-b', (1 - p2.en * 0.12 - p2.ex * 0.18).toFixed(3)); set('--salle-blur', (p2.en * 3 + p2.ex * 4).toFixed(2) + 'px');
-    set('--plat-o', f3.en.toFixed(3)); set('--plat-s', (1.1 - f3.en * 0.08).toFixed(4));
-    set('--plat-b', (1 - f3.ex * 0.32).toFixed(3)); set('--plat-blur', (f3.ex * 7).toFixed(2) + 'px');
-    set('--shade', clamp(p2.en * 0.8 + f3.en * 0.2).toFixed(3));
+    set('--ck', (1 - ss(1240, 1540, s)).toFixed(4)); set('--st', (52 * (1 - grow)).toFixed(3) + '%');
+    set('--salle-s', (1 + grow * 0.06 + p2.ex * 0.05).toFixed(4)); set('--salle-b', (1 - p2.en * 0.15 - p2.ex * 0.2).toFixed(3));
+    set('--salle-o', (1 - f3.en).toFixed(3));
+    set('--plat-o', f3.en.toFixed(3)); set('--plat-s', (1.12 - f3.en * 0.1 - sIn * 0.04).toFixed(4)); set('--plat-b', (1 - f3.ex * 0.4).toFixed(3));
+    set('--shade', clamp(p2.en * 0.82 + f3.en * 0.1 + f3.ex * 0.25).toFixed(3));
     set('--p2-o', (p2.ac * (1 - p2.ex)).toFixed(3)); set('--p2-y', (-p2.ex * 86 + (1 - p2.en) * 58).toFixed(1) + 'px');
     set('--p3-o', (f3.ac * (1 - f3.ex)).toFixed(3)); set('--p3-y', (-f3.ex * 86 + (1 - f3.en) * 58).toFixed(1) + 'px');
     set('--sx', ((1 - sIn) * 420).toFixed(2) + 'vw'); set('--sv', sIn > 0.01 ? 'visible' : 'hidden');
     set('--ctl-o', ctl.toFixed(3)); ctlBox.classList.toggle('ready', ctl > 0.98);
-    hdr.classList.toggle('solid', target > sec.offsetHeight - innerHeight - 40);
-    // le film de la choucroute ne tourne que lorsqu'il est à l'écran
-    const want = s > 1300;
-    if (want && !vid.src) { vid.src = vid.dataset.src; }
-    if (want && vid.paused) { const p = vid.play(); if (p && p.catch) p.catch(() => {}); }
-    if (!want && !vid.paused) vid.pause();
-    if (Math.abs(smooth - target) > 0.1 || Math.abs(mX - tX) > 0.001 || Math.abs(mY - tY) > 0.001) req();
+    hdr.classList.toggle('solid', target > 1450);
+    if (Math.abs(smooth - target) > 0.1 || Math.abs(mX - tX) > 0.001 || (t0 && L < 1)) req();
+    if (sIn > 0.01) parallax();
   }
   function req() { if (!raf) raf = requestAnimationFrame(update); }
   addEventListener('scroll', req, { passive: true });
   addEventListener('resize', () => { layout(); req(); });
-  addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; tX = e.clientX / innerWidth - 0.5; tY = e.clientY / innerHeight - 0.5; req(); }, { passive: true });
-  // liens du menu : on descend à l'endroit de l'histoire
-  document.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => {
-    e.preventDefault(); scrollTo({ top: sec.offsetTop + Number(a.dataset.go), behavior: 'smooth' });
-  }));
+  addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; tX = e.clientX / innerWidth - 0.5; req(); }, { passive: true });
+  document.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); scrollTo({ top: sec.offsetTop + Number(a.dataset.go), behavior: 'smooth' }); }));
 
-  // slider infini (3 jeux de cartes, saut invisible au retour au jeu du milieu) + glisser au doigt
-  const track = document.getElementById('track'), ctlBox = document.getElementById('ctl');
+  // défilé infini des plats : 3 jeux de cartes, glisser au doigt avec élan, photo qui glisse dans sa carte
   const orig = [...track.children], n = orig.length;
   track.replaceChildren();
   for (let k = 0; k < 3; k++) orig.forEach((c, i) => { const x = c.cloneNode(true); x.dataset.i = k * n + i; if (k !== 1) x.setAttribute('aria-hidden', 'true'); track.appendChild(x); });
-  const cards = [...track.children]; let active = n;
+  const cards = [...track.children]; let active = n, pr = 0;
+  function ctlTop() { const r = track.getBoundingClientRect(), sr = st.getBoundingClientRect(); ctlBox.style.top = (r.bottom - sr.top + 18) + 'px'; }
   function layout() {
     const w = cards[0].offsetWidth, gap = parseFloat(getComputedStyle(track).columnGap || '0');
     track.style.setProperty('--shift', (-(w + gap) * active) + 'px');
-    cards.forEach((c, i) => c.classList.toggle('is-active', i === active));
+    count.textContent = String((active % n) + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0');
+    ctlTop(); kick();
   }
+  function parallax() {
+    const cx = innerWidth * 0.5;
+    for (const c of cards) { const r = c.getBoundingClientRect(); if (r.right < -200 || r.left > innerWidth + 200) continue; c.style.setProperty('--px', clamp((r.left + r.width / 2 - cx) / innerWidth, -1, 1).toFixed(3)); }
+  }
+  function kick() { const until = performance.now() + 800; cancelAnimationFrame(pr); (function loop() { parallax(); if (performance.now() < until) pr = requestAnimationFrame(loop); })(); }
   const move = d => { active += d; layout(); };
-  function jump(i) { track.classList.add('is-jumping'); active = i; layout(); requestAnimationFrame(() => requestAnimationFrame(() => track.classList.remove('is-jumping'))); }
+  function jump(i) { track.classList.add('jump'); active = i; layout(); requestAnimationFrame(() => requestAnimationFrame(() => track.classList.remove('jump'))); }
   track.addEventListener('transitionend', e => { if (e.target !== track) return; if (active >= n * 2) jump(active - n); else if (active < n) jump(active + n); });
   document.getElementById('prev').onclick = () => move(-1);
   document.getElementById('next').onclick = () => move(1);
-  cards.forEach(c => { c.addEventListener('click', () => { if (moved) return; active = Number(c.dataset.i); layout(); });
-    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); active = Number(c.dataset.i); layout(); } }); });
-  let x0 = null, y0 = 0, dx = 0, moved = false, horiz = null;
-  track.addEventListener('pointerdown', e => { x0 = e.clientX; y0 = e.clientY; dx = 0; moved = false; horiz = null; });
+  let x0 = null, y0 = 0, dx = 0, horiz = null, lastX = 0, lastT = 0, vel = 0, moved = false;
+  track.addEventListener('pointerdown', e => { x0 = lastX = e.clientX; y0 = e.clientY; lastT = performance.now(); dx = 0; vel = 0; horiz = null; moved = false; });
   addEventListener('pointermove', e => {
     if (x0 === null) return;
     const ddx = e.clientX - x0, ddy = e.clientY - y0;
     if (horiz === null && Math.hypot(ddx, ddy) > 8) horiz = Math.abs(ddx) > Math.abs(ddy);
     if (!horiz) return;
-    dx = ddx; moved = Math.abs(dx) > 6; track.classList.add('dragging'); track.style.setProperty('--drag', dx + 'px');
+    const now = performance.now(); vel = (e.clientX - lastX) / Math.max(1, now - lastT); lastX = e.clientX; lastT = now;
+    dx = ddx; moved = Math.abs(dx) > 6; track.classList.add('drag'); track.style.setProperty('--drag', dx + 'px'); parallax();
   }, { passive: true });
   const end = () => {
     if (x0 === null) return;
-    track.classList.remove('dragging'); track.style.setProperty('--drag', '0px');
-    if (horiz && Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
+    track.classList.remove('drag'); track.style.setProperty('--drag', '0px');
+    if (horiz) { const w = cards[0].offsetWidth + 12, proj = dx + vel * 220, steps = Math.round(-proj / w); if (steps) move(clamp(steps, -3, 3)); else layout(); }
     x0 = null; setTimeout(() => { moved = false; }, 0);
   };
   addEventListener('pointerup', end); addEventListener('pointercancel', end);
+  cards.forEach(c => c.addEventListener('click', () => { if (moved) return; const i = Number(c.dataset.i); if (i !== active) { active = i; layout(); } }));
   layout(); req();
 })();
 </script>
